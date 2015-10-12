@@ -10,7 +10,7 @@ DDTree是一个通用的选择公司，部门，项目控件
 
 ##Quick start
 
-+ 在页面上使用位置添加div
++ 在页面上使用位置添加div和js引用
 
 ```html
 <div id="ddtree"></div>
