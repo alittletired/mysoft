@@ -67,6 +67,8 @@
     <Content Include="ajax.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="js\DDTree\usp_myProjFilterBase.sql" />
+    <Content Include="js\project.js" />
     <Content Include="js\DDTree\DDTree.css" />
     <Content Include="js\DDTree\DDTree.js" />
     <Content Include="js\DDTree\demo.htm" />
@@ -77,12 +79,12 @@
     <Content Include="js\DDTree\install.htm" />
     <Content Include="js\DDTree\CompanyMenuTree.js" />
     <Content Include="js\jquery-1.11.3.min.js" />
-    <Content Include="js\project.js" />
     <Content Include="js\jquery.js" />
     <Content Include="js\sea-debug.js" />
     <Content Include="js\sea.js" />
     <Content Include="js\json.js" />
     <Content Include="js\Selector\Selector.js" />
+    <Content Include="js\seaConfig.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="js\DDTree\ddttreeupdate.json" />
