@@ -1,4 +1,4 @@
-(function() {
+ï»¿(function() {
     var project = {};
     project.invoke = function(method, option, callback) {
 
@@ -28,7 +28,7 @@
                 if (window.debug || window.location.host.indexOf('localhost') > -1)
                     alert(json.__error__);
                 else
-                    alert('²Ù×÷³ö´í£¬ÇëÁªÏµÏµÍ³¹ÜÀíÔ±£¡');
+                    alert('æ“ä½œå‡ºé”™ï¼Œè¯·è”ç³»ç³»ç»Ÿç®¡ç†å‘˜ï¼');
                 return;
 
             }
@@ -51,7 +51,7 @@
         src._oPopUp = src._oPopUp || window.createPopup();
         var popup = src._oPopUp;
         popup.document.body.innerHTML = html
-        //»ñÈ¡ä¯ÀÀÆ÷´°¿Ú¿ÉÊÓ·¶Î§µÄ¸ß¶ÈºÍ¿í¶È
+        //è·å–æµè§ˆå™¨çª—å£å¯è§†èŒƒå›´çš„é«˜åº¦å’Œå®½åº¦
         var iWidth, iHeight;
         try {
             iWidth = top.document.documentElement.offsetWidth;
@@ -62,7 +62,7 @@
             iHeight = window.screen.availHeight - 60;
         }
 
-        //»ñÈ¡µ±Ç°µã»÷ÔªËØËùÔÚ´°¿ÚÔÚä¯ÀÀÆ÷ÖĞµÄÎ»ÖÃ
+        //è·å–å½“å‰ç‚¹å‡»å…ƒç´ æ‰€åœ¨çª—å£åœ¨æµè§ˆå™¨ä¸­çš„ä½ç½®
         var frameLeft = 0;
         var frameTop = 0;
         var oWin = window;
@@ -77,12 +77,12 @@
             }
         }
         catch (e) { }
-        //»ñÈ¡µ±Ç°µã»÷ÔªËØµÄÎ»ÖÃ
+        //è·å–å½“å‰ç‚¹å‡»å…ƒç´ çš„ä½ç½®
         pos = src.getBoundingClientRect();
         var xPos = pos.left;
         var yPos = pos.top;
 
-        //¶Ôµ±Ç°µã»÷ÔªËØµÄÎ»ÖÃ½øĞĞÅĞ¶Ï,ÊÇ·ñĞèÒªµ÷ÕûpopupµÄÎ»ÖÃ
+        //å¯¹å½“å‰ç‚¹å‡»å…ƒç´ çš„ä½ç½®è¿›è¡Œåˆ¤æ–­,æ˜¯å¦éœ€è¦è°ƒæ•´popupçš„ä½ç½®
         if (frameLeft + xPos + x + popupWidth > iWidth) {
             x = iWidth - frameLeft - xPos - popupWidth;
         }
@@ -97,10 +97,10 @@
             y = 0 - frameTop - yPos;
         }
 
-        // ÏÔÊ¾ Popup ´°¿Ú
+        // æ˜¾ç¤º Popup çª—å£
         popup.document.iLeft = frameLeft + xPos + x;
         popup.document.iTop = frameTop + yPos + y;
-        //¶ş¼¶²Ëµ¥¶¨Î»
+        //äºŒçº§èœå•å®šä½
         if (src.ownerDocument.iLeft) {
             xPos = src.ownerDocument.iLeft;
             yPos = yPos + src.ownerDocument.iTop;
@@ -136,8 +136,8 @@
         document.getElementsByTagName('head')[0].appendChild(style);
     }
 
- 
-    //¼æÈİĞ¡Æ½Ì¨´«²Îµ÷ÓÃ
+
+    //å…¼å®¹å°å¹³å°ä¼ å‚è°ƒç”¨
     window.my = window.my || {};
     window.my.project = project;
     if (typeof define === 'function') {

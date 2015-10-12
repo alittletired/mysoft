@@ -14,6 +14,17 @@
         var me = that.$element = $(element);
         me.data('_ddtree', that);
         that.options = options;
+        //添加appfind支持
+        for (var i = 0; i < 20; i++) {
+            var _oCtl = document.getElementById("#appQueryCtl" + i.toString());
+            if (!_oCtl) {
+                this._oCtl = $('<input type="hidden" id="appQueryCtl' + i + '" />');
+                this._oCtl.prop('queryxml', '<filter type="and"><condition attribute="1" value="2" operator="eq"/></filter>')
+                $('body').append(this._oCtl);
+                break;
+            }
+        }
+
         if (!that.options.data) {
             var data = project.invoke(that.options.serviceMethod, { applySys: that.options.applySys, treeType: that.options.treeType });
             data = data || {}
@@ -106,16 +117,6 @@
         var headerHtml = that.renderHeader();
         me.addClass("ddtreeWarp").html(headerHtml);
 
-        //添加appfind支持
-        for (var i = 0; i < 20; i++) {
-            _oCtl = document.getElementById("#appQueryCtl" + i.toString());
-            if (!_oCtl) {
-                this._oCtl = $('<input type="hidden" id="appQueryCtl' + i + '" />');
-                this._oCtl.prop('queryxml', '<filter type="and"><condition attribute="1" value="2" operator="eq"/></filter>')
-                me.append(this._oCtl);
-                break;
-            }
-        }
 
         if (that.options.value)
             that.setValue(that.options.value, 1);
