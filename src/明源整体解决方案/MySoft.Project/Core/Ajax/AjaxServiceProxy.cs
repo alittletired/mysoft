@@ -52,6 +52,8 @@ namespace Mysoft.Project.Ajax
                 return true;
             return false;
         }
+
+
         private static object Handle(HttpContext context)
         {
 
@@ -62,14 +64,14 @@ namespace Mysoft.Project.Ajax
             Type type;
 
             //请求前端脚本
-            if (string.IsNullOrEmpty(typeName) && request.HttpMethod.Equals("GET", StringComparison.OrdinalIgnoreCase))
+            if (!string.IsNullOrEmpty(typeName) && request.HttpMethod.Equals("GET", StringComparison.OrdinalIgnoreCase))
             {
                 try
                 {
 
                     type = ReflectionHelper.GetType(typeName, assbemlyName);
 
-                 
+
                     context.Response.AddHeader("Content-Type", "application/x-javascript");
 
                     return GetProxyScript(type, context.Request.Path);
@@ -92,15 +94,49 @@ namespace Mysoft.Project.Ajax
 
             }
 
-            if (!IsAllowServiceMethod(methodInfo)) {
+            if (!IsAllowServiceMethod(methodInfo))
+            {
                 throw new Exception("方法'" + invokeMethod + "'不满足约定，申明方法的类型需以Service结尾或方法添加ServiceAttribute特性！");
             }
 
+            //是否开启事务
+            var transAttribute = methodInfo.GetCustomAttributes(typeof(TransactionAttribute), true);
+            var isOpenTrans = true;
+            if (transAttribute.Length > 0)
+            {
+                isOpenTrans = ((TransactionAttribute)transAttribute[0]).IsOpen;
+            }
+            else if (methodInfo.Name.StartsWith("get", StringComparison.OrdinalIgnoreCase))
+            {
+                isOpenTrans = false;
+            }
+
+            var postdata = request.Form["postdata"];
+            if (isOpenTrans)
+            {
+                using (var trans = DBHelper.BeginTransaction())
+                {
+                    mess = Invoke(methodInfo, postdata);
+                    trans.Complete();
+                }
+            }
+            else
+            {
+                mess = Invoke(methodInfo, postdata);
+            }
+
+            return mess;
+        }
+
+        public static object Invoke(MethodInfo methodInfo, string jsonstr)
+        {
             ParameterInfo[] paramterInfos = methodInfo.GetParameters();
+            var type = methodInfo.DeclaringType;
+
             object[] paramters = new object[paramterInfos.Length];
             try
             {
-                var json = JObject.Parse(request.Form["postdata"]);
+                var json = JObject.Parse(jsonstr);
                 for (int i = 0; i < paramterInfos.Length; i++)
                 {
                     Type parameterType = paramterInfos[i].ParameterType;
@@ -120,49 +156,21 @@ namespace Mysoft.Project.Ajax
                     paramters[i] = value;
                 }
             }
-            catch (Exception ex) {
-                throw new Exception("解析方法'" + invokeMethod + "'参数出错，请检查传入参数！\n出错信息：" + ex.Message, ex);
+            catch (Exception ex)
+            {
+                throw new Exception("解析方法'" + type.FullName + "." + methodInfo.Name + "'参数出错，请检查传入参数！\n出错信息：" + ex.Message, ex);
             }
             try
             {
-                type = methodInfo.DeclaringType;
                 object instance = null;
                 if (!methodInfo.IsStatic)
                     instance = Activator.CreateInstance(type, new object[] { });
-                //是否开启事务
-                var transAttribute = methodInfo.GetCustomAttributes(typeof(TransactionAttribute), true);
-                var isOpenTrans = true;
-                if (transAttribute.Length > 0)
-                {
-                    isOpenTrans = ((TransactionAttribute)transAttribute[0]).IsOpen;
-                }
-                else if (methodInfo.Name.StartsWith("get", StringComparison.OrdinalIgnoreCase))
-                {
-                    isOpenTrans = false;
-                }
-
-                if (isOpenTrans)
-                {
-                    using (var trans = DBHelper.BeginTransaction())
-                    {
-                        mess = new { result = methodInfo.Invoke(instance, paramters) };
-                        trans.Complete();
-                    }
-                }
-                else
-                {
-                    mess = new { result = methodInfo.Invoke(instance, paramters) };
-                }
+                return new { result = methodInfo.Invoke(instance, paramters) };
             }
             catch (Exception ex)
             {
-                throw new Exception("调用方法'" + invokeMethod + "'失败\n出错信息：" + ex.Message, ex);
+                throw new Exception("调用方法'" + type.FullName + "." + methodInfo.Name + "'失败\n出错信息：" + ex.Message, ex);
             }
-
-
-
-
-            return mess;
         }
         /// <summary>
         /// 创建类型代理脚本
@@ -175,7 +183,7 @@ namespace Mysoft.Project.Ajax
             string script;
             if (_cacheScript.TryGetValue(type, out script)) { return script; }
             StringBuilder sb = new StringBuilder();
-            var resName = typeof(AjaxServiceProxy).FullName + ".js";          
+            var resName = typeof(AjaxServiceProxy).Name + ".js";          
             var serviceJS = ReflectionHelper.GetResourceString(resName, typeof(AjaxServiceProxy));
             sb.AppendLine(serviceJS);
             sb.AppendLine("var service=new AjaxServiceProxy(window,'" + type.FullName + "','" + xmlHttpUrl + "');");

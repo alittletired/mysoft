@@ -57,40 +57,37 @@
     <Reference Include="Toxy, Version=1.6.0.0, Culture=neutral, PublicKeyToken=48d3dbd26ddb59c9, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ajax\AjaxServiceProxy.cs" />
-    <Compile Include="Ajax\CommonService.cs" />
-    <Compile Include="Ajax\HttpResult.cs" />
-    <Compile Include="Ajax\IBusiness.cs" />
-    <Compile Include="Ajax\ProxyClass.cs" />
-    <Compile Include="Ajax\ServiceAttribute.cs" />
-    <Compile Include="Ajax\TypeHelper.cs" />
-    <Compile Include="Ajax\ReflectionHelper.cs" />
+    <Compile Include="Core\Ajax\AjaxServiceProxy.cs" />
+    <Compile Include="Core\Ajax\CommonService.cs" />
+    <Compile Include="Core\Ajax\HttpResult.cs" />
+    <Compile Include="Core\Ajax\IBusiness.cs" />
+    <Compile Include="Core\Ajax\ProxyClass.cs" />
+    <Compile Include="Core\Ajax\ServiceAttribute.cs" />
+    <Compile Include="Core\Ajax\TypeHelper.cs" />
+    <Compile Include="Core\Ajax\ReflectionHelper.cs" />
     <Compile Include="Control\DDTree\DDTreeService.cs" />
-    <Compile Include="DB\Database.cs" />
-    <Compile Include="DB\DBAttribute.cs" />
-    <Compile Include="DB\DBHelper.cs" />
-    <Compile Include="DB\SqlJointer.cs" />
-    <Compile Include="DB\TransactionScope.cs" />
-    <Compile Include="Entity\BuildAll.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BuildAll.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Core\DB\Database.cs" />
+    <Compile Include="Core\DB\DBAttribute.cs" />
+    <Compile Include="Core\DB\DBHelper.cs" />
+    <Compile Include="Core\DB\SqlJointer.cs" />
+    <Compile Include="Core\DB\TransactionScope.cs" />
     <Compile Include="Excel\ExcelHelper.cs" />
     <Compile Include="Excel\ExcelTemplateParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Ajax\AjaxServiceProxy.js" />
-    <Content Include="Entity\BuildAll.tt">
+    <EmbeddedResource Include="Core\Ajax\AjaxServiceProxy.js">
+      <CustomToolNamespace>Mysoft.Project.Ajax</CustomToolNamespace>
+    </EmbeddedResource>
+    <Content Include="Core\Entity\BuildAll.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BuildAll.cs</LastGenOutput>
     </Content>
-    <Content Include="Entity\EntityGenerator.tt">
+    <Content Include="Core\Entity\EntityGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityGenerator.cs</LastGenOutput>
     </Content>
-    <Content Include="Entity\EntityTemplate.tt">
+    <Content Include="Core\Entity\EntityTemplate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityTemplate.cs</LastGenOutput>
     </Content>

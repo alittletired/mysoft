@@ -29,7 +29,7 @@ namespace Mysoft.Project.Core
             var stream = assembly.GetManifestResourceStream(resourceName);
             if (stream == null)
             {
-                var resName = assembly.GetManifestResourceNames().FirstOrDefault(name => name.EndsWith(resourceName, StringComparison.CurrentCultureIgnoreCase));
+                var resName = assembly.GetManifestResourceNames().FirstOrDefault(name => name.EndsWith(resourceName, StringComparison.OrdinalIgnoreCase));
                 if (resName != null)
                     stream = assembly.GetManifestResourceStream(resName);
             }

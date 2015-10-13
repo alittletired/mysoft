@@ -28,10 +28,9 @@
 
     //设置默认值
     Selector.DEFAULTS = {
-
         title: '' //弹出的选择窗口名称
-            , bindValue: true//绑定的值控件
-            , bindText: false  //绑定的文本控件
+            , valueCtrl: true//绑定的值控件
+            , textCtrl: false  //绑定的文本控件
             , searchField: []
             , columns: []
             , dataMethod: 'MySoft.Project.Control.DDTreeService.GetDDTreeData'
