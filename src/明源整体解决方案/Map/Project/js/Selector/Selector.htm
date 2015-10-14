@@ -1,0 +1,85 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+    <title></title>
+
+    <script type="text/javascript" src="/_controls/settings.aspx"></script>
+
+    <link type="text/css" rel="stylesheet" href="/_common/styles/global_css.axd?v=20150923095625" />
+
+    <script type="text/javascript" src="/_common/scripts/global.js?v=20141204095940"></script>
+
+    <script type="text/javascript" src="/_controls/util/util.js?v=20141204095943"></script>
+
+    <link href="/_nav/menu_css.axd?v=20150105092728" rel="stylesheet" type="text/css" />
+    <link href="/_forms/styles/form_css.axd?v=20150923095625" rel="stylesheet" type="text/css" />
+    <link href="/_controls/find/find_css.axd?v=20150105092734" rel="stylesheet" type="text/css" />
+    <link href="/_controls/tree/dropdowntree_css.axd?v=20150105092735" rel="stylesheet"
+        type="text/css" />
+        <style>
+        #menuTitle
+        {
+             font-weight:bold;
+            }
+        </style>
+        
+</head>
+<body style="padding-right: 10px; padding-left: 10px; padding-bottom: 10px; padding-top: 10px">
+    <table style="font-size: 9pt" height="100%" border="0" cellspacing="0" cellpadding="0"
+        width="100%">
+        <%--  <tr height="10">
+            <td>
+            </td>
+        </tr>--%>
+        <tr height="1" valign="top">
+            <td>
+                <table id="appGridMenu_Main" style="height: 28px; table-layout: fixed" cellspacing="0"
+                    cellpadding="0" width="100%">
+                    <tbody>
+                        <tr>
+                            <td width="100%">
+                                <table id="appGridMenu" class="mnubar" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding-left: 5px" nowrap id="menuTitle">
+                                               供应商选择列表
+                                            </td>
+                                            <td class="icMenu mnuRight" nowrap>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="border-top: #969693 1px solid; border-bottom: #c2c2bf 1px solid">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        
+        <tr><td></td></tr>
+        <tr height="30">
+            <td align="right" height="30">
+                <button style="width: 70px; display: none" id="btnClear" onclick="doClear()" runat="server"
+                    type="button">
+                    清 空</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button style="width: 70px" onclick="doOk();" name="btnNext1" type="button">
+                    确定</button>&nbsp;&nbsp;
+                <button style="width: 70px" onclick="window.returnValue=null;parent.window.close();"
+                    name="btnClose" value="取 消" type="button">
+                    取 消</button>
+            </td>
+        </tr>
+    </table>
+</body>
+<script type="text/javascript">
+    var grid;
+    function doOk() {
+        var ret = grid.getSelectedItems();
+        if (ret.length == 0)
+            return; 
+    }
+        </script>
+</html>

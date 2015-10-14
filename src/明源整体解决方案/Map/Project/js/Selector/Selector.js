@@ -25,7 +25,7 @@
     }
 
 
-
+    var SelectorType = { grid: 0, treeGrid: 1 }
     //设置默认值
     Selector.DEFAULTS = {
         title: '' //弹出的选择窗口名称
@@ -34,10 +34,17 @@
             , searchField: []
             , columns: []
             , dataMethod: 'MySoft.Project.Control.DDTreeService.GetDDTreeData'
-            , params: function() { return { buguid: 123 }; }//调用服务器方法前传递的参数
+            , params: function() { return { buguid: 123 }; } //调用服务器方法前传递的参数
+            , selectorType: SelectorType.treeGrid
+            , showClearButton: false
 
     };
+   
     var data = project.invoke(tdataMethod, params);
+    var json = {};
+    json.size = 10;
+    json.page = 1;
+    json.customerparams = options.params() || {};
     DDTree.prototype.addStyle = function() {
         var css = []
         css.push(".ddtreeWarp{  padding:0px 0px ;display:inline-block;text-align:left; }  table.ddtree{TABLE-LAYOUT: fixed; WIDTH: 100%; BACKGROUND-COLOR: white; }")
@@ -50,16 +57,12 @@
     DDTree.prototype.init = function() {
 
         var that = this;
-        if (that.options.selectType > that.options.treeType && window.location.host.indexOf('localhost') > 0) {
-            alert("注意了，配置的selectType大于treeType将无法选取任何数据");
-        }
+
         var me = that.$element;
         that.addStyle();
         that._rootItems = [];
         that._treeKey = {};
-        that._searchHit = {}
-        that._searchShow = {};
-        this._popup = {}
+
         NodeType = that.options.NodeType
         nodeBgColor = that.options.nodeBgColor
         $.each(that.options.data, function() {

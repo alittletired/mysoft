@@ -25,6 +25,8 @@ namespace Mysoft.Project.Core
         /// <returns></returns>
         public static Stream GetResourceStream(string resourceName, Type type)
         {
+         
+          
             Assembly assembly = Assembly.GetAssembly(type);
             var stream = assembly.GetManifestResourceStream(resourceName);
             if (stream == null)
@@ -140,11 +142,12 @@ namespace Mysoft.Project.Core
 
         public static object InvokeMethod(string callMethod, string assbemlyName, params object[] paramArr)
         {
+         
 
-            var methodInfo = GetMethod(callMethod, assbemlyName, paramArr);            
+            var methodInfo = GetMethod(callMethod, assbemlyName, paramArr);
             object instance = null;
             if (!methodInfo.IsStatic)
-            {               
+            {
                 instance = Activator.CreateInstance(methodInfo.DeclaringType, new object[] { });
             }
             return methodInfo.Invoke(instance, paramArr);

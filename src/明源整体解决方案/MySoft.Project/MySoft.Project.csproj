@@ -42,6 +42,9 @@
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="NPOI, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -71,6 +74,7 @@
     <Compile Include="Core\DB\DBHelper.cs" />
     <Compile Include="Core\DB\SqlJointer.cs" />
     <Compile Include="Core\DB\TransactionScope.cs" />
+    <Compile Include="Core\EntityGenerator1.cs" />
     <Compile Include="Excel\ExcelHelper.cs" />
     <Compile Include="Excel\ExcelTemplateParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,18 +83,6 @@
     <EmbeddedResource Include="Core\Ajax\AjaxServiceProxy.js">
       <CustomToolNamespace>Mysoft.Project.Ajax</CustomToolNamespace>
     </EmbeddedResource>
-    <Content Include="Core\Entity\BuildAll.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>BuildAll.cs</LastGenOutput>
-    </Content>
-    <Content Include="Core\Entity\EntityGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EntityGenerator.cs</LastGenOutput>
-    </Content>
-    <Content Include="Core\Entity\EntityTemplate.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EntityTemplate.cs</LastGenOutput>
-    </Content>
     <Content Include="lib\DCSoft.RTF.dll" />
     <Content Include="lib\dmach.Mail.dll" />
     <Content Include="lib\DocumentFormat.OpenXml.dll" />
