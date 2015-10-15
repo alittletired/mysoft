@@ -12,13 +12,17 @@ string ns="Mysoft.BusinessPortal.Entity";
 
 //表名数组 
 string[] tableNames=new string[]{
-"myUserConfig","myAttentionCompany","myUser"
+//"myUserConfig","myAttentionCompany","myUser"
 };
 
-EntityGenerator gen=new EntityGenerator(connectionString,ns,tableNames);
-
 //生成文件
-gen.Run();
+foreach(string tableName in tableNames){
+	if(string.IsNullOrEmpty(tableName)) 
+		continue;
+	EntityTemplate tempalte=new EntityTemplate(connectionString,ns,tableName);
+	tempalte.RenderToFile(tableName + ".cs");
+}
+
 
  #>
 
@@ -26,27 +30,7 @@ gen.Run();
 
 
 <#+
-public class EntityGenerator : Generator
-{
-	string[] tableNames;
-	string connectionString;
-	string nameSpace;
-	public EntityGenerator(string connectionString, string ns,params string[] tableNames)
-    {        
-       	this.tableNames=tableNames;
-		this.connectionString=connectionString;
-		this.nameSpace=ns;
-      
-    }
-	protected override void RunCore()
-	{
-		foreach(string tableName in tableNames){
-		if(string.IsNullOrEmpty(tableName)) continue;
-			EntityTemplate tempalte=new EntityTemplate(connectionString,nameSpace,tableName);
-			tempalte.RenderToFile(tableName + ".cs");
-		}
-	}
-}
+
 
 public class EntityTemplate : Template
 {		
