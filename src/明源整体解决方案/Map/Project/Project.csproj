@@ -64,29 +64,15 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entity\BuildAll.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BuildAll.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\myAttentionCompany.cs">
-      <DependentUpon>BuildAll.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\myUser.cs">
-      <DependentUpon>BuildAll.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\myUserConfig.cs">
-      <DependentUpon>BuildAll.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ajax.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Entity\BuildAll.tt">
+    <Content Include="Entity\Entity.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>BuildAll.cs</LastGenOutput>
+      <LastGenOutput>Entity.cs</LastGenOutput>
     </Content>
     <Content Include="js\DDTree\usp_myProjFilterBase.sql" />
     <Content Include="js\project.js" />
