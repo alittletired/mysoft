@@ -1,0 +1,55 @@
+<#@ template language="C#v3.5"  hostSpecific="true" debug="true"#>
+<#@ include file="T4Toolbox.tt" #>
+<#@ VolatileAssembly processor="T4Toolbox.VolatileAssemblyProcessor" name="MySoft.Project.dll" #>
+   
+<#
+
+//数据库连接字符串
+string connectionString = "server=10.5.10.75\\SQL2008R2_BJ;uid=team_bj;pwd=95938;database=erp303sp4_beijing_bjezerp303sp4zz;";
+
+//命名空间
+string ns="Mysoft.BusinessPortal.Entity"; 
+
+//表名数组 
+string[] tableNames=new string[]{
+//"myUserConfig","myAttentionCompany","myUser"
+};
+
+//生成文件
+foreach(string tableName in tableNames){
+	if(string.IsNullOrEmpty(tableName)) 
+		continue;
+	EntityTemplate tempalte=new EntityTemplate(connectionString,ns,tableName);
+	tempalte.RenderToFile(tableName + ".cs");
+}
+
+
+ #>
+
+
+
+
+<#+
+
+
+public class EntityTemplate : Template
+{		
+	string tableName;
+	string connectionString;
+	string nameSpace;
+	public EntityTemplate( string connectionString,string ns, string tableName){
+		this.tableName=tableName;
+		this.connectionString=connectionString;
+		this.nameSpace=ns;
+	}
+	
+	public override string TransformText()
+	{  
+	
+		
+		var gen=new MySoft.Project.Core.Entity.EntityGenerator(this. connectionString,this.nameSpace,this.tableName);
+		return gen.Generate();
+      // return this.GenerationEnvironment.ToString();
+	}
+}
+#>

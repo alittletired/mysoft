@@ -92,6 +92,10 @@
             element = '#' + element;
         }
         options = $.extend({}, DDTree.DEFAULTS, typeof options == 'object' && options)
+        $.each(function() {
+            var column = this;
+            $.extend(column, DDTree.columnDEFAULTS, column)
+        });
         var that = this;
         var me = that.$element = $(element);
         me.data('_ddtree', that);
@@ -136,6 +140,18 @@
              , applySys: '0201'
              , NodeType: { None: -1, Group: 0, Company: 10, EndCompany: 20, Dept: 30, Team: 40, ProjectTeam: 50, Project: 60, EndProject: 70 }
              , nodeBgColor: { "0": "#DDE0E5", "10": "#E4E7EC", "20": "#EEF0F2", "30": "#F4F5F8", "60": "#F4F5F8", "70": "#F8F9FC" }
+, autoSwitchCompany: true //是否自动切换公司
+    };
+    //设置默认值
+    DDTree.columnDEFAULTS = {
+        data: null //数据源    
+        , text: ''
+            , showFullText: true//显示完整的路径名
+            , onchange: false  //选择元素后的回调函数
+
+
+             , columnType: { None: -1, Group: 0, Company: 10, EndCompany: 20, Dept: 30, Team: 40, ProjectTeam: 50, Project: 60, EndProject: 70 }
+
 , autoSwitchCompany: true //是否自动切换公司
     };
 

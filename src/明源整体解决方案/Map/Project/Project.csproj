@@ -39,6 +39,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -61,12 +64,30 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\BuildAll.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BuildAll.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\myAttentionCompany.cs">
+      <DependentUpon>BuildAll.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\myUser.cs">
+      <DependentUpon>BuildAll.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\myUserConfig.cs">
+      <DependentUpon>BuildAll.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ajax.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Entity\BuildAll.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BuildAll.cs</LastGenOutput>
+    </Content>
     <Content Include="js\DDTree\usp_myProjFilterBase.sql" />
     <Content Include="js\project.js" />
     <Content Include="js\DDTree\DDTree.css" />
@@ -83,8 +104,12 @@
     <Content Include="js\sea-debug.js" />
     <Content Include="js\sea.js" />
     <Content Include="js\json.js" />
+    <Content Include="js\Selector\DDTree.js" />
     <Content Include="js\Selector\Selector.js" />
     <Content Include="js\seaConfig.js" />
+    <Content Include="js\Selector\Selector.htm">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="js\DDTree\ddttreeupdate.json" />
@@ -93,7 +118,11 @@
     <ProjectReference Include="..\..\MySoft.Project\MySoft.Project.csproj">
       <Project>{CA53A269-00C3-420B-8B9D-BDAB07B226B3}</Project>
       <Name>MySoft.Project</Name>
+      <Private>True</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
