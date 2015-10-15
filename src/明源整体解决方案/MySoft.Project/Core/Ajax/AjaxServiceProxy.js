@@ -35,7 +35,7 @@
         }
     }
 
-    if (module && typeof module === 'object' && typeof module.exports === 'object') { module.exports = service; }
+    if (typeof module === 'object' && typeof module.exports === 'object') { module.exports = service; }
     if (typeof define === 'function') { define(function() { return service; }); }
     var serviceNames = type.split('.');
     window[serviceNames[serviceNames.length - 1]] = service;
@@ -46,19 +46,17 @@
 //兼容小平台传参调用
 window.my = window.my || {};
 my.project = my.project || {};
-
 my.project.invoke = function(method, option, callback) {
-
     var invokeMethod = method;
-    var data = {};
+    var data = option;
     if (typeof invokeMethod !== "string") {
-        invokeMethod = option.serviceInfo;
-        data = option.data || option
-    }
-    if ($.isFunction(option)) {
+        invokeMethod = method.serviceInfo;
+        data = method.data || method
         callback = option;
+    } else if ($.isFunction(option)) {
+        callback = option;
+        data = {}
     }
-
     serverUrl = data.serverUrl || '/project/ajax.aspx';
     var async = callback ? true : false;
     var returnValue;
@@ -72,7 +70,7 @@ my.project.invoke = function(method, option, callback) {
             parentWin.__error__ = json.__error__;
             if (window.debug || window.location.host.indexOf('localhost') > -1)
                 alert(json.__error__);
-            else
+            else if (!window.hiddenServiceError)
                 alert('操作出错，请联系系统管理员！');
             return;
 
@@ -85,4 +83,4 @@ my.project.invoke = function(method, option, callback) {
     $.ajax({ url: serverUrl + '?invokeMethod=' + invokeMethod, contentType: 'application/x-www-form-urlencoded; charset=UTF-8', data: { postdata: JSON.stringify(data) }, async: async, type: 'POST', cache: false, dataType: 'json' }).done(ajaxdone);
     return returnValue;
 
-};
+};  

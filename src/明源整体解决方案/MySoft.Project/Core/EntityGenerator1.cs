@@ -109,7 +109,7 @@ namespace MySoft.Project.Core.Entity
             {
 
                 if (row1["COLUMN_DEFAULT"] != DBNull.Value)
-                    defValDict[row1["COLUMN_NAME"].ToString()] = row1["COLUMN_DEFAULT"].ToString().Replace("((", "").Replace("))", "").Replace("'", "");
+                    defValDict[row1["COLUMN_NAME"].ToString()] = row1["COLUMN_DEFAULT"].ToString().Replace("(", "").Replace(")", "").Replace("'", "");
                 var len = row1["MAX_LENTH"];
                 if (len != DBNull.Value)
                     lenDict[row1["COLUMN_NAME"].ToString()] = Convert.ToInt32(len);
@@ -130,12 +130,12 @@ namespace MySoft.Project.Core.Entity
                     if (dc1.DataType.IsPrimitive || dc1.DataType == typeof(decimal))
                     {
 
-                        AddLine("this." + columnName + "  =  " + defVal.Replace("(", "").Replace(")", "") + " ;");
+                        AddLine("this." + columnName + "  =  " + defVal + " ;");
                     }
                     else if (dc1.DataType == typeof(string))
                     {
 
-                        AddLine("this." + columnName + "  =  \"" + defVal.Replace("(", "").Replace(")", "") + "\";");
+                        AddLine("this." + columnName + "  =  \"" + defVal + "\";");
                     }
 
                 }
