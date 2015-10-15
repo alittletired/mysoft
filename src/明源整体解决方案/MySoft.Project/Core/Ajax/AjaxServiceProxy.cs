@@ -10,6 +10,7 @@ using System.IO;
 using Mysoft.Project.Core.DataAnnotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using MySoft.Project.Core;
 namespace Mysoft.Project.Ajax
 {
 
@@ -17,24 +18,27 @@ namespace Mysoft.Project.Ajax
     {
         static BindingFlags _bindingFlags = BindingFlags.Public | BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Static;
         static Dictionary<Type, string> _cacheScript = new Dictionary<Type, string>();
-      
-    
+
+
         public static void Run()
         {
             HttpContext context = HttpContext.Current;
             context.Response.ContentEncoding = System.Text.Encoding.UTF8;
-            object mess=null;
+            object mess = null;
             try
             {
 
                 mess = Handle(context);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 var innerEx = ex.InnerException ?? ex;
-                if (context.Request.HttpMethod.Equals("GET", StringComparison.OrdinalIgnoreCase)) {
-                    mess = "alert('" + ex.Message  + "')";
+                if (context.Request.HttpMethod.Equals("GET", StringComparison.OrdinalIgnoreCase))
+                {
+                    mess = "alert('" + ex.Message + "')";
                 }
-                mess = new { __error__ = ex.Message + "\n调用堆栈：" + innerEx.StackTrace };
+                else
+                    mess = new { __error__ = ex.Message + "\n调用堆栈：" + innerEx.StackTrace };
             }
             if (mess is string)
             {
@@ -48,7 +52,7 @@ namespace Mysoft.Project.Ajax
         private static bool IsAllowServiceMethod(MemberInfo method){
             if (method.DeclaringType.Name.EndsWith("Service", StringComparison.OrdinalIgnoreCase))
                return true;
-            if (method.GetCustomAttributes(typeof(TransactionAttribute), true).Length > 0)
+            if (method.GetCustomAttributes(typeof(ServiceAttribute), true).Length > 0)
                 return true;
             return false;
         }
