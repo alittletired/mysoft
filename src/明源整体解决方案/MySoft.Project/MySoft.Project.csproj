@@ -74,7 +74,7 @@
     <Compile Include="Core\DB\DBHelper.cs" />
     <Compile Include="Core\DB\SqlJointer.cs" />
     <Compile Include="Core\DB\TransactionScope.cs" />
-    <Compile Include="Core\EntityGenerator1.cs" />
+    <Compile Include="Core\EntityGenerator.cs" />
     <Compile Include="Excel\ExcelHelper.cs" />
     <Compile Include="Excel\ExcelTemplateParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
