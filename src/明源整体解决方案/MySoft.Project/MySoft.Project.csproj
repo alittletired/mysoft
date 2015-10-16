@@ -60,6 +60,7 @@
     <Reference Include="Toxy, Version=1.6.0.0, Culture=neutral, PublicKeyToken=48d3dbd26ddb59c9, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Control\myRepeater\myRepeaterService.cs" />
     <Compile Include="Core\Ajax\AjaxServiceProxy.cs" />
     <Compile Include="Core\Ajax\CommonService.cs" />
     <Compile Include="Core\Ajax\HttpResult.cs" />

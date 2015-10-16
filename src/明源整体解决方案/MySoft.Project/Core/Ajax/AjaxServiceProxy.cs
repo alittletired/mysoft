@@ -120,13 +120,13 @@ namespace Mysoft.Project.Ajax
             {
                 using (var trans = DBHelper.BeginTransaction())
                 {
-                    mess =ReflectionHelper. Invoke(methodInfo, postdata);
+                    mess =new {result= ReflectionHelper. Invoke(methodInfo, postdata)};
                     trans.Complete();
                 }
             }
             else
             {
-                mess =ReflectionHelper. Invoke(methodInfo, postdata);
+                mess = new { result = ReflectionHelper.Invoke(methodInfo, postdata) };
             }
 
             return mess;

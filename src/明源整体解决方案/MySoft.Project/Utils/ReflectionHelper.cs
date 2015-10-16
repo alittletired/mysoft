@@ -177,12 +177,20 @@ namespace Mysoft.Project.Core
 
                     if (json.TryGetValue(parameterName, StringComparison.OrdinalIgnoreCase, out jvalue))
                     {
-                        value = jvalue.ToObject(parameterType);
+                        if (parameterType == typeof(string))
+                            value = jvalue.ToString();
+                        else
+                            value = jvalue.ToObject(parameterType);
 
                     }
                     else
                     {
-                        value = json.ToObject(parameterType);
+                        if (parameterType == typeof(string))
+                            value = json.ToString();
+                        else
+                            value = json.ToObject(parameterType);
+
+
                     }
                     paramters[i] = value;
                 }
@@ -196,7 +204,7 @@ namespace Mysoft.Project.Core
                 object instance = null;
                 if (!methodInfo.IsStatic)
                     instance = Activator.CreateInstance(type, new object[] { });
-                return new { result = methodInfo.Invoke(instance, paramters) };
+                return methodInfo.Invoke(instance, paramters);
             }
             catch (Exception ex)
             {
