@@ -10,7 +10,7 @@ using System.IO;
 using Mysoft.Project.Core.DataAnnotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using MySoft.Project.Core;
+
 namespace Mysoft.Project.Ajax
 {
 

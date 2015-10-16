@@ -13,7 +13,7 @@ using System.Reflection;
 
 using Mysoft.Project.Core;
 using System.Linq;
-namespace MySoft.Project.Control
+namespace Mysoft.Project.Control
 {
     public enum TreeType { None = -1, Group = 0, Company = 10, EndCompany = 20, Dept = 30, Team = 40, ProjectTeam = 50, Project = 60, EndProject = 70 }
     public interface IDDTreeItem
@@ -47,10 +47,14 @@ namespace MySoft.Project.Control
             data = new List<T>();
         }
         public string value { get; set; }
-        string ApplySys { get; set; }
+       
+      
     }
-    
 
+    public class DDTreeModel {
+     public   string ApplySys { get; set; }
+     public TreeType TreeType { get; set; }
+    }
     public class DDTreeService
     {
         public List<IDDTreeItem> GetDept(string userguid)
@@ -193,12 +197,13 @@ WHERE u.UserGUID ='" + userguid + "'";
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
-        public DDTreeDTO<IDDTreeItem> GetDDTreeData(TreeType treeType, string ApplySys)
+        public DDTreeDTO<IDDTreeItem> GetDDTreeData(DDTreeModel model)
         {
+            
             var tree = new DDTreeDTO<IDDTreeItem>();
             var userguid = HttpContext.Current.Session["UserGUID"].ToString();
-            var value = DBHelper.ExecuteScalarString("select ArgGUID from myCurrArgs where UserGUID=@0 and ObjType=@1", userguid, treeType.ToString());
-            switch (treeType)
+            var value = DBHelper.ExecuteScalarString("select ArgGUID from myCurrArgs where UserGUID=@0 and ObjType=@1", userguid, model.TreeType.ToString());
+            switch (model.TreeType)
             {
                 //部门
                 case TreeType.Dept:
@@ -214,7 +219,7 @@ WHERE u.UserGUID ='" + userguid + "'";
                 //项目
                 case TreeType.Project:
                 case TreeType.EndProject:
-                    tree.data = GetProject(userguid, ApplySys);
+                    tree.data = GetProject(userguid, model.ApplySys);
                     if (!string.IsNullOrEmpty(value))
                     {
                         if (DBHelper.ExecuteScalarInt("SELECT 1 FROM dbo.p_Project WHERE BUGUID=@1 AND ProjGUID=@0", value, CurrentUser.Current.BUGUID) != 1)

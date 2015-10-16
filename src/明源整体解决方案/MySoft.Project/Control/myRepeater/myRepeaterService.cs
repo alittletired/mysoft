@@ -6,7 +6,7 @@ using System.Data;
 using Mysoft.Project.Core;
 using Mysoft.Project.Ajax;
 
-namespace MySoft.Project.Control
+namespace Mysoft.Project.Control
 {
     public class myRepeaterService
     {

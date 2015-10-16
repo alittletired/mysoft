@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project", "..\明源整体解决方案\Map\Project\Project.csproj", "{46DFB8AD-1E4C-46A5-AE09-992160209813}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySoft.Project", "..\明源整体解决方案\MySoft.Project\MySoft.Project.csproj", "{CA53A269-00C3-420B-8B9D-BDAB07B226B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySoft.Project", "..\明源整体解决方案\Mysoft.Project\Mysoft.Project.csproj", "{CA53A269-00C3-420B-8B9D-BDAB07B226B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

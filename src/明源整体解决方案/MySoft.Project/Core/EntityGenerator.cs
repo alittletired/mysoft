@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
-namespace MySoft.Project.Core.Entity
+namespace Mysoft.Project.Core.Entity
 {
     public class EntityGenerator
     {

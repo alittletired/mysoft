@@ -11,7 +11,7 @@ using System.Web.Hosting;
 using Toxy;
 using System.Data;
 using System.Text.RegularExpressions;
-namespace MySoft.Project.Excel
+namespace Mysoft.Project.Excel
 {
     public interface IExcelTemplate
     {
@@ -41,8 +41,9 @@ namespace MySoft.Project.Excel
     }
     public class TemplateMetaData
     {
-        public List<ExcelCellTemplate> Cells { get; set; }
-        public List<ExcelTableTemplate> Tables { get; set; }
+        public ExcelCellTemplate SheetNameTemplate { get; set; }
+        public List<ExcelCellTemplate> CellTemplates { get; set; }
+        public List<ExcelTableTemplate> TableTemplates { get; set; }
     }
     public class ExcelTemplateParser
     {
@@ -144,14 +145,14 @@ namespace MySoft.Project.Excel
                         var tabletoken = ParseTable(cell);
                         if (tabletoken != null)
                         {
-                            templateMetadata.Tables.Add(tabletoken);
+                            templateMetadata.TableTemplates.Add(tabletoken);
                         }
                         else
                         {
                             var cellToken = ParseCell(cell);
                             if (cellToken != null)
                             {
-                                templateMetadata.Cells.Add(cellToken);
+                                templateMetadata.CellTemplates.Add(cellToken);
                             }
                         }
 

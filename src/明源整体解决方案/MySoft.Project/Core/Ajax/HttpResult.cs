@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MySoft.Project.Core
+namespace Mysoft.Project.Core
 {
     public class HttpResult<T> : HttpResult
     {

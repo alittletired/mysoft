@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MySoft.Project</RootNamespace>
-    <AssemblyName>MySoft.Project</AssemblyName>
+    <AssemblyName>Mysoft.Project</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -76,6 +76,7 @@
     <Compile Include="Core\EntityGenerator.cs" />
     <Compile Include="Excel\ExcelHelper.cs" />
     <Compile Include="Excel\ExcelTemplateParser.cs" />
+    <Compile Include="Extension\ObjectExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\DatatableHelper.cs" />
     <Compile Include="Utils\ReflectionHelper.cs" />
