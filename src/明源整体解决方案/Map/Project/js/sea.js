@@ -5,9 +5,10 @@
 var config = {
     // 别名配置
     alias: {
-        'json': 'json',
-        'jquery': 'jquery',
-        'DDTree': 'DDTree/DDTree'
+        'json': '/project/js/json',
+        'jquery': '/project/js/jquery',
+        'DDTree': '/project/js/DDTree/DDTree',
+         'Selector': '/project/js/Selector/Selector'
     },
 
     // 路径配置
@@ -24,7 +25,7 @@ var config = {
 
     // 预加载项
     preload: [
-        this.JSON ? '' : 'json'
+        this.JSON ? '' : 'json'       
   ],
 
     // 调试模式
@@ -38,3 +39,4 @@ var config = {
 }
 
 seajs.config(config);
+seajs.use('jquery');

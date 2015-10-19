@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using Toxy;
 using System.Web.Hosting;
 
-namespace MySoft.Project.Excel
+namespace Mysoft.Project.Excel
 {
     public class ExcelHelper {
         public string BuildExcel(string templateFilePath, object data) {

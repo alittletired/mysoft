@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列属性集
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("MySoft.Project.Core")]
+[assembly: AssemblyTitle("Mysoft.Project.Core")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Sky123.Org")]
-[assembly: AssemblyProduct("MySoft.Project.Core")]
+[assembly: AssemblyProduct("Mysoft.Project.Core")]
 [assembly: AssemblyCopyright("Copyright © Sky123.Org 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

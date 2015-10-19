@@ -1,10 +1,12 @@
 
+
 var config = {
     // ±√˚≈‰÷√
     alias: {
         'json': 'json',
         'jquery': 'jquery',
-        'DDTree': 'DDTree/DDTree'
+        'DDTree': 'DDTree/DDTree',
+        'Selector': 'Selector/Selector'
     },
 
     // ¬∑æ∂≈‰÷√
@@ -35,4 +37,4 @@ var config = {
 }
 
 seajs.config(config);
-
+seajs.use('jquery');

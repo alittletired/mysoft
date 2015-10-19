@@ -10,7 +10,7 @@ using System.IO;
 using Mysoft.Project.Core.DataAnnotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using MySoft.Project.Core;
+
 namespace Mysoft.Project.Ajax
 {
 
@@ -32,13 +32,17 @@ namespace Mysoft.Project.Ajax
             }
             catch (Exception ex)
             {
-                var innerEx = ex.InnerException ?? ex;
+
+                var innerEx = ex;
+                while (innerEx.InnerException != null) {
+                    innerEx = innerEx.InnerException;
+                }              
                 if (context.Request.HttpMethod.Equals("GET", StringComparison.OrdinalIgnoreCase))
                 {
-                    mess = "alert('" + ex.Message + "')";
+                    mess = "alert('" + innerEx.Message + "')";
                 }
                 else
-                    mess = new { __error__ = ex.Message + "\n调用堆栈：" + innerEx.StackTrace };
+                    mess = new { __error__ = innerEx.Message + "\n调用堆栈：" + innerEx.StackTrace };
             }
             if (mess is string)
             {
@@ -120,62 +124,19 @@ namespace Mysoft.Project.Ajax
             {
                 using (var trans = DBHelper.BeginTransaction())
                 {
-                    mess = Invoke(methodInfo, postdata);
+                    mess =new {result= ReflectionHelper. Invoke(methodInfo, postdata)};
                     trans.Complete();
                 }
             }
             else
             {
-                mess = Invoke(methodInfo, postdata);
+                mess = new { result = ReflectionHelper.Invoke(methodInfo, postdata) };
             }
 
             return mess;
         }
 
-        public static object Invoke(MethodInfo methodInfo, string jsonstr)
-        {
-            ParameterInfo[] paramterInfos = methodInfo.GetParameters();
-            var type = methodInfo.DeclaringType;
-
-            object[] paramters = new object[paramterInfos.Length];
-            try
-            {
-                var json = JObject.Parse(jsonstr);
-                for (int i = 0; i < paramterInfos.Length; i++)
-                {
-                    Type parameterType = paramterInfos[i].ParameterType;
-                    string parameterName = paramterInfos[i].Name;
-                    object value = null;
-                    JToken jvalue = null;
-
-                    if (json.TryGetValue(parameterName, StringComparison.OrdinalIgnoreCase, out jvalue))
-                    {
-                        value = jvalue.ToObject(parameterType);
-
-                    }
-                    else
-                    {
-                        value = json.ToObject(parameterType);
-                    }
-                    paramters[i] = value;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("解析方法'" + type.FullName + "." + methodInfo.Name + "'参数出错，请检查传入参数！\n出错信息：" + ex.Message, ex);
-            }
-            try
-            {
-                object instance = null;
-                if (!methodInfo.IsStatic)
-                    instance = Activator.CreateInstance(type, new object[] { });
-                return new { result = methodInfo.Invoke(instance, paramters) };
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("调用方法'" + type.FullName + "." + methodInfo.Name + "'失败\n出错信息：" + ex.Message, ex);
-            }
-        }
+      
         /// <summary>
         /// 创建类型代理脚本
         /// </summary>

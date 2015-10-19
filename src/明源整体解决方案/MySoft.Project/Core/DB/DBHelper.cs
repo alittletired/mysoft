@@ -222,25 +222,7 @@ namespace Mysoft.Project.Core
         // as the primary key the id of the new record is assigned to it.  Either way,
         // the new id is returned.
       
-        public static string BuildCopySql<src, desc>(string srcAlias)
-        {
-            var srcMeta = PocoData.ForType(typeof(src));
-            var descMeta = PocoData.ForType(typeof(desc));
-            var columns = srcMeta.Columns.Keys.Intersect(descMeta.Columns.Keys, StringComparer.OrdinalIgnoreCase);
-            string sql = "insert into {0}({1}) select {3} from {2} {4} ";
-            var descColumns = string.Join(",", columns.ToArray());
-            var srcColumns = descColumns;
-            if (!string.IsNullOrEmpty(srcAlias))
-            {
-                srcColumns = srcAlias + "." + string.Join("," + srcAlias + ".", columns.ToArray());
-            }
-            else
-            {
-                srcAlias = "";
-            }
-            return string.Format(sql, descMeta.TableInfo.TableName, descColumns, srcMeta.TableInfo.TableName, srcColumns, srcAlias);
-
-        }
+     
         public static Entity GetByID<Entity>(object id)
         {
             var meta = PocoData.ForType(typeof(Entity));
