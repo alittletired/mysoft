@@ -127,7 +127,7 @@
             , showFullText: true//显示完整的路径名
             , onchange: false  //选择元素后的回调函数
             , showSearch: true
-             , serviceMethod: 'MySoft.Project.Control.DDTreeService.GetDDTreeData'
+             , serviceMethod: 'Mysoft.Project.Control.DDTreeService.GetDDTreeData'
              , treeType: NodeType.EndProject //数据加载类型
              , selectType: NodeType.EndProject //可以选择的类型
              , showType: NodeType.None //默认展开类型，-1不展开

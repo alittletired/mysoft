@@ -59,7 +59,8 @@
             </td>
         </tr>
         
-        <tr><td></td></tr>
+        <tr><td><input type="button" value="选择窗口" onclick="openSel()" />
+        </td></tr>
         <tr height="30">
             <td align="right" height="30">
                 <button style="width: 70px; display: none" id="btnClear" onclick="doClear()" runat="server"
@@ -74,12 +75,26 @@
         </tr>
     </table>
 </body>
+<script type="text/javascript" src="/project/js/sea.js"></script>
+
+
 <script type="text/javascript">
-    var grid;
-    function doOk() {
-        var ret = grid.getSelectedItems();
-        if (ret.length == 0)
-            return; 
+    var options = {
+      title: '' //弹出的选择窗口名称
+            , valueCtrl: ''//绑定的值控件
+            , textCtrl: ''  //绑定的文本控件
+            , searchField: []
+            , columns: []
+            , dataMethod: 'Mysoft.Project.Control.DDTreeService.GetDDTreeData'
+            , params: function() { return { buguid: 123 }; } //调用服务器方法前传递的参数
+            
+            , showClearButton: false
+
+    };
+    function openSel() {
+        seajs.use('Selector', function(Selector) {
+        var retValue = Selector.show(options);
+        });
     }
         </script>
 </html>

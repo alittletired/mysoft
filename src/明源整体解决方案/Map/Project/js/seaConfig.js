@@ -4,7 +4,8 @@ var config = {
     alias: {
         'json': 'json',
         'jquery': 'jquery',
-        'DDTree': 'DDTree/DDTree'
+        'DDTree': 'DDTree/DDTree',
+        'Selector': 'Selector/DDTree'
     },
 
     // 路径配置
@@ -22,6 +23,7 @@ var config = {
     // 预加载项
     preload: [
         this.JSON ? '' : 'json'
+        , this.$ ? '' : 'jquery'
   ],
 
     // 调试模式

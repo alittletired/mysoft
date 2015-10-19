@@ -74,12 +74,18 @@
         </tr>
     </table>
 </body>
+<script type="text/javascript" src="/project/js/sea.js"></script>
 <script type="text/javascript">
+
     var grid;
     function doOk() {
         var ret = grid.getSelectedItems();
         if (ret.length == 0)
-            return; 
+            return;
     }
+    $(function() {
+        var options = window.dialogArguments;
+        alert(JSON.stringify(options))
+    });
         </script>
 </html>

@@ -90,10 +90,12 @@
     <Content Include="js\sea-debug.js" />
     <Content Include="js\sea.js" />
     <Content Include="js\json.js" />
-    <Content Include="js\Selector\DDTree.js" />
     <Content Include="js\Selector\Selector.js" />
     <Content Include="js\seaConfig.js" />
     <Content Include="js\Selector\Selector.htm">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="js\Selector\demo.htm">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
   </ItemGroup>
