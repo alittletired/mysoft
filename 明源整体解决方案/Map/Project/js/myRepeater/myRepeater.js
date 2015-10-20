@@ -46,7 +46,7 @@ function IsNotNull(val) {
 }
 define(function(require) {
     require('jquery');
-    
+
     require('/_controls/number/number.js');
     require('/_controls/datetime/date.js');
     require('/_controls/datetime/time.js');
@@ -86,6 +86,7 @@ define(function(require) {
             , sortField: ''//field1 asc/field desc
             , isEdit: false
             , height: "300px"
+            , width: ""
             , deleterows: []
             , isChange: false
 
@@ -156,7 +157,9 @@ define(function(require) {
         //展示数据
         var me = that.$element;
 
-        var table = '<div style="overflow: auto; width: 100%; height: ' + that.options.height + '"><table id="gridBar" width="100%" cellpadding="0" cellspacing="0" border="0"   style="table-layout: fixed; padding-left: 2px; padding-right: 2px">';
+        if (that.options.width == "")
+            that.options.width = me.css("width");
+        var table = '<div style="overflow: auto; width: ' + that.options.width + '; height: ' + that.options.height + '"><table id="gridBar" width="100%" cellpadding="0" cellspacing="0" border="0"   style="table-layout: fixed; padding-left: 2px; padding-right: 2px">';
 
 
         table += '<tr id="trHeader" class="repTitle" align="center" height="23" style="cursor: hand">';
@@ -171,10 +174,10 @@ define(function(require) {
             if (("#" + that.options.sortField).indexOf("#" + this.field + " ") > -1) {
 
                 if (that.options.sortField.indexOf("asc") > -1) {
-                    tdTitle.html("<NOBR>" + this.title + "<img class='asc' data-field='" + this.field + "' src='_imgs/ico_arrow_U.gif' /></NOBR>");
+                    tdTitle.html("<NOBR>" + this.title + "<img class='asc' data-field='" + this.field + "' src='/Project/js/myRepeater/_imgs/ico_arrow_U.gif' /></NOBR>");
                 }
                 else {
-                    tdTitle.html("<NOBR>" + this.title + "<img class='desc' data-field='" + this.field + "' src='_imgs/ico_arrow_D.gif' /></NOBR>");
+                    tdTitle.html("<NOBR>" + this.title + "<img class='desc' data-field='" + this.field + "' src='/Project/js/myRepeater/_imgs/ico_arrow_D.gif' /></NOBR>");
                 }
             }
 
@@ -240,7 +243,7 @@ define(function(require) {
             arrPager.push('<TABLE id="' + me.attr("id") + '_PagerBar" class="gridBar" height="22" cellSpacing="0" cellPadding="0" width="100%">');
             arrPager.push('<TBODY><TR> <TD style="PADDING-LEFT: 8px"><NOBR>');
             //页调整
-            arrPager.push('页次：<INPUT id="' + me.attr("id") + '_ToPage" class="pagenum" style="WIDTH: 24px" maxLength="4" value="' + that.options.pageindex + '" name="' + me.attr("id") + ':ToPage" onvalidchange="" max="' + pagecount + '" min="1">');
+            arrPager.push('页次：<INPUT id="' + me.attr("id") + '_ToPage" class="pagenum" style="WIDTH: 24px" maxLength="4" value="' + that.options.pageindex + '" name="' + me.attr("id") + ':ToPage" max="' + pagecount + '" min="1">');
             arrPager.push("/");
             arrPager.push('<SPAN id="' + me.attr("id") + '_PageCount">' + pagecount + '</SPAN>&nbsp;&nbsp;每页<INPUT id="' + me.attr("id") + '_PageSize" class="pagenum" style="WIDTH: 24px" maxLength="3" value="' + that.options.pagesize + '" name="' + me.attr("id") + ':PageSize" onvalidchange="" max="100" min="1">               条/共<SPAN id="' + me.attr("id") + '_RowsCount">' + that.options.total + '</SPAN>条');
             arrPager.push('</NOBR></TD><TD width="170" align="right"><NOBR>');
@@ -254,33 +257,36 @@ define(function(require) {
         table += arrPager.join("");
         me.html(table);
 
+
         //绑定分页事件
-
-        me.find('#' + me.attr("id") + "_ToPage").bind("change", function(e) {
-            that.options.pageindex = $(e.target).val();
+        me.find('#' + me.attr("id") + "_ToPage")[0].onvalidchange = function(e) {
+            
+            that.options.pageindex = $(this).val();
             that.loadData();
-        });
 
-        me.find('#' + me.attr("id") + "_PageSize").bind("change", function(e) {
-            that.options.pagesize = $(e.target).val();
+        }
+
+        me.find('#' + me.attr("id") + "_PageSize")[0].onvalidchange = function(e) {
+
+        that.options.pagesize = $(this).val();
             that.loadData();
-        });
+        }
 
-        me.find('#' + me.attr("id") + "_FirstPage").bind("click", function() {
+        me.find('#' + me.attr("id") + "_FirstPage").on("click", function() {
             if (that.options.pageindex == 1)
                 return false;
             else
                 that.options.pageindex = 1;
             that.loadData();
         });
-        me.find('#' + me.attr("id") + "_PrevPage").bind("click", function() {
+        me.find('#' + me.attr("id") + "_PrevPage").on("click", function() {
             if (that.options.pageindex <= 1)
                 return false;
             else
                 that.options.pageindex -= 1;
             that.loadData();
         });
-        me.find('#' + me.attr("id") + "_NextPage").bind("click", function() {
+        me.find('#' + me.attr("id") + "_NextPage").on("click", function() {
             if (that.options.pagesize == 0) that.options.pageindex = 20;
             var pagecount = Math.ceil(that.options.total / that.options.pagesize);
             if (that.options.pageindex >= pagecount)
@@ -289,7 +295,7 @@ define(function(require) {
                 that.options.pageindex += 1;
             that.loadData();
         });
-        me.find('#' + me.attr("id") + "_LastPage").bind("click", function() {
+        me.find('#' + me.attr("id") + "_LastPage").on("click", function() {
             if (that.options.pagesize == 0) that.options.pagesize = 20;
             var pagecount = Math.ceil(that.options.total / that.options.pagesize);
             if (that.options.pageindex == pagecount)
@@ -356,6 +362,7 @@ define(function(require) {
         if (that.options.items.length > 0)
             me.find("#gridBar tr[id!=trHeader]:first").click();
 
+        //页面自适应
 
         //beg lpf
         myRepeater.prototype.LastEditRow = null;
@@ -709,7 +716,7 @@ define(function(require) {
                     }
                 }
     };
-    //end
+        //end
         //数据重新加载后，重置状态
         that.options.isChange = false;
     }
@@ -1020,3 +1027,4 @@ define(function(require) {
 
     return myRepeater;
 });
+function show() { alert(this); }
