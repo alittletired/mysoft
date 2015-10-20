@@ -102,9 +102,6 @@
     <Content Include="js\Selector\demo.htm">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="js\Selector\demo2.htm">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="js\DDTree\ddttreeupdate.json" />
