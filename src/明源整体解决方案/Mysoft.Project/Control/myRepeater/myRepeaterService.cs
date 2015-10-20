@@ -20,7 +20,7 @@ namespace Mysoft.Project.Control
 
            DataTable dtPageData = SplitDataTable(dt, pageindex, pagesize, sortfield);
 
-           var data = new { total = dt.Rows.Count, page = pageindex, size = pagesize, items = rtnData };
+           var data = new { total = dt.Rows.Count, pageindex = pageindex, pagesize = pagesize, items = dtPageData };
 
            return data;
         }
@@ -30,7 +30,7 @@ namespace Mysoft.Project.Control
             DataView dv = new DataView();
             dv.Table = dt;
             dv.Sort = sortfield;
-            return dv.Table;
+            return dv.ToTable();
         }
 
         /**/
@@ -68,6 +68,12 @@ namespace Mysoft.Project.Control
             }
 
             return newdt;
+        }
+
+
+        public DataTable GetRepeaterDemoData()
+        {
+            return DBHelper.GetDataTable("select top 100 RoomGUID,Room,RoomCode,HuXing,Total,Price,Status,SLControlDate from dbo.p_Room order by  Roomcode asc");
         }
     }
 }

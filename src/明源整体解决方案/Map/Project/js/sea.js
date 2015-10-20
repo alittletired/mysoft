@@ -7,7 +7,8 @@ var config = {
     alias: {
         'json': 'json',
         'jquery': 'jquery',
-        'DDTree': 'DDTree/DDTree'
+        'DDTree': 'DDTree/DDTree',
+        'myRepeater': 'myRepeater/myRepeater'
     },
 
     // ¬∑æ∂≈‰÷√
