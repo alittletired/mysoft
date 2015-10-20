@@ -8,7 +8,7 @@ var config = {
         'json': '/project/js/json',
         'jquery': '/project/js/jquery',
         'DDTree': '/project/js/DDTree/DDTree',
-         'Selector': '/project/js/Selector/Selector'
+         'Selector': '/project/js/Selector/Selector',
         'myRepeater': '/project/js/myRepeater/myRepeater'
 
     },
@@ -39,6 +39,7 @@ var config = {
     // ÎÄ¼þ±àÂë
     charset: 'utf-8'
 }
+
 
 seajs.config(config);
 seajs.use('jquery');
