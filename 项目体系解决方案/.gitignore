@@ -1,21 +1,3 @@
-*
-!*/
-!.gitignore
-!.gitattributes
-M[m]ap/*
-!**/M[m]ap/P[p]roject/**
-!**/Mysoft.Project/**
-!项目体系解决方案/**
-obj/
-!/docs/
-bin/
-!/dist/
-!.gitignore
-!README.md
-!push.cmd
-
-
-
 #ignore thumbnails created by windows
 Thumbs.db
 #Ignore files build by Visual Studio
