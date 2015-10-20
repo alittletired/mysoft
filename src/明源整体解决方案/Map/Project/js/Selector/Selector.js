@@ -4,6 +4,7 @@
     Selector.open = function(options) {
         options = $.extend({}, Selector.DEFAULTS, options);
 
+<<<<<<< HEAD
         var arrItem = window.showModalDialog('/project/js/Selector/Selector.htm?t=4',
        options, "dialogWidth:" + options.width + "px;dialogHeight:" + options.height + "px;help:0;status:0;scroll:0;center:1");
         if (arrItem) {
@@ -27,6 +28,12 @@
             }
             return arrItem;
         }
+=======
+        var ret = window.showModalDialog('/project/js/Selector/Selector.htm',
+       options, "dialogWidth:" + options.width + "px;dialogHeight:" + options.height + "px;help:0;status:0;scroll:0;center:1");
+        if (ret)
+            return JSON.parse(ret).result;
+>>>>>>> master
         return null;
     }
 
@@ -34,15 +41,25 @@
     //设置默认值
     Selector.DEFAULTS = {
         title: '' //弹出的选择窗口名称
+<<<<<<< HEAD
             , bindCtrls: { 'id': 'oid'}//绑定的值控件
+=======
+            , valueCtrl: ''//绑定的值控件
+            , textCtrl: ''  //绑定的文本控件
+>>>>>>> master
             , searchField: []
             , columns: []
             , dataMethod: 'Mysoft.Project.Control.DDTreeService.GetDDTreeData'
             , params: function() { return { buguid: 123 }; } //调用服务器方法前传递的参数
             , selectorType: SelectorType.grid
             , showClearButton: false
+<<<<<<< HEAD
             , height: 400,
         width: 600
+=======
+            , height: 340,
+        width: 500
+>>>>>>> master
 
     };
 

@@ -2,12 +2,29 @@
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<<<<<<< HEAD
     <title></title>   
     <link type="text/css" rel="stylesheet" href="/_common/styles/global.css" />
     <link href="/_nav/menu.css" rel="stylesheet" type="text/css" />
     <link href="/_forms/styles/form.css" rel="stylesheet" type="text/css" />
     <link href="/_controls/find/find.css" rel="stylesheet" type="text/css" />
     <link href="/_controls/tree/dropdowntree.css" rel="stylesheet"
+=======
+    <title></title>
+
+    <script type="text/javascript" src="/_controls/settings.aspx"></script>
+
+    <link type="text/css" rel="stylesheet" href="/_common/styles/global_css.axd?v=20150923095625" />
+
+    <script type="text/javascript" src="/_common/scripts/global.js?v=20141204095940"></script>
+
+    <script type="text/javascript" src="/_controls/util/util.js?v=20141204095943"></script>
+
+    <link href="/_nav/menu_css.axd?v=20150105092728" rel="stylesheet" type="text/css" />
+    <link href="/_forms/styles/form_css.axd?v=20150923095625" rel="stylesheet" type="text/css" />
+    <link href="/_controls/find/find_css.axd?v=20150105092734" rel="stylesheet" type="text/css" />
+    <link href="/_controls/tree/dropdowntree_css.axd?v=20150105092735" rel="stylesheet"
+>>>>>>> master
         type="text/css" />
         <style>
         #menuTitle
@@ -79,13 +96,21 @@
             , columns: []
             , dataMethod: 'Mysoft.Project.Control.DDTreeService.GetDDTreeData'
             , params: function() { return { buguid: 123 }; } //调用服务器方法前传递的参数
+<<<<<<< HEAD
             ,title:'选择人员'
+=======
+            
+>>>>>>> master
             , showClearButton: false
 
     };
     function openSel() {
         seajs.use('Selector', function(Selector) {
+<<<<<<< HEAD
         var retValue = Selector.open(options);
+=======
+        var retValue = Selector.show(options);
+>>>>>>> master
         });
     }
         </script>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.IO;
+using Newtonsoft.Json.Linq;
 namespace Mysoft.Project.Core
 {
     /// <summary>
@@ -25,8 +26,8 @@ namespace Mysoft.Project.Core
         /// <returns></returns>
         public static Stream GetResourceStream(string resourceName, Type type)
         {
-         
-          
+
+
             Assembly assembly = Assembly.GetAssembly(type);
             var stream = assembly.GetManifestResourceStream(resourceName);
             if (stream == null)
@@ -52,7 +53,7 @@ namespace Mysoft.Project.Core
         }
 
 
-        public static bool TryInvokeMethod(string methodName, string assbemly,out object value, params object[] paramArr)
+        public static bool TryInvokeMethod(string methodName, string assbemly, out object value, params object[] paramArr)
         {
             value = null;
             try
@@ -79,7 +80,7 @@ namespace Mysoft.Project.Core
             var methodInfos = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
             foreach (var n in methodInfos)
             {
-                if (n.Name.Equals(methodName) &&(paramArr.Length==0|| n.GetParameters().Length == paramArr.Length))
+                if (n.Name.Equals(methodName) && (paramArr.Length == 0 || n.GetParameters().Length == paramArr.Length))
                 {
                     methodInfo = n;
                     break;
@@ -116,13 +117,13 @@ namespace Mysoft.Project.Core
 
             }
             _typeCache[typeName] = type;
-          
+
             return type;
         }
 
         static Assembly GetAssembly(string assemblyName)
         {
-            Assembly assembly = null;          
+            Assembly assembly = null;
             while (assemblyName.LastIndexOf('.') > 0)
             {
                 try
@@ -131,7 +132,7 @@ namespace Mysoft.Project.Core
                 }
                 catch { }
                 if (assembly != null)
-                {                  
+                {
                     return assembly;
                 }
                 assemblyName = assemblyName.Substring(0, assemblyName.LastIndexOf('.'));
@@ -142,7 +143,7 @@ namespace Mysoft.Project.Core
 
         public static object InvokeMethod(string callMethod, string assbemlyName, params object[] paramArr)
         {
-         
+
 
             var methodInfo = GetMethod(callMethod, assbemlyName, paramArr);
             object instance = null;
@@ -152,6 +153,63 @@ namespace Mysoft.Project.Core
             }
             return methodInfo.Invoke(instance, paramArr);
 
+        }
+        public static object Invoke(string callMethod, string jsonstr)
+        {
+            var methodInfo = GetMethod(callMethod, "");
+            return Invoke(methodInfo, jsonstr);
+        }
+        public static object Invoke(MethodInfo methodInfo, string jsonstr)
+        {
+            ParameterInfo[] paramterInfos = methodInfo.GetParameters();
+            var type = methodInfo.DeclaringType;
+
+            object[] paramters = new object[paramterInfos.Length];
+            try
+            {
+                var json = JObject.Parse(jsonstr);
+                for (int i = 0; i < paramterInfos.Length; i++)
+                {
+                    Type parameterType = paramterInfos[i].ParameterType;
+                    string parameterName = paramterInfos[i].Name;
+                    object value = null;
+                    JToken jvalue = null;
+
+                    if (json.TryGetValue(parameterName, StringComparison.OrdinalIgnoreCase, out jvalue))
+                    {
+                        if (parameterType == typeof(string))
+                            value = jvalue.ToString();
+                        else
+                            value = jvalue.ToObject(parameterType);
+
+                    }
+                    else
+                    {
+                        if (parameterType == typeof(string))
+                            value = json.ToString();
+                        else
+                            value = json.ToObject(parameterType);
+
+
+                    }
+                    paramters[i] = value;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("解析方法'" + type.FullName + "." + methodInfo.Name + "'参数出错，请检查传入参数！\n出错信息：" + ex.Message, ex);
+            }
+            try
+            {
+                object instance = null;
+                if (!methodInfo.IsStatic)
+                    instance = Activator.CreateInstance(type, new object[] { });
+                return methodInfo.Invoke(instance, paramters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("调用方法'" + type.FullName + "." + methodInfo.Name + "'失败\n出错信息：" + ex.Message, ex);
+            }
         }
     }
 }

@@ -3,10 +3,12 @@
 var config = {
     // 别名配置
     alias: {
-        'json': 'json',
-        'jquery': 'jquery',
-        'DDTree': 'DDTree/DDTree',
-        'Selector': 'Selector/Selector'
+        'json': '/project/js/json',
+        'jquery': '/project/js/jquery',
+        'DDTree': '/project/js/DDTree/DDTree',
+         'Selector': '/project/js/Selector/Selector'
+        'myRepeater': '/project/js/myRepeater/myRepeater'
+
     },
 
     // 路径配置
@@ -24,6 +26,7 @@ var config = {
     // 预加载项
     preload: [
         this.JSON ? '' : 'json'
+        , this.$ ? '' : 'jquery'
   ],
 
     // 调试模式
