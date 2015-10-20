@@ -1,9 +1,9 @@
 /*
 !.gitignore
 !.gitattributes
-!/明源整体解决方案/Map/Project/
-!/明源整体解决方案/Mysoft.Project/
-!/项目体系解决方案/
+!明源整体解决方案/Map/Project/
+!明源整体解决方案/Mysoft.Project/
+!项目体系解决方案/
 obj/
 !/docs/
 bin/
