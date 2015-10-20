@@ -23,6 +23,7 @@ namespace Mysoft.Project.Control
            var data = new { total = dt.Rows.Count, pageindex = pageindex, pagesize = pagesize, items = dtPageData };
 
            return data;
+
         }
 
         private DataTable SortDesc(DataTable dt,string sortfield)

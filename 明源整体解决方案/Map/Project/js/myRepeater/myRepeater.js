@@ -1,9 +1,13 @@
-﻿/*
+﻿
+var c = { charset: 'gb2312' }
+seajs.config(c);
+/*
 undo:
 启用自定义分页：CustomerPager
 背景样式须调整
-格式化数据，number,datetime
 隐藏数据未处理 newrow
+done:格式化数据，number,datetime
+
     
 */
 
@@ -12,8 +16,11 @@ undo:
 // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)   
 // 例子：   
 // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423   
-// (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18   
-Date.prototype.Format = function(fmt) { //author: meizz   
+// (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18
+Date.prototype.Format = function(fmt) {
+    if (this.toString() == "NaN")
+        return "";
+    //author: meizz   
     var o = {
         "M+": this.getMonth() + 1,                 //月份   
         "d+": this.getDate(),                    //日   
@@ -39,6 +46,14 @@ function IsNotNull(val) {
 }
 define(function(require) {
     require('jquery');
+    
+    require('/_controls/number/number.js');
+    require('/_controls/datetime/date.js');
+    require('/_controls/datetime/time.js');
+    require('/_controls/lookup/map_lookup.js');
+    require('/_controls/util/util.js');
+    require('/_common/scripts/global.js');
+
     var project = require('project');
 
     //repeater列表
@@ -72,6 +87,7 @@ define(function(require) {
             , isEdit: false
             , height: "300px"
             , deleterows: []
+            , isChange: false
 
         //event
             , onClickRow: false//行点击事件
@@ -123,6 +139,11 @@ define(function(require) {
     */
     myRepeater.prototype.setData = function(data) {
         var that = this;
+        if (that.options.isChange) {
+            if (!confirm("页面存在数据修改，是否继续页面刷新?"))
+                return;
+        }
+
         that.LastEditRow = null;
         $.extend(that.options, data);
         var cols = [];
@@ -131,7 +152,7 @@ define(function(require) {
         });
         that.options.columns = cols;
         //新增样式
-
+        project.addStyle('.repTitle td{border-right: 2px solid #dbdac9; padding-left: 5px;padding-right: 5px;}');
         //展示数据
         var me = that.$element;
 
@@ -167,7 +188,7 @@ define(function(require) {
         var mydr = [];
         $(that.options.items).each(function(i) {
             var item = this;
-            item.rowoptype = "edit";
+            //item.rowoptype = "edit";
             mydr.push('<tr height="24" data-id="' + item[that.options.idField] + '" rowtype="datarow">');
             //是否多选决定是否显示下拉框
             if (that.options.mutiSelect) {
@@ -191,7 +212,7 @@ define(function(require) {
                         case "number":
                             if (col.datatype.option.format && col.datatype.option.format != "") {
 
-                                val = __formatNumber(val, col.datatype.option.format);
+                                val = __formatNumber(val.toString(), col.datatype.option.format);
                             }
                             break;
                     }
@@ -291,8 +312,6 @@ define(function(require) {
         })
 
         //列头点击事件
-
-
 
         me.find("#trHeader NOBR").bind("click", function() {
             var me = $(this).parent();
@@ -404,6 +423,7 @@ define(function(require) {
                             var rowIndex = target.parentNode.rowIndex;
                             var cellIndex = target.cellIndex;
                             that.options.items[rowIndex - 1][col.field] = $(input).val();
+                            that.options.isChange = true;
                         });
                         $(target).html("");
                         $(input).appendTo(target);
@@ -476,6 +496,11 @@ define(function(require) {
                     if (IsNotNull(options.onchange)) {
                         $(input).bind("change", options.onchange);
                     }
+
+                    $(input).bind("change", function() {
+                        that.options.isChange = true;
+                    });
+
                     $(input).val($(target).text());
                 }
                 $(target).html("");
@@ -506,7 +531,7 @@ define(function(require) {
                     var rowIndex = row.rowIndex;
                     var value = that.options.items[rowIndex - 1][target.fieldname];
                     if (typeof (col.datatype) == "object") {
-                        value = __formatNumber(value, col.datatype.option && col.datatype.option.format ? col.datatype.option.format : "#,##0.00");
+                        value = __formatNumber(value.toString(), col.datatype.option && col.datatype.option.format ? col.datatype.option.format : "#,##0.00");
                     }
 
                     $(target).text(value);
@@ -524,6 +549,8 @@ define(function(require) {
                     var cellIndex = target.cellIndex;
                     var value = this.options[this.selectedIndex].innerText;
                     that.options.items[rowIndex - 1][col.field] = value;
+                    //记录数据修改
+                    that.options.isChange = true;
                 });
                 if (IsNotNull(options)) {
                     if (IsNotNull(options.data)) {
@@ -594,6 +621,8 @@ define(function(require) {
                     var rowIndex = target.parentNode.rowIndex;
                     var cellIndex = target.cellIndex;
                     that.options.items[rowIndex - 1][col.field] = $(input).val();
+                    //记录数据修改
+                    that.options.isChange = true;
                 });
                 $(target).html("");
                 $(table).appendTo(target);
@@ -633,7 +662,7 @@ define(function(require) {
                 {
                     init: function(target, col) {
                         var options = col.editor.option;
-                        var table = $('<table style="table-layout:fixed;display:inline;width:97%" cellspacing="0" cellpadding="0" ><colgroup><col /><col width="26" /></colgroup><tr><td><input type="text" class="txt2" id="" value="" /></td><td style="padding-left: 2px;"><img class="txt2" src="/_imgs/btn_off_lookup.gif" align="absMiddle" onclick="" /></td></tr></table>');
+                        var table = $('<table style="table-layout:fixed;display:inline;width:97%" cellspacing="0" cellpadding="0" ><colgroup><col /><col width="26" /></colgroup><tr><td><input type="text" class="txt2" id="" readOnly value="" /></td><td style="padding-left: 2px;"><img style="cursor:hand" class="txt2" src="/_imgs/btn_off_lookup.gif" align="absMiddle" onclick="" /></td></tr></table>');
                         var input = $(table).find("input");
                         var img = $(table).find("img");
                         if (IsNotNull(options)) {
@@ -646,6 +675,8 @@ define(function(require) {
                             var rowIndex = target.parentNode.rowIndex;
                             var cellIndex = target.cellIndex;
                             that.options.items[rowIndex - 1][col.field] = $(input).val();
+                            //记录数据修改
+                            that.options.isChange = true;
                         });
                         $(target).html("");
                         $(table).appendTo(target);
@@ -678,8 +709,9 @@ define(function(require) {
                     }
                 }
     };
-        //end 
-
+    //end
+        //数据重新加载后，重置状态
+        that.options.isChange = false;
     }
     myRepeater.prototype.loadData = function() {
         var that = this;
@@ -814,11 +846,14 @@ define(function(require) {
     myRepeater.prototype.validateData = function() {
     };
     //新增行
-    myRepeater.prototype.newRow = function() {
-        var item = {};
+    myRepeater.prototype.newRow = function(item) {
+
+        var item = $.extend({}, myRepeater.ColumnDEFAULTS, item);
         var that = this;
+        //增加变量确定数据是否改变
+        that.options.isChange = true;
         var me = that.$element;
-        item.rowoptype = "new";
+        //item.rowoptype = "new";
         var mydr = [];
         mydr.push('<tr height="24" data-id="" rowtype="datarow">');
         //是否多选决定是否显示下拉框
@@ -832,13 +867,26 @@ define(function(require) {
         $(that.options.columns).each(function(j) {
             var col = this;
             mydr.push('<td ' + (this.hidden ? "style='display:none'" : "") + ' class="gridBorder" align="' + col.align + '" fieldname="' + col.field + '" data-type="' + col.datatype + '">');
-            //undo 处理datatype,格式化数据--处理默认值
 
+            var val = item[col.field];
+            if (typeof (col.datatype) == "object") {
+                switch (col.datatype.type) {
+                    case "datetime":
+                        var d = new Date(val.replace("T", " ").replace(/-/g, "/"));
+                        var format = col.datatype.option.format == "" ? "yyyy-MM-dd" : col.datatype.option.format;
+                        val = d.Format(format);
+                        break;
+                    case "number":
+                        if (col.datatype.option.format && col.datatype.option.format != "") {
 
-            mydr.push(col.defalutvalue);
+                            val = __formatNumber(val.toString(), col.datatype.option.format);
+                        }
+                        break;
+                }
+            }
+            mydr.push(val);
             mydr.push('</td>');
-            //undo 隐藏数据未处理
-            item[col.field] = col.defaultvalue;
+            // item[col.field] = col.defaultvalue;
         });
         mydr.push('</tr>');
         //增加数据
@@ -901,11 +949,10 @@ define(function(require) {
 
             //缓存数据,标识为删除
             del.push(this.index - 1);
-            if (this.rowoptype == "edit") {
-                this.rowoptype = "del";
+            if (this[that.options.idField] && this[that.options.idField] != "") {
                 delete this["index"];
                 that.options.deleterows.push(this);
-
+                that.options.isChange = true;
             }
 
         });
