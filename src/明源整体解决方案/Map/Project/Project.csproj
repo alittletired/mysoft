@@ -75,6 +75,10 @@
       <LastGenOutput>Entity.cs</LastGenOutput>
     </Content>
     <Content Include="js\DDTree\usp_myProjFilterBase.sql" />
+    <Content Include="js\myRepeater\demo.html" />
+    <Content Include="js\myRepeater\myRepeater.js" />
+    <Content Include="js\myRepeater\_imgs\ico_Arrow_D.gif" />
+    <Content Include="js\myRepeater\_imgs\ico_arrow_U.gif" />
     <Content Include="js\project.js" />
     <Content Include="js\DDTree\DDTree.css" />
     <Content Include="js\DDTree\DDTree.js" />
