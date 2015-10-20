@@ -1,0 +1,5 @@
+﻿table.ddtree{TABLE-LAYOUT: fixed; WIDTH: 100%; BACKGROUND-COLOR: white}
+.ddtree  span.spanOut {  CURSOR: default; FONT-SIZE: 9pt; BORDER-TOP: #7b9ebd 1px solid; HEIGHT: 19px; FONT-FAMILY: 宋体, Tahoma, Verdana, Arial; BORDER-RIGHT: medium none; BORDER-BOTTOM: #7b9ebd 1px solid; PADDING-LEFT: 5px; BORDER-LEFT: #7b9ebd 1px solid; WIDTH: 100% }
+.ddtree span.text{ CURSOR: hand; COLOR: blue; TEXT-DECORATION: underline } 
+.ddtree .dropdown table{ table-layout:fixed; font-size: 9pt; font-family: 宋体, Tahoma, Verdana, Arial; width:100%;}
+.ddtree .dropdown tr{ CURSOR: hand; height:20px; }

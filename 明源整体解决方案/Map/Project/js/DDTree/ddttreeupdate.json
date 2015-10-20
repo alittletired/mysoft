@@ -1,0 +1,87 @@
+﻿[
+  {"Name":"成本-目标成本-目标成本","Path":"/Cbgl/MBCB/TargetStage/ProjectTargetStage.aspx"}
+  ,{"Name":"成本-目标成本-合约规划","Path":"/CBGL/MBCB/TargetCost_Budget.aspx"}
+  ,{"Name":"成本-合同订立-合同登记","Path":"/cbgl/HTDL/Contract.aspx"}
+  ,{"Name":"成本-合同执行-合同变更","Path":"/cbgl/HTZX/HtAlter.aspx"}
+  ,{"Name":"成本-合同执行-合同变更-完工确认","Path":"/cbgl/HTZX/HtAlterQr.aspx"}
+  ,{"Name":"成本-合同执行-合同结算","Path":"/cbgl/HTZX/HTBalance.aspx"}
+  ,{"Name":"成本-合同执行-合同台账","Path":"/Cbgl/HTZX/HtAllInfo.aspx"}
+  ,{"Name":"成本-合同付款-应付进度款","Path":"/cbgl/HTFK/HTFKSchedule.aspx"}
+  ,{"Name":"成本-合同付款-付款计划","Path":"/cbgl/HTFK/HTFKPlan.aspx"}
+  ,{"Name":"成本-合同付款-付款申请","Path":"/cbgl/HTFK/HTFKApply.aspx"}
+  ,{"Name":"成本-合同付款-付款登记-合同付款","Path":"/cbgl/HTFK/Pay.aspx"}
+  ,{"Name":"成本-合同付款-付款登记-实付款查询","Path":"/cbgl/HTFK/CxSfk.aspx"}
+  ,{"Name":"成本-合同付款-付款登记-单独收发票","Path":"/cbgl/HTFK/Invoice.aspx"}
+  ,{"Name":"成本-合同分析-合同执行分析","Path":"/cbgl/HTFX/HtzxFx.aspx"}
+  ,{"Name":"成本-合同分析-合同付款分析","Path":"/cbgl/HTFX/HtfkFx.aspx"}
+  ,{"Name":"成本-动态成本-动态成本监控","Path":"/Cbgl/DTCB/DTCB_JK.aspx"}
+  ,{"Name":"销售-项目准备-房间管理-房间资料","Path":"/Slxt/XMZB/RoomList.aspx"}
+  ,{"Name":"销售-项目准备-房间管理-房间绑定","Path":"/Slxt/XMZB/FyBind.aspx","ColGroupIndex":1}
+  ,{"Name":"销售-项目准备-房间管理-放盘","Path":"/Slxt/XMZB/Fjgl_fp.aspx"}
+  ,{"Name":"销售-项目准备-房间管理-其他信息","Path":"/Slxt/XMZB/Fjgl_other.aspx"}
+  ,{"Name":"销售-项目准备-付款方式定义-付款方式","Path":"/Slxt/XTCS/Fkfs.aspx"}
+  ,{"Name":"销售-项目准备-付款方式定义-付款事件传递","Path":"/Slxt/XTCS/Gcjd.aspx"}
+  ,{"Name":"销售-项目准备-底价管理-调价","Path":"/Slxt/XMZB/DjTj.aspx"}
+  ,{"Name":"销售-项目准备-底价管理-退房审核","Path":"/Slxt/XMZB/Djgl_TfSh.aspx"}
+  ,{"Name":"销售-项目准备-底价管理-面积变更审核","Path":"/Slxt/XMZB/Djgl_MjbgSh.aspx"}
+  ,{"Name":"销售-项目准备-底价管理-底价查询","Path":"/Slxt/XMZB/Djgl_Djcx.aspx"}
+  ,{"Name":"销售-项目准备-底价管理-历史价格查询","Path":"/Slxt/XMZB/Djgl_HisPrice.aspx"}
+  ,{"Name":"销售-项目准备-标准价管理-调价","Path":"/Slxt/XMZB/Tj.aspx"}
+  ,{"Name":"销售-项目准备-标准价管理-退房审核","Path":"/Slxt/XMZB/Jggl_TfSh.aspx"}
+  ,{"Name":"销售-项目准备-标准价管理-面积变更审核","Path":"/Slxt/XMZB/Jggl_MjbgSh.aspx"}
+  ,{"Name":"销售-项目准备-标准价管理-底价查询","Path":"/Slxt/XMZB/Jggl_Jglr.aspx"}
+  ,{"Name":"销售-项目准备-标准价管理-历史价格查询","Path":"/Slxt/XMZB/Jggl_HisPrice.aspx"}
+
+  ,{"Name":"销售-市场营销-市场营销-销售预算","Path":"/Slxt/XMXSYSBZ/ProjSaleTarget.aspx"}
+  ,{"Name":"销售-市场营销-市场营销-销售预算分解","Path":"/Slxt/XMXSYSBZ/ProjSaleBudget_Weave.aspx"}
+  ,{"Name":"销售-市场营销-市场营销-项目预算年度汇总","Path":"/Slxt/XMXSYSBZ/ProjSaleBudget.aspx"}
+  ,{"Name":"销售-市场营销-市场营销-项目收入资金预测","Path":"/Slxt/XMXSYSBZ/ProjSaleForecast.aspx"}
+  ,{"Name":"销售-市场营销-投放信息","Path":"/Slxt/SCYX/ActivityRegister.aspx"}
+  ,{"Name":"销售-市场营销-公司投放费效分析","Path":"/Slxt/SCYX/GsDl_Analysis.aspx","UpdateClass":"Mysoft.Expand.Slxt_SCYX_GsDl_Analysis_Update"}
+  ,{"Name":"销售-市场营销-媒体效果统计","Path":"/Slxt/SCYX/Media_Analysis.aspx"}
+
+  ,{"Name":"销售-客户跟进-接电接访登记","Path":"/Slxt/XSZDH/Jdjf.aspx","UpdateClass":"Mysoft.Expand.Slxt_XSZDH_Jdjf_Update"}
+  ,{"Name":"销售-客户跟进-回访追访跟进","Path":"/Slxt/XSZDH/Hfzf.aspx","UpdateClass":"Mysoft.Expand.Slxt_XSZDH_Hfzf_Update"}
+  ,{"Name":"销售-客户跟进-跟进过程监控","Path":"/Slxt/XSZDH/Gjgc.aspx","ColGroupIndex":1}
+  ,{"Name":"销售-客户跟进-逾期业务催办","Path":"/Slxt/XSZDH/Yqywcb_Query.aspx","ColGroupIndex":1}
+  ,{"Name":"销售-客户跟进-客户分配-分配新客户","Path":"/Slxt/XSZDH/Khfp_FpXkh.aspx"}
+  ,{"Name":"销售-客户跟进-客户分配-重新分配客户","Path":"/Slxt/XSZDH/Khfp_CxfpKh.aspx","ColGroupIndex":1}
+  ,{"Name":"销售-客户跟进-客户分配-分配新交易","Path":"/Slxt/XSZDH/Khfp_fpXjy.aspx","ColGroupIndex":1}
+  ,{"Name":"销售-客户跟进-客户分配-重新分配交易","Path":"/Slxt/XSZDH/Khfp_Cxfpjy.aspx","ColGroupIndex":1}
+  ,{"Name":"销售-客户跟进-客户跟进分析-工作成果统计","Path":"/Slxt/XSZDH/Khgj_Work.aspx","ColGroupIndex":1}
+  ,{"Name":"销售-客户跟进-客户跟进分析-客户来访量统计","Path":"/Slxt/XSZDH/Khgj_LfTj.aspx"}
+  ,{"Name":"销售-客户跟进-客户跟进分析-客户多维度分析","Path":"/Slxt/XSZDH/KhFx_Tz.aspx","ColGroupIndex":1}
+  ,{"Name":"销售-客户跟进-客户跟进分析-机会丢失原因统计","Path":"/Slxt/XSZDH/Khgj_DsReasonTj.aspx","UpdateClass":"Mysoft.Expand.Slxt_XSZDH_Khgj_DsReasonTj"}
+  ,{"Name":"销售-客户跟进-客户台帐-客户","Path":"/Slxt/XSZDH/Khgl_Kh.aspx"}
+  ,{"Name":"销售-客户跟进-客户台帐-重名客户","Path":"/Slxt/XSZDH/Khgl_Cmkh.aspx"}
+
+  ,{"Name":"销售-交易管理-房源查询","Path":"/Slxt/XMZB/FyQuery.aspx"}
+  ,{"Name":"销售-交易管理-预约排号","Path":"/Slxt/XSXC/Booking.aspx"}
+  ,{"Name":"销售-交易管理-选房确认","Path":"/Slxt/XSXC/RoomCheck.aspx"}
+  ,{"Name":"销售-交易管理-认购管理","Path":"/Slxt/XSXC/Order.aspx"}
+  ,{"Name":"销售-交易管理-合同管理","Path":"/Slxt/XSXC/Contract.aspx"}
+  ,{"Name":"销售-交易管理-变更审批","Path":"/Slxt/XSXC/SaleModiApply.aspx"}
+  ,{"Name":"销售-交易管理-变更审批","Path":"/Slxt/XSXC/SaleModiApply.aspx"}
+  ,{"Name":"销售-交易管理-变更日志","Path":"/Slxt/XSXC/SaleModiLog.aspx"}
+
+  ,{"Name":"销售-售后服务-按揭贷款服务","Path":"/Slxt/XSFW/Ajdk.aspx"}
+  ,{"Name":"销售-售后服务-公积金贷款服务","Path":"/Slxt/XSFW/Gjjdk.aspx"}
+  ,{"Name":"销售-售后服务-产权服务","Path":"/Slxt/XSFW/Cqfw.aspx"}
+  ,{"Name":"销售-售后服务-入伙服务","Path":"/Slxt/XSFW/Rhfw.aspx"}
+  ,{"Name":"销售-售后服务-面积补差","Path":"/Slxt/XSFW/Bcfw.aspx"}
+
+  ,{"Name":"销售-财务管理-财务待办","Path":"/Slxt/CWGL/CWDB.aspx"}
+  ,{"Name":"销售-财务管理-收支管理-预收款","Path":"/Slxt/CWGL/Cwgl_Szgl_Ysk.aspx"}
+  ,{"Name":"销售-财务管理-收支管理-预约金管理","Path":"/Slxt/CWGL/Cwgl_Szgl_Yyjgl.aspx"}
+  ,{"Name":"销售-财务管理-收支管理-房款管理","Path":"/Slxt/CWGL/Cwgl_Szgl_Fkgl.aspx"}
+  ,{"Name":"销售-财务管理-收支管理-银行批量放款","Path":"/Slxt/CWGL/Cwgl_Szgl_Bankplfk.aspx"}
+  ,{"Name":"销售-财务管理-收支管理-单据查询","Path":"/Slxt/CWGL/Cwgl_Szgl_VoucherQuery.aspx"}
+  ,{"Name":"销售-财务管理-收支管理-款项明细查询","Path":"/Slxt/CWGL/Cwgl_Szgl_KxmxQuery.aspx"}
+  ,{"Name":"销售-财务管理-催缴欠款","Path":"/Slxt/CWGL/Arrearage.aspx"}
+  ,{"Name":"销售-财务管理-批量调整","Path":"/Slxt/CWGL/Cwgl_DsFee_Pass.aspx"}
+  ,{"Name":"销售-财务管理-批量划出","Path":"/Slxt/CWGL/CWDB.aspx"}
+
+  ,{"Name":"费用-部门费用执行-日常报销申请","Path":"/Fygl/FKSP/Expense.aspx"}
+
+  ,{"Name":"Map-Menu.aspx","Path":"/Menu.aspx","UpdateClass":"Mysoft.Expand.MenuCompanyTree_Update"}
+]
