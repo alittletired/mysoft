@@ -157,8 +157,8 @@ define(function(require) {
         //展示数据
         var me = that.$element;
 
-        if (that.options.width == "")
-            that.options.width = me.css("width");
+        that.options.width = me.width();
+
         var table = '<div style="overflow: auto; width: ' + that.options.width + '; height: ' + that.options.height + '"><table id="gridBar" width="100%" cellpadding="0" cellspacing="0" border="0"   style="table-layout: fixed; padding-left: 2px; padding-right: 2px">';
 
 
@@ -260,7 +260,7 @@ define(function(require) {
 
         //绑定分页事件
         me.find('#' + me.attr("id") + "_ToPage")[0].onvalidchange = function(e) {
-            
+
             that.options.pageindex = $(this).val();
             that.loadData();
 
@@ -268,7 +268,7 @@ define(function(require) {
 
         me.find('#' + me.attr("id") + "_PageSize")[0].onvalidchange = function(e) {
 
-        that.options.pagesize = $(this).val();
+            that.options.pagesize = $(this).val();
             that.loadData();
         }
 

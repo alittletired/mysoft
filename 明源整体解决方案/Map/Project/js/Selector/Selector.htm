@@ -4,16 +4,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
     <title></title>
 
-    <script type="text/javascript" src="/_controls/settings.aspx"></script>
+    <script type="text/javascript" src="/_controls/settings.aspx" charset="GB2312"></script>
 
-    <link type="text/css" rel="stylesheet" href="/_common/styles/global.css?v=20150923095625" />
+    <link rel="stylesheet" type="text/css" href="/_common/styles/global.css" charset="GB2312" />
+    <link rel="stylesheet" type="text/css" href="/_grid/map_grid.css" charset="GB2312" />
+    <link rel="stylesheet" type="text/css" href="/_nav/menu.css" charset="GB2312" />
+    <link rel="stylesheet" type="text/css" href="/_forms/styles/form.css" charset="GB2312" />
+    <!-- Find -->
+    <link rel="stylesheet" type="text/css" href="/_controls/find/find.css">
+    <link href="/_nav/menu.css?v=20150105092728" rel="stylesheet" type="text/css" />
+    <link href="/_controls/tree/dropdowntree.css?v=20150105092735" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript" src="/_common/scripts/global.js?v=20141204095940"></script>
 
-   <link rel="stylesheet" type="text/css" href="/_common/styles/global.css"  charset="GB2312"/>
-    <link rel="stylesheet" type="text/css" href="/_grid/map_grid.css" charset="GB2312"/>
-    <link rel="stylesheet" type="text/css" href="/_nav/menu.css" charset="GB2312"/>
-    <link rel="stylesheet" type="text/css" href="/_forms/styles/form.css" charset="GB2312"/>
+    <script language="javascript" src="/_controls/find/find.js" charset="GB2312"></script>
 
     <script type="text/javascript" src="/_common/scripts/details.js" charset="GB2312"></script>
 
@@ -33,26 +37,17 @@
 
     <script type="text/javascript" src="/Project/js/sea.js" charset="GB2312"></script>
 
-    <link href="/_nav/menu.css?v=20150105092728" rel="stylesheet" type="text/css" />
-    <link href="/_forms/styles/form.css?v=20150923095625" rel="stylesheet" type="text/css" />
-    <link href="/_controls/find/find.css?v=20150105092734" rel="stylesheet" type="text/css" />
-    <link href="/_controls/tree/dropdowntree.css?v=20150105092735" rel="stylesheet"
-        type="text/css" />
-        <style>
+    <style>
         #menuTitle
         {
-             font-weight:bold;
-            }
-        </style>
-        
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body style="padding-right: 10px; padding-left: 10px; padding-bottom: 10px; padding-top: 10px">
     <table style="font-size: 9pt" height="100%" border="0" cellspacing="0" cellpadding="0"
         width="100%">
-        <%--  <tr height="10">
-            <td>
-            </td>
-        </tr>--%>
+       
         <tr height="1" valign="top">
             <td>
                 <table id="appGridMenu_Main" style="height: 28px; table-layout: fixed" cellspacing="0"
@@ -64,7 +59,6 @@
                                     <tbody>
                                         <tr>
                                             <td style="padding-left: 5px" nowrap id="menuTitle">
-                                              
                                             </td>
                                             <td class="icMenu mnuRight" nowrap>
                                             </td>
@@ -79,8 +73,12 @@
                 </table>
             </td>
         </tr>
-        
-        <tr valign="top"><td valign="top" id="tdGrid"><div id="gridDiv" ></div></td></tr>
+        <tr valign="top">
+            <td valign="top" id="tdGrid">
+                <div id="gridDiv">
+                </div>
+            </td>
+        </tr>
         <tr height="40">
             <td align="right" height="40">
                 <button style="width: 70px; display: none" id="btnClear" onclick="doClear()" runat="server"
@@ -95,43 +93,28 @@
         </tr>
     </table>
 </body>
+
 <script type="text/javascript" src="/project/js/sea.js"></script>
+
 <script type="text/javascript" src="/project/js/jquery.js"></script>
 
 <script type="text/javascript">
-//var defaultOptions= {
-//        columns: [
-//                            { title: "房号", field: "Room", width: "100" },
-//                            { title: "总价", field: "Total", width: "100"},                          
-//                            { title: "价格",  field: "Price", width: "100"  },
-//                            { title: "日期", field: "SLControlDate", width: "150"},
-//                            { title: "房间编码" , field: "RoomCode"    },
-//                            { title: "户型" , field: "HuXing"  , width: "100" },
-//                            { title: "状态"  , field: "Status"  , width: "150" }
-//                         ]
-//                , idField: "RoomGUID"
-//                , serviceMethod: "Mysoft.Project.Control.myRepeaterService.GetRepeaterDemoData"
-//                , sortField: "Room asc"
-//                , mutiSelect: true
-//                , height: "200px"
-//                , pagesize: 15
-//    };
     var grid;
     function doOk() {
         var ret = grid.getSelected();
-     
+
         if (ret.length == 0)
             return;
         window.returnValue = ret;
         window.close();
     }
-    
+
     var options = window.dialogArguments;
-    setOptions(options );
+    setOptions(options);
 
 
     function setOptions(options) {
-        alert(JSON.stringify(options))
+        //        alert(JSON.stringify(options))
         document.title = options.title;
         $('#menuTitle').text(options.title + '列表');
         seajs.use('myRepeater', function(myrepeater) {
@@ -139,11 +122,12 @@
 
         });
     }
-    
-  //  alert(JSON.stringify(options))
-   
-//    $(function() {
-//     
-//    });
-        </script>
+
+    //  alert(JSON.stringify(options))
+
+    //    $(function() {
+    //     
+    //    });
+</script>
+
 </html>

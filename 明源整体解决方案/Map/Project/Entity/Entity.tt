@@ -1,6 +1,6 @@
 <#@ template language="C#v3.5"  hostSpecific="true" debug="true"#>
 <#@ include file="T4Toolbox.tt" #>
-<#@ VolatileAssembly processor="T4Toolbox.VolatileAssemblyProcessor" name="MySoft.Project.dll" #>
+<#@ VolatileAssembly processor="T4Toolbox.VolatileAssemblyProcessor" name="Mysoft.Project.dll" #>
    
 <#
 
@@ -12,7 +12,7 @@ string ns="Mysoft.BusinessPortal.Entity";
 
 //表名数组 
 string[] tableNames=new string[]{
-//"myUserConfig","myAttentionCompany","myUser"
+"myUserConfig","myAttentionCompany","myUser"
 };
 
 //生成文件
@@ -25,6 +25,18 @@ foreach(string tableName in tableNames){
 
 
  #>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -47,7 +59,7 @@ public class EntityTemplate : Template
 	{  
 	
 		
-		var gen=new MySoft.Project.Core.Entity.EntityGenerator(this. connectionString,this.nameSpace,this.tableName);
+		var gen=new Mysoft.Project.Core.Entity.EntityGenerator(this. connectionString,this.nameSpace,this.tableName);
 		return gen.Generate();
       // return this.GenerationEnvironment.ToString();
 	}

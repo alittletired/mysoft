@@ -4,6 +4,7 @@
     Selector.open = function(options) {
         options = $.extend({}, Selector.DEFAULTS, options);
         var height = options.height
+    
         options.height = options.height - 120;
         var arrItem = window.showModalDialog('/project/js/Selector/Selector.htm?t=' + Math.random(),
        options, "dialogWidth:" + options.width + "px;dialogHeight:" + height + "px;help:0;status:0;scroll:0;center:1");
@@ -56,7 +57,6 @@
             , showClearButton: false
             , height: 400,
         width: 600
-
     };
 
 
