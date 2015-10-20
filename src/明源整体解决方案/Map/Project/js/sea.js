@@ -5,10 +5,10 @@
 var config = {
     // ±ğÃûÅäÖÃ
     alias: {
-        'json': 'json',
-        'jquery': 'jquery',
-        'DDTree': 'DDTree/DDTree',
-        'myRepeater': 'myRepeater/myRepeater'
+        'json': '/project/js/json',
+        'jquery': '/project/js/jquery',
+        'DDTree': '/project/js/DDTree/DDTree',
+        'myRepeater': '/project/js/myRepeater/myRepeater'
     },
 
     // Â·¾¶ÅäÖÃ
