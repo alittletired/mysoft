@@ -1,8 +1,8 @@
 /*
 !.gitignore
 !.gitattributes
-!Map/Project/
-!Mysoft.Project/
+!**/Map/Project/**
+!**/Mysoft.Project/**
 !项目体系解决方案/
 obj/
 !/docs/
