@@ -80,9 +80,9 @@
             </td>
         </tr>
         
-        <tr><td><div id="gridDiv"></div></td></tr>
-        <tr height="30">
-            <td align="right" height="30">
+        <tr valign="top"><td valign="top" id="tdGrid"><div id="gridDiv" ></div></td></tr>
+        <tr height="40">
+            <td align="right" height="40">
                 <button style="width: 70px; display: none" id="btnClear" onclick="doClear()" runat="server"
                     type="button">
                     清 空</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -99,24 +99,45 @@
 <script type="text/javascript" src="/project/js/jquery.js"></script>
 
 <script type="text/javascript">
-
+//var defaultOptions= {
+//        columns: [
+//                            { title: "房号", field: "Room", width: "100" },
+//                            { title: "总价", field: "Total", width: "100"},                          
+//                            { title: "价格",  field: "Price", width: "100"  },
+//                            { title: "日期", field: "SLControlDate", width: "150"},
+//                            { title: "房间编码" , field: "RoomCode"    },
+//                            { title: "户型" , field: "HuXing"  , width: "100" },
+//                            { title: "状态"  , field: "Status"  , width: "150" }
+//                         ]
+//                , idField: "RoomGUID"
+//                , serviceMethod: "Mysoft.Project.Control.myRepeaterService.GetRepeaterDemoData"
+//                , sortField: "Room asc"
+//                , mutiSelect: true
+//                , height: "200px"
+//                , pagesize: 15
+//    };
     var grid;
     function doOk() {
-        var ret = grid.getSelectedItems();
+        var ret = grid.getSelected();
+     
         if (ret.length == 0)
             return;
+        window.returnValue = ret;
+        window.close();
     }
     
     var options = window.dialogArguments;
-    setOptions(options || {});
-    options.height = 200;
-    seajs.use('myRepeater', function(myrepeater) {
-    grid = new myrepeater('gridDiv', options);
+    setOptions(options );
 
-    });
+
     function setOptions(options) {
+        alert(JSON.stringify(options))
         document.title = options.title;
         $('#menuTitle').text(options.title + '列表');
+        seajs.use('myRepeater', function(myrepeater) {
+            grid = new myrepeater('gridDiv', options);
+
+        });
     }
     
   //  alert(JSON.stringify(options))
