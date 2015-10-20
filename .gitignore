@@ -1,4 +1,4 @@
-/*
+
 !.gitignore
 !.gitattributes
 !/明源整体解决方案/Map/Project/
@@ -10,6 +10,7 @@ bin/
 !.gitignore
 !README.md
 !push.cmd
+/*
 
 
 
