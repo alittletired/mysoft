@@ -1,0 +1,113 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Map", "..\明源整体解决方案\Map\Map.vbproj", "{BAEC5A68-6D02-42B8-88D0-C3B867466394}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Mysoft.Qmys.Controls", "..\明源整体解决方案\Mysoft.Qmys.Controls\Mysoft.Qmys.Controls.vbproj", "{D872E929-08CD-45FA-B0F5-C382C84EF362}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Mysoft.Cbgl.Business", "..\明源整体解决方案\Mysoft.Cbgl.Business\Mysoft.Cbgl.Business.vbproj", "{F52E7E5E-BC39-436E-BB4A-22AD3589E478}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Mysoft.Qmys.Business", "..\明源整体解决方案\Mysoft.Qmys.Business\Mysoft.Qmys.Business.vbproj", "{BF56A7EC-72CB-441A-A832-4C2B864CA663}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Cbgl", "..\明源整体解决方案\Map\Cbgl\Cbgl.vbproj", "{B4D90A9F-2533-4D32-8D6A-11150670F8B6}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://10.5.10.7:8080/tfs/bjzhongxin
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ..\\明源整体解决方案\\Mysoft.Qmys.Controls\\Mysoft.Qmys.Controls.vbproj
+		SccProjectName1 = ../明源整体解决方案/Mysoft.Qmys.Controls
+		SccLocalPath1 = ..\\明源整体解决方案\\Mysoft.Qmys.Controls
+		SccProjectUniqueName2 = ..\\明源整体解决方案\\Map\\Map.vbproj
+		SccProjectName2 = ../明源整体解决方案/Map
+		SccLocalPath2 = ..\\明源整体解决方案\\Map
+		SccProjectUniqueName3 = ..\\明源整体解决方案\\Mysoft.Cbgl.Business\\Mysoft.Cbgl.Business.vbproj
+		SccProjectName3 = ../明源整体解决方案/Mysoft.Cbgl.Business
+		SccLocalPath3 = ..\\明源整体解决方案\\Mysoft.Cbgl.Business
+		SccProjectUniqueName4 = ..\\明源整体解决方案\\Mysoft.Qmys.Business\\Mysoft.Qmys.Business.vbproj
+		SccProjectName4 = ../明源整体解决方案/Mysoft.Qmys.Business
+		SccLocalPath4 = ..\\明源整体解决方案\\Mysoft.Qmys.Business
+		SccProjectUniqueName5 = ..\\明源整体解决方案\\Map\\Cbgl\\Cbgl.vbproj
+		SccProjectName5 = ../明源整体解决方案/Map/Cbgl
+		SccLocalPath5 = ..\\明源整体解决方案\\Map\\Cbgl
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug(Full Build)|Any CPU = Debug(Full Build)|Any CPU
+		Debug(Map)|Any CPU = Debug(Map)|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		ERP编译方案|Any CPU = ERP编译方案|Any CPU
+		POM编译方案|Any CPU = POM编译方案|Any CPU
+		Release|Any CPU = Release|Any CPU
+		只编译Map|Any CPU = 只编译Map|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BAEC5A68-6D02-42B8-88D0-C3B867466394}.Debug(Full Build)|Any CPU.ActiveCfg = Debug(Full Build)|Any CPU
+		{BAEC5A68-6D02-42B8-88D0-C3B867466394}.Debug(Map)|Any CPU.ActiveCfg = Debug(Map)|Any CPU
+		{BAEC5A68-6D02-42B8-88D0-C3B867466394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAEC5A68-6D02-42B8-88D0-C3B867466394}.ERP编译方案|Any CPU.ActiveCfg = ERP编译方案|Any CPU
+		{BAEC5A68-6D02-42B8-88D0-C3B867466394}.POM编译方案|Any CPU.ActiveCfg = POM编译方案|Any CPU
+		{BAEC5A68-6D02-42B8-88D0-C3B867466394}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAEC5A68-6D02-42B8-88D0-C3B867466394}.只编译Map|Any CPU.ActiveCfg = 只编译Map|Any CPU
+		{D872E929-08CD-45FA-B0F5-C382C84EF362}.Debug(Full Build)|Any CPU.ActiveCfg = Debug|Any CPU
+		{D872E929-08CD-45FA-B0F5-C382C84EF362}.Debug(Full Build)|Any CPU.Build.0 = Debug|Any CPU
+		{D872E929-08CD-45FA-B0F5-C382C84EF362}.Debug(Map)|Any CPU.ActiveCfg = Debug|Any CPU
+		{D872E929-08CD-45FA-B0F5-C382C84EF362}.Debug(Map)|Any CPU.Build.0 = Debug|Any CPU
+		{D872E929-08CD-45FA-B0F5-C382C84EF362}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D872E929-08CD-45FA-B0F5-C382C84EF362}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D872E929-08CD-45FA-B0F5-C382C84EF362}.ERP编译方案|Any CPU.ActiveCfg = Release|Any CPU
+		{D872E929-08CD-45FA-B0F5-C382C84EF362}.ERP编译方案|Any CPU.Build.0 = Release|Any CPU
+		{D872E929-08CD-45FA-B0F5-C382C84EF362}.POM编译方案|Any CPU.ActiveCfg = Release|Any CPU
+		{D872E929-08CD-45FA-B0F5-C382C84EF362}.POM编译方案|Any CPU.Build.0 = Release|Any CPU
+		{D872E929-08CD-45FA-B0F5-C382C84EF362}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D872E929-08CD-45FA-B0F5-C382C84EF362}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D872E929-08CD-45FA-B0F5-C382C84EF362}.只编译Map|Any CPU.ActiveCfg = Release|Any CPU
+		{D872E929-08CD-45FA-B0F5-C382C84EF362}.只编译Map|Any CPU.Build.0 = Release|Any CPU
+		{F52E7E5E-BC39-436E-BB4A-22AD3589E478}.Debug(Full Build)|Any CPU.ActiveCfg = Debug|Any CPU
+		{F52E7E5E-BC39-436E-BB4A-22AD3589E478}.Debug(Full Build)|Any CPU.Build.0 = Debug|Any CPU
+		{F52E7E5E-BC39-436E-BB4A-22AD3589E478}.Debug(Map)|Any CPU.ActiveCfg = Debug|Any CPU
+		{F52E7E5E-BC39-436E-BB4A-22AD3589E478}.Debug(Map)|Any CPU.Build.0 = Debug|Any CPU
+		{F52E7E5E-BC39-436E-BB4A-22AD3589E478}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F52E7E5E-BC39-436E-BB4A-22AD3589E478}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F52E7E5E-BC39-436E-BB4A-22AD3589E478}.ERP编译方案|Any CPU.ActiveCfg = ERP编译方案|Any CPU
+		{F52E7E5E-BC39-436E-BB4A-22AD3589E478}.ERP编译方案|Any CPU.Build.0 = ERP编译方案|Any CPU
+		{F52E7E5E-BC39-436E-BB4A-22AD3589E478}.POM编译方案|Any CPU.ActiveCfg = POM编译方案|Any CPU
+		{F52E7E5E-BC39-436E-BB4A-22AD3589E478}.POM编译方案|Any CPU.Build.0 = POM编译方案|Any CPU
+		{F52E7E5E-BC39-436E-BB4A-22AD3589E478}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F52E7E5E-BC39-436E-BB4A-22AD3589E478}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F52E7E5E-BC39-436E-BB4A-22AD3589E478}.只编译Map|Any CPU.ActiveCfg = POM编译方案|Any CPU
+		{F52E7E5E-BC39-436E-BB4A-22AD3589E478}.只编译Map|Any CPU.Build.0 = POM编译方案|Any CPU
+		{BF56A7EC-72CB-441A-A832-4C2B864CA663}.Debug(Full Build)|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF56A7EC-72CB-441A-A832-4C2B864CA663}.Debug(Full Build)|Any CPU.Build.0 = Debug|Any CPU
+		{BF56A7EC-72CB-441A-A832-4C2B864CA663}.Debug(Map)|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF56A7EC-72CB-441A-A832-4C2B864CA663}.Debug(Map)|Any CPU.Build.0 = Debug|Any CPU
+		{BF56A7EC-72CB-441A-A832-4C2B864CA663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF56A7EC-72CB-441A-A832-4C2B864CA663}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF56A7EC-72CB-441A-A832-4C2B864CA663}.ERP编译方案|Any CPU.ActiveCfg = Release|Any CPU
+		{BF56A7EC-72CB-441A-A832-4C2B864CA663}.ERP编译方案|Any CPU.Build.0 = Release|Any CPU
+		{BF56A7EC-72CB-441A-A832-4C2B864CA663}.POM编译方案|Any CPU.ActiveCfg = Release|Any CPU
+		{BF56A7EC-72CB-441A-A832-4C2B864CA663}.POM编译方案|Any CPU.Build.0 = Release|Any CPU
+		{BF56A7EC-72CB-441A-A832-4C2B864CA663}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF56A7EC-72CB-441A-A832-4C2B864CA663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF56A7EC-72CB-441A-A832-4C2B864CA663}.只编译Map|Any CPU.ActiveCfg = Release|Any CPU
+		{BF56A7EC-72CB-441A-A832-4C2B864CA663}.只编译Map|Any CPU.Build.0 = Release|Any CPU
+		{B4D90A9F-2533-4D32-8D6A-11150670F8B6}.Debug(Full Build)|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4D90A9F-2533-4D32-8D6A-11150670F8B6}.Debug(Full Build)|Any CPU.Build.0 = Debug|Any CPU
+		{B4D90A9F-2533-4D32-8D6A-11150670F8B6}.Debug(Map)|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4D90A9F-2533-4D32-8D6A-11150670F8B6}.Debug(Map)|Any CPU.Build.0 = Debug|Any CPU
+		{B4D90A9F-2533-4D32-8D6A-11150670F8B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4D90A9F-2533-4D32-8D6A-11150670F8B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4D90A9F-2533-4D32-8D6A-11150670F8B6}.ERP编译方案|Any CPU.ActiveCfg = ERP编译方案|Any CPU
+		{B4D90A9F-2533-4D32-8D6A-11150670F8B6}.ERP编译方案|Any CPU.Build.0 = ERP编译方案|Any CPU
+		{B4D90A9F-2533-4D32-8D6A-11150670F8B6}.POM编译方案|Any CPU.ActiveCfg = POM编译方案|Any CPU
+		{B4D90A9F-2533-4D32-8D6A-11150670F8B6}.POM编译方案|Any CPU.Build.0 = POM编译方案|Any CPU
+		{B4D90A9F-2533-4D32-8D6A-11150670F8B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4D90A9F-2533-4D32-8D6A-11150670F8B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4D90A9F-2533-4D32-8D6A-11150670F8B6}.只编译Map|Any CPU.ActiveCfg = POM编译方案|Any CPU
+		{B4D90A9F-2533-4D32-8D6A-11150670F8B6}.只编译Map|Any CPU.Build.0 = POM编译方案|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
