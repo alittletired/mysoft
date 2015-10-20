@@ -10,7 +10,28 @@
 
     <script type="text/javascript" src="/_common/scripts/global.js?v=20141204095940"></script>
 
-   
+   <link rel="stylesheet" type="text/css" href="/_common/styles/global.css"  charset="GB2312"/>
+    <link rel="stylesheet" type="text/css" href="/_grid/map_grid.css" charset="GB2312"/>
+    <link rel="stylesheet" type="text/css" href="/_nav/menu.css" charset="GB2312"/>
+    <link rel="stylesheet" type="text/css" href="/_forms/styles/form.css" charset="GB2312"/>
+
+    <script type="text/javascript" src="/_common/scripts/details.js" charset="GB2312"></script>
+
+    <script type="text/javascript" src="/_controls/setting.js" charset="GB2312"></script>
+
+    <script type="text/javascript" src="/_controls/datetime/date.js" charset="GB2312"></script>
+
+    <script type="text/javascript" src="/_controls/datetime/time.js" charset="GB2312"></script>
+
+    <script type="text/javascript" src="/_controls/number/number.js" charset="GB2312"></script>
+
+    <script type="text/javascript" src="/_controls/lookup/map_lookup.js" charset="GB2312"></script>
+
+    <script type="text/javascript" src="/_controls/util/util.js" charset="GB2312"></script>
+
+    <script type="text/javascript" src="/_common/scripts/global.js" charset="GB2312"></script>
+
+    <script type="text/javascript" src="/Project/js/sea.js" charset="GB2312"></script>
 
     <link href="/_nav/menu.css?v=20150105092728" rel="stylesheet" type="text/css" />
     <link href="/_forms/styles/form.css?v=20150923095625" rel="stylesheet" type="text/css" />
@@ -88,11 +109,16 @@
     
     var options = window.dialogArguments;
     setOptions(options || {});
-    
+    options.height = 200;
+    seajs.use('myRepeater', function(myrepeater) {
+    grid = new myrepeater('gridDiv', options);
+
+    });
     function setOptions(options) {
         document.title = options.title;
         $('#menuTitle').text(options.title + '列表');
     }
+    
   //  alert(JSON.stringify(options))
    
 //    $(function() {

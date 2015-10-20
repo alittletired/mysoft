@@ -693,7 +693,7 @@ define(function(require) {
             param.customerParam = that.options.queryParams || {};
         }
         //获取数据
-        var data = project.invoke("MySoft.Project.Control.myRepeaterService.GetPageData", param);
+        var data = project.invoke("Mysoft.Project.Control.myRepeaterService.GetPageData", param);
 
         return that.setData(data)
 
