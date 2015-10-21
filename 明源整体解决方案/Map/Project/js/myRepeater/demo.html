@@ -57,7 +57,7 @@
                             { title: "房号",
                                 field: "Room",
                                 width: "100",
-                                req:true,
+                                req: true,
                                 editor: { type: "textbox", option: { onchange: function() { }, maxlength: 3, min: -99999, max: 999999999} }
                             },
                             { title: "总价",
@@ -66,7 +66,7 @@
                                 editor: { type: "numbox", option: { onchange: function() { }, maxlength: 3, min: -99999, max: 999999999, ro: 0} },
                                 datatype: "number",
                                 format: "#,###",
-                                req:true
+                                req: true
                             },
                             { title: "价格",
                                 field: "Price",
@@ -113,6 +113,7 @@
                 var arrRow = rep.getSelected();
                 rep.deleteRow(arrRow);
             });
+            $("#Button6").bind("click", function() { rep.validData(); });
             $("#Button3").bind("click", function() {
                 var item = { RoomGUID: "", Room: "a1001", RoomCode: "testnew", HuXing: 1, Total: 0, Price: 0, Status: "销控", SLControlDate: "" };
                 rep.newRow(item);
@@ -136,5 +137,6 @@
     <input type="button" value="测试新增" id="Button3" />
     <input type="button" value="编辑" id="Button4" onclick="rep.beginEdit();" />
     <input type="button" value="取数" id="Button5" onclick="GetAllData();" />
+    <input type="button" value="数据验证" id="Button6" />
 </body>
 </html>
