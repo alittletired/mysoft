@@ -102,9 +102,9 @@ define(function(require) {
         , align: "center"//对齐方式
         , sortable: true//是否可排序
         , datatype: "text"//number,datetime
-        , format:""
+        , format: ""
         , hidden: false
-        , req:false
+        , req: false
     };
 
     //Methods
@@ -156,8 +156,9 @@ define(function(require) {
         project.addStyle('.repTitle td{border-right: 2px solid #dbdac9; padding-left: 5px;padding-right: 5px;} .gridSelectOver{background-color:rgb(230, 230, 230)}');
         //展示数据
         var me = that.$element;
-        that.options.width = me.width();
 
+
+        that.options.width = me.width();
         var table = '<div style="overflow: auto; width: ' + that.options.width + '; height: ' + that.options.height + '"><table id="gridBar" width="100%" cellpadding="0" cellspacing="0" border="0"   style="table-layout: fixed; padding-left: 2px; padding-right: 2px">';
 
 
@@ -293,7 +294,7 @@ define(function(require) {
         //绑定控件事件
         //行事件
         me.find("#gridBar tr[id!=trHeader]").on("click", $.proxy(that.rowClick, that))
-        me.find("#gridBar tr[id!=trHeader]").on("click", "nobr", $.proxy(that.rowClick, that))
+        //me.find("#gridBar tr[id!=trHeader]").on("click", "nobr", $.proxy(that.rowClick, that))
         me.find("#gridBar tr[id!=trHeader]").on("mouseover", function() {
             $(this).addClass("gridSelectOver");
         })
@@ -549,7 +550,7 @@ define(function(require) {
 
                     var rowIndex = row.rowIndex;
                     var value = that.options.items[rowIndex - 1][target.fieldname];
-                    value = that.dataFormat(col,value);
+                    value = that.dataFormat(col, value);
 
                     $(target).text(value);
                     $(target).find("input").remove();
@@ -921,7 +922,7 @@ define(function(require) {
         me.find("#gridBar").append(mydr.join(""));
 
         me.find("#gridBar tr:last").bind("click", $.proxy(that.rowClick, that));
-        me.find("#gridBar tr:last").on("click", "nobr", $.proxy(that.rowClick, that));
+        //me.find("#gridBar tr:last").on("click", "nobr", $.proxy(that.rowClick, that));
         me.find("#gridBar tr:last").click();
     };
     myRepeater.prototype.rowClick = function(e) {
@@ -1054,7 +1055,39 @@ define(function(require) {
         return row[field];
     };
 
+    //根据配置进行数据校验
+    myRepeater.prototype.validData = function(row, field) {
 
+        var that = this;
+
+        if (that.options.isEdit) {
+            var me = that.$element;
+            $(that.options.items).each(function(i) {
+                var item = this;
+                var reqCol = $(that.options.columns).filter(function() {
+                    if (this.req)
+                        return this
+                });
+                var valid = true;
+                reqCol.each(function() {
+                    if (item[this.field] == "") {
+                        alert("请录入" + this.title + "!")
+                        me.find("#gridBar tr[rowtype=datarow]").eq(i).click();
+                        valid = false;
+                        return false;
+                    }
+                });
+                if (!valid) {
+                    return valid;
+                }
+            });
+            return true;
+        }
+        else {
+            alert("列表不处于编辑状态，无法校验数据！");
+            return;
+        }
+    };
 
     return myRepeater;
 });
