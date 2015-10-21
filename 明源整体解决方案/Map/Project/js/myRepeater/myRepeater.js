@@ -86,7 +86,6 @@ define(function(require) {
             , sortField: ''//field1 asc/field desc
             , isEdit: false
             , height: "300px"
-            , width: ""
             , deleterows: []
             , isChange: false
 
@@ -103,8 +102,9 @@ define(function(require) {
         , align: "center"//对齐方式
         , sortable: true//是否可排序
         , datatype: "text"//number,datetime
+        , format:""
         , hidden: false
-        , defaultvalue: ""
+        , req:false
     };
 
     //Methods
@@ -153,10 +153,9 @@ define(function(require) {
         });
         that.options.columns = cols;
         //新增样式
-        project.addStyle('.repTitle td{border-right: 2px solid #dbdac9; padding-left: 5px;padding-right: 5px;}');
+        project.addStyle('.repTitle td{border-right: 2px solid #dbdac9; padding-left: 5px;padding-right: 5px;} .gridSelectOver{background-color:rgb(230, 230, 230)}');
         //展示数据
         var me = that.$element;
-
         that.options.width = me.width();
 
         var table = '<div style="overflow: auto; width: ' + that.options.width + '; height: ' + that.options.height + '"><table id="gridBar" width="100%" cellpadding="0" cellspacing="0" border="0"   style="table-layout: fixed; padding-left: 2px; padding-right: 2px">';
@@ -205,24 +204,10 @@ define(function(require) {
                 var col = this;
                 mydr.push('<td ' + (this.hidden ? "style='display:none'" : "") + ' class="gridBorder" align="' + col.align + '" fieldname="' + col.field + '" data-type="' + col.datatype + '">');
                 var val = item[col.field];
-                if (typeof (col.datatype) == "object") {
-                    switch (col.datatype.type) {
-                        case "datetime":
-                            var d = new Date(val.replace("T", " ").replace(/-/g, "/"));
-                            var format = col.datatype.option.format == "" ? "yyyy-MM-dd" : col.datatype.option.format;
-                            val = d.Format(format);
-                            break;
-                        case "number":
-                            if (col.datatype.option.format && col.datatype.option.format != "") {
-
-                                val = __formatNumber(val.toString(), col.datatype.option.format);
-                            }
-                            break;
-                    }
-                }
+                val = that.dataFormat(col, val);
 
                 //处理datatype,格式化数据
-                mydr.push(val);
+                mydr.push("<NOBR title='" + val + "'>" + val + "</NOBR>");
 
                 mydr.push('</td>');
             });
@@ -308,6 +293,28 @@ define(function(require) {
         //绑定控件事件
         //行事件
         me.find("#gridBar tr[id!=trHeader]").on("click", $.proxy(that.rowClick, that))
+        me.find("#gridBar tr[id!=trHeader]").on("click", "nobr", $.proxy(that.rowClick, that))
+        me.find("#gridBar tr[id!=trHeader]").on("mouseover", function() {
+            $(this).addClass("gridSelectOver");
+        })
+        me.find("#gridBar tr[id!=trHeader]").on("mouseout", function() {
+            $(this).removeClass("gridSelectOver");
+        })
+        me.find("#gridBar tr[id!=trHeader]").on("click", "input[name=rowChk]", function() {
+            if (this.checked) {
+                $(this).parents("tr[rowtype=datarow]").addClass("gridSelectOn");
+                $(this).parents("tr[rowtype=datarow]").removeClass("gridSelectOff");
+                if (that.options.items.length == me.find("#gridBar .gridSelectOn").length) {
+                    me.find("#chkAll").attr("checked", true);
+                }
+            }
+            else {
+                $(this).parents("tr[rowtype=datarow]").addClass("gridSelectOff");
+                $(this).parents("tr[rowtype=datarow]").removeClass("gridSelectOn");
+                me.find("#chkAll").attr("checked", false);
+            }
+        });
+
         me.find("#gridBar tr[id!=trHeader]").on("dbclick", function() {
             var row = that.options.items[$(this).index()];
             if (that.options.onDblClickRow) {
@@ -346,9 +353,15 @@ define(function(require) {
         me.find("#chkAll").bind("click", function() {
             var tbl = $(this).closest("table").find("tr[id!=trHeader]");
             if (this.checked) {
+                //tbl.removeClass("gridSelectOn");
+                tbl.removeClass("gridSelectOff");
+                tbl.addClass("gridSelectOn");
                 tbl.find("input[name=rowChk]").attr("checked", true);
             }
             else {
+                tbl.removeClass("gridSelectOn");
+                //tbl.removeClass("gridSelectOff");
+                tbl.addClass("gridSelectOff");
                 tbl.find("input[name=rowChk]").attr("checked", false);
             }
         })
@@ -379,9 +392,9 @@ define(function(require) {
                     for (var n = 0; n < cols.length; n++) {
                         var editor = cols[n].editor;
                         if (IsNotNull(editor)) {
-                            //$(lastCells[n]).text(that.options.items[lastRow.rowIndex - 1][cols[n].field]);
+
                             var control = this.editors[cols[n].editor.type];
-                            control.destory(lastCells[n], cols[n]);
+                            control.destroy(lastCells[n], cols[n]);
                         }
                     }
                     lastRow.isEditing = false;
@@ -400,6 +413,9 @@ define(function(require) {
             that.LastEditRow = row;
             row.isEditing = true;
         }
+
+
+
         myRepeater.prototype.editors =
     {
         textbox:
@@ -450,7 +466,7 @@ define(function(require) {
                     getValue: function(target) {
                         return that.options.items[target.parentNode.rowIndex - 1][target.fieldname];
                     },
-                    destory: function(target, col) {
+                    destroy: function(target, col) {
                         var row = target.parentNode;
                         if (row.isEditing != true) {
                             return;
@@ -471,10 +487,6 @@ define(function(require) {
                     var rowIndex = target.parentNode.rowIndex;
                     var cellIndex = target.cellIndex;
                     var value = $(input).val().replace(/,/g, "");
-                    //                    if (typeof (col.datatype) == "object") {
-                    //                        value = __formatNumber(value, col.datatype.option.format ? col.datatype.option.format : "#,##0.00")
-                    //                    }
-
                     input.returnValue = value;
                     that.options.items[rowIndex - 1][col.field] = value;
                 });
@@ -528,7 +540,7 @@ define(function(require) {
             getValue: function(target) {
                 return that.options.items[target.parentNode.rowIndex - 1][target.fieldname];
             },
-            destory: function(target, col) {
+            destroy: function(target, col) {
                 var row = target.parentNode;
                 if (row.isEditing != true) {
                     return;
@@ -537,9 +549,7 @@ define(function(require) {
 
                     var rowIndex = row.rowIndex;
                     var value = that.options.items[rowIndex - 1][target.fieldname];
-                    if (typeof (col.datatype) == "object") {
-                        value = __formatNumber(value.toString(), col.datatype.option && col.datatype.option.format ? col.datatype.option.format : "#,##0.00");
-                    }
+                    value = that.dataFormat(col,value);
 
                     $(target).text(value);
                     $(target).find("input").remove();
@@ -594,7 +604,7 @@ define(function(require) {
             getValue: function(target) {
                 return that.options.items[target.parentNode.rowIndex - 1][target.fieldname];
             },
-            destory: function(target, col) {
+            destroy: function(target, col) {
                 var row = target.parentNode;
                 if (row.isEditing != true) {
                     return;
@@ -649,7 +659,7 @@ define(function(require) {
             getValue: function(target) {
                 return that.options.items[target.parentNode.rowIndex - 1][target.fieldname];
             },
-            destory: function(target, col) {
+            destroy: function(target, col) {
                 var row = target.parentNode;
                 if (row.isEditing != true) {
                     return;
@@ -657,9 +667,7 @@ define(function(require) {
                 else {
                     var rowIndex = row.rowIndex;
                     var val = that.options.items[rowIndex - 1][target.fieldname];
-                    var d = new Date(val.replace("T", " ").replace(/-/g, "/"));
-                    var format = col.datatype.option.format == "" ? "yyyy-MM-dd" : col.datatype.option.format;
-                    val = d.Format(format);
+                    val = that.dataFormat(col, val);
                     $(target).text(val);
                     $(target).find("table").remove();
                 }
@@ -703,7 +711,7 @@ define(function(require) {
                     getValue: function(target) {
                         return that.options.items[target.parentNode.rowIndex - 1][target.fieldname];
                     },
-                    destory: function(target, col) {
+                    destroy: function(target, col) {
                         var row = target.parentNode;
                         if (row.isEditing != true) {
                             return;
@@ -791,6 +799,28 @@ define(function(require) {
         }
     }
 
+    myRepeater.prototype.dataFormat = function(col, val) {
+
+        switch (col.datatype) {
+            case "datetime":
+                val = val.replace("T", " ").replace(/-/g, "/");
+                var d = new Date(val);
+                if (col.format && col.format != "") {
+                    val = d.Format(col.format);
+                }
+
+                break;
+            case "number":
+                if (col.format && col.format != "") {
+
+                    val = __formatNumber(val.toString(), col.format);
+                }
+                break;
+        }
+
+        return val;
+    }
+
     //使用新的条件重新加载数据
     myRepeater.prototype.reload = function(param) {
         this.options.queryParam = param || {};
@@ -811,23 +841,12 @@ define(function(require) {
         var that = this;
         var arrSelected = [];
         var me = that.$element;
-        if (that.options.mutiSelect) {
-            me.find("#gridBar tr input[name=rowChk]").each(function() {
-                if (this.checked) {
-                    var item = that.options.items[$(this).closest("tr").index() - 1];
-                    item.index = $(this).closest("tr").index();
-                    arrSelected.push(item);
-                }
-            });
-        }
-        else {
-            me.find("#gridBar tr .gridSelectOn").each(function() {
-                var item = that.options.items[$(this).index() - 1];
+        me.find("#gridBar .gridSelectOn").each(function() {
+            var item = that.options.items[$(this).index() - 1];
 
-                item.index = $(this).index();
-                arrSelected.push(item);
-            });
-        }
+            item.index = $(this).index();
+            arrSelected.push(item);
+        });
 
         return arrSelected;
     };
@@ -891,7 +910,8 @@ define(function(require) {
                         break;
                 }
             }
-            mydr.push(val);
+            //处理datatype,格式化数据
+            mydr.push("<NOBR title='" + val + "'>" + val + "</NOBR>");
             mydr.push('</td>');
             // item[col.field] = col.defaultvalue;
         });
@@ -901,29 +921,48 @@ define(function(require) {
         me.find("#gridBar").append(mydr.join(""));
 
         me.find("#gridBar tr:last").bind("click", $.proxy(that.rowClick, that));
+        me.find("#gridBar tr:last").on("click", "nobr", $.proxy(that.rowClick, that));
         me.find("#gridBar tr:last").click();
     };
     myRepeater.prototype.rowClick = function(e) {
         var that = this;
+        var me = that.$element;
         var tr = [];
         if ($(e.target).attr("rowtype") == "datarow")
             tr = $(e.target)
         else
-            tr = $(e.target).parent("tr[rowtype=datarow]");
+            tr = $(e.target).parents("tr[rowtype=datarow]");
         if (tr.length != 1)
             return;
         var i = tr.index();
         tr.removeClass("gridSelectOff");
         tr.addClass("gridSelectOn");
 
-        tr.parent().find("tr[rowtype=datarow]").each(function() {
-            if (i != $(this).index()) {
-                $(this).removeClass("gridSelectOn");
-                $(this).addClass("gridSelectOff");
+        if (that.options.mutiSelect) {
+            var chk = tr.find("input[name=rowChk]");
+            if (chk.attr("checked") == "checked") {
+                chk.attr("checked", false);
+                tr.removeClass("gridSelectOn");
+                me.find("#chkAll").attr("checked", false);
+            }
+            else {
+                chk.attr("checked", true);
+                tr.addClass("gridSelectOn");
+                if (that.options.items.length == me.find("#gridBar .gridSelectOn").length) {
+                    me.find("#chkAll").attr("checked", true);
+                }
             }
         }
+        else {
+            tr.parent().find("tr[rowtype=datarow]").each(function() {
+                if (i != $(this).index()) {
+                    $(this).removeClass("gridSelectOn");
+                    $(this).addClass("gridSelectOff");
+                }
+            }
 
             );
+        }
         var row = that.options.items[tr.index() - 1];
         //beg lpf
         //当编辑模式需要进入编辑模式
@@ -978,14 +1017,6 @@ define(function(require) {
                 return this;
             }
         });
-        /*
-        $(that.options.items).each(function(i) {
-        if (("," + del.join(",") + ",").indexOf("," + i + ",") == -1) {
-        data.push(that.options.items[i]);
-        }
-
-        });*/
-
         that.options.items = data;
     };
     //显示列
@@ -1027,4 +1058,3 @@ define(function(require) {
 
     return myRepeater;
 });
-function show() { alert(this); }
