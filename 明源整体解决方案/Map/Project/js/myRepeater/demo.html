@@ -7,14 +7,15 @@
     <meta content="Visual Basic .NET 7.1" name="CODE_LANGUAGE">
     <meta content="JavaScript" name="vs_defaultClientScript">
     <meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
-    <link rel="stylesheet" type="text/css" href="/_common/styles/global.css"  charset="GB2312"/>
-    <link rel="stylesheet" type="text/css" href="/_grid/map_grid.css" charset="GB2312"/>
-    <link rel="stylesheet" type="text/css" href="/_forms/styles/form.css" charset="GB2312"/>
+    <link rel="stylesheet" type="text/css" href="/_common/styles/global.css" charset="GB2312" />
+    <link rel="stylesheet" type="text/css" href="/_grid/map_grid.css" charset="GB2312" />
+    <link rel="stylesheet" type="text/css" href="/_forms/styles/form.css" charset="GB2312" />
 
+    <script type="text/javascript" src="/_controls/setting.js" charset="GB2312"></script>
 
-  <script type="text/javascript" src="/_controls/setting.js" charset="GB2312"></script>
- <script type="text/javascript" src="/Project/js/sea.js"></script>
-<!--
+    <script type="text/javascript" src="/Project/js/sea.js"></script>
+
+    <!--
     
     <script type="text/javascript" src="/_controls/datetime/date.js" charset="GB2312"></script>
 
@@ -34,6 +35,20 @@
 
     <script type="text/javascript">
 
+        //        myrepeater.formatter.number = function(acc) {
+        //            acc = acc || 2;
+        //        }
+        //        var f;
+        //        if (typeof (f) === 'string') {
+        //            //内部逻辑
+        //            //末尾分号空格干掉
+        //            if (f.endsWith(')')) {
+        //                var ret = eval('myrepeater.formatter.' + f);
+        //            }
+        //           ret= myrepeater.formatter[f]()
+        //       }
+        //        
+        //        
         var rep = null;
         seajs.use('myRepeater', function(myrepeater) {
 
@@ -42,23 +57,28 @@
                             { title: "房号",
                                 field: "Room",
                                 width: "100",
+                                req:true,
                                 editor: { type: "textbox", option: { onchange: function() { }, maxlength: 3, min: -99999, max: 999999999} }
                             },
                             { title: "总价",
                                 field: "Total",
                                 width: "100",
-                                editor: { type: "numbox", option: { onchange: function() { }, maxlength: 3, min: -99999, max: 999999999,ro:1} },
-                                datatype: { type: "number", option: { format: "#,###"} }
+                                editor: { type: "numbox", option: { onchange: function() { }, maxlength: 3, min: -99999, max: 999999999, ro: 0} },
+                                datatype: "number",
+                                format: "#,###",
+                                req:true
                             },
                             { title: "价格",
                                 field: "Price",
                                 width: "100",
-                                datatype: { type: "number", option: { format: "#,##0.00"} }
+                                datatype: "number"
+                               , format: "#,##0.0000"
                             },
                              { title: "日期",
                                  field: "SLControlDate",
                                  width: "150",
-                                 datatype: { type: "datetime", option: { format: "yyyy-MM-dd"} },
+                                 datatype: "datetime",
+                                 format: "yyyy-MM-dd",
                                  editor: { type: "datetimebox", option: { time: 0, maxlength: 10, change: function() { } } }
                              },
                             { title: "房间编码"
@@ -94,7 +114,7 @@
                 rep.deleteRow(arrRow);
             });
             $("#Button3").bind("click", function() {
-                var item = {RoomGUID:"",Room:"a1001",RoomCode:"testnew",HuXing:1,Total:0,Price:0,Status:"销控",SLControlDate:""};
+                var item = { RoomGUID: "", Room: "a1001", RoomCode: "testnew", HuXing: 1, Total: 0, Price: 0, Status: "销控", SLControlDate: "" };
                 rep.newRow(item);
             });
         });
@@ -114,7 +134,6 @@
     <input type="button" value="测试显示" id="Button1" />
     <input type="button" value="测试删除" id="Button2" />
     <input type="button" value="测试新增" id="Button3" />
-    
     <input type="button" value="编辑" id="Button4" onclick="rep.beginEdit();" />
     <input type="button" value="取数" id="Button5" onclick="GetAllData();" />
 </body>
