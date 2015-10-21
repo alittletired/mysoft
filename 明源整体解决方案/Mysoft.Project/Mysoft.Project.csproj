@@ -87,14 +87,7 @@
     <EmbeddedResource Include="Core\Ajax\AjaxServiceProxy.js">
       <CustomToolNamespace>Mysoft.Project.Ajax</CustomToolNamespace>
     </EmbeddedResource>
-    <Content Include="lib\DCSoft.RTF.dll" />
-    <Content Include="lib\dmach.Mail.dll" />
-    <Content Include="lib\DocumentFormat.OpenXml.dll" />
     <Content Include="lib\HtmlAgilityPack.dll" />
-    <Content Include="lib\ICSharpCode.SharpZipLib.dll" />
-    <Content Include="lib\itextsharp.dll" />
-    <Content Include="lib\LumenWorks.Framework.IO.dll" />
-    <Content Include="lib\MsgReader.dll" />
     <Content Include="lib\Newtonsoft.Json.dll" />
     <Content Include="lib\NPOI.dll" />
     <Content Include="lib\NPOI.OOXML.dll" />
@@ -102,7 +95,6 @@
     <Content Include="lib\NPOI.OpenXmlFormats.dll" />
     <Content Include="lib\NPOI.ScratchPad.HWPF.dll" />
     <Content Include="lib\NPOI.xml" />
-    <Content Include="lib\Toxy.dll" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
