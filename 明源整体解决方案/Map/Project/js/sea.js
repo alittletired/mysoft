@@ -8,8 +8,8 @@ var config = {
         'json': '/project/js/json',
         'jquery': '/project/js/jquery',
         'DDTree': '/project/js/DDTree/DDTree',
-         'Selector': '/project/js/Selector/Selector',
-        'myRepeater': '/project/js/myRepeater/myRepeater'
+         'Selector': '/project/js/Selector/Selector.js?t=30',
+        'myRepeater': '/project/js/myRepeater/myRepeater.js?t=3121'
 
     },
 

@@ -156,9 +156,8 @@ define(function(require) {
         project.addStyle('.repTitle td{border-right: 2px solid #dbdac9; padding-left: 5px;padding-right: 5px;} .gridSelectOver{background-color:rgb(230, 230, 230)}');
         //展示数据
         var me = that.$element;
-
-
         that.options.width = me.width();
+
         var table = '<div style="overflow: auto; width: ' + that.options.width + '; height: ' + that.options.height + '"><table id="gridBar" width="100%" cellpadding="0" cellspacing="0" border="0"   style="table-layout: fixed; padding-left: 2px; padding-right: 2px">';
 
 

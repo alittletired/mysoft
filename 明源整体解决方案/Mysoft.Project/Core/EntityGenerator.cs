@@ -11,6 +11,7 @@ namespace Mysoft.Project.Core.Entity
         public string ConnectionString { get; set; }
         public string NameSpace { get; set; }
         public string TableName { get; set; }
+        Database _db;
         public EntityGenerator(string connectionString, string ns, string tableName)
         {
             ConnectionString = connectionString;
@@ -18,48 +19,48 @@ namespace Mysoft.Project.Core.Entity
             TableName = tableName;
 
         }
-        StringBuilder _sb = new StringBuilder();
-        string _identityColumn;
+        StringBuilder _sb = new StringBuilder();      
         int _indent = 0;
+        class ColumnInfo {
+            public string ColumnName { get; set; }
+            public string DbType { get; set; }
+            public string DefaultValue { get; set; }
+            public int? MaxLength { get; set; }
+            public Type DataType { get; set; }
+            public int IsNullable { get; set; }
+        }
+        string GetTableName() {
+          return  _db.ExecuteScalar<string>("SELECT * FROM  sys.objects WHERE object_id=object_id('" + TableName + "')");
+        }
+        string GetPKColumn()
+        {
+            return _db.ExecuteScalar<string>("SELECT name FROM SysColumns WHERE id=Object_Id('" + TableName + "') and colid=(select top 1 colid from sysindexkeys where id=Object_Id('" + TableName + "'))");
+        }
+        Dictionary<string, string> GetTableDesc() { 
+             Dictionary<string, string> descDict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+             var sql = "SELECT table_name_c,field_name,field_name_c,b_pk FROM dbo.data_dict WHERE table_name='" + TableName + "'";
+             var tabel = _db.GetDataTable(sql);
+             foreach (DataRow row in tabel.Rows)
+             {
+                 descDict[TableName] = row["table_name_c"].ToString();
+                 descDict[row["field_name"].ToString()] = row["field_name_c"].ToString();
+             }
+             return descDict;
+        }
         public string Generate()
         {
+            _db = new Database(ConnectionString, "System.Data.SqlClient");
+           
+            var tableName = GetTableName();
+            if (string.IsNullOrEmpty(tableName)) return "";          
+             var    pkColumn =GetPKColumn();          
 
-            SqlConnection conn = new SqlConnection(ConnectionString);
-            conn.Open();
-            //如果需要database中全部table，则使用conn.GetSchema("Tables")即可
-            string[] restrictions = new string[4];
-            restrictions[1] = "dbo";
-            //修改table名称
-            restrictions[2] = TableName;
-            System.Data.DataTable schema = conn.GetSchema("TABLES", restrictions);
-            string selectQuery = "select * from @tableName";
-            SqlCommand command = new SqlCommand(selectQuery, conn);
-            SqlDataAdapter ad = new SqlDataAdapter(command);
-            System.Data.DataSet ds = new DataSet();
-            if (schema.Rows.Count == 0)
-                return "";
-            DataRow row = schema.Rows[0];
-            var tableName = row["TABLE_NAME"].ToString();
-
-            var cmd = new SqlCommand("SELECT name FROM SysColumns WHERE id=Object_Id('" + tableName + "') and colid=(select top 1 colid from sysindexkeys where id=Object_Id('" + tableName + "'))", conn);
-            var pk = cmd.ExecuteScalar();
-            if (pk != null)
-                _identityColumn = pk.ToString();
-            SqlDataAdapter ad3 = new SqlDataAdapter();
-            DataSet ds3 = new DataSet();
-            ad3.SelectCommand = new SqlCommand("SELECT table_name_c,field_name,field_name_c,b_pk FROM dbo.data_dict WHERE table_name='" + tableName + "'", conn);
-            ad3.Fill(ds3);
-            Dictionary<string, string> descDict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            foreach (DataRow row2 in ds3.Tables[0].Rows)
-            {
-                descDict[tableName] = row2["table_name_c"].ToString();
-                descDict[row2["field_name"].ToString()] = row2["field_name_c"].ToString();
-            }
+            var descDict = GetTableDesc();
             string tabledesc = "";
             descDict.TryGetValue(tableName, out tabledesc);
 
             //namespace
-            AddNameSpace();
+            AddImport();
             AddLine("namespace " + NameSpace);
             AddLine("{");
 
@@ -71,74 +72,44 @@ namespace Mysoft.Project.Core.Entity
             AddLine("{");
             _indent++;
             #region 构造函数
-            ds.Tables.Clear();
-            command.CommandText = selectQuery.Replace("@tableName", row["TABLE_NAME"].ToString());
-            ad.FillSchema(ds, SchemaType.Mapped, row["TABLE_NAME"].ToString());
-            string defualtValueSql = @"SELECT  COLUMN_NAME ,                      
-                    COLUMN_DEFAULT ,                                          
-                    DATA_TYPE , 
-                    CAST(CHARACTER_MAXIMUM_LENGTH AS INT) MAX_LENTH , 
-                    CASE WHEN ic.object_id IS NULL THEN 0
-                         ELSE 1
-                    END AS IdentityColumn ,
-                    CAST(ISNULL(ic.seed_value, 0) AS INT) AS IdentitySeed ,
-                    CAST(ISNULL(ic.increment_value, 0) AS INT) AS IdentityIncrement ,
-                    CASE WHEN st.collation_name IS NOT NULL THEN 1
-                         ELSE 0
-                    END AS IsCharColumn
-            FROM    INFORMATION_SCHEMA.COLUMNS c
-                    JOIN sys.columns sc ON c.TABLE_NAME = OBJECT_NAME(sc.object_id)
-                                           AND c.COLUMN_NAME = sc.Name
-                    LEFT JOIN sys.identity_columns ic ON c.TABLE_NAME = OBJECT_NAME(ic.object_id)
-                                                         AND c.COLUMN_NAME = ic.Name
-                    JOIN sys.types st ON COALESCE(c.DOMAIN_NAME,
-                                                  c.DATA_TYPE) = st.name
-                    LEFT OUTER JOIN sys.objects dobj ON dobj.object_id = sc.default_object_id
-                                                        AND dobj.type = 'D'
-            WHERE   c.TABLE_NAME = '{0}' 
-            ORDER BY c.TABLE_NAME ,
-                    c.ORDINAL_POSITION";
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            DataSet dataset = new DataSet();
-            adapter.SelectCommand = new SqlCommand(string.Format(defualtValueSql, tableName), conn);
-            adapter.Fill(dataset);
 
-            Dictionary<string, string> defValDict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            Dictionary<string, int> lenDict = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-            foreach (DataRow row1 in dataset.Tables[0].Rows)
-            {
+            string coloinfoSql = @"SELECT  COLUMN_NAME ColumnName ,
+        COLUMN_DEFAULT DefaultValue ,
+        DATA_TYPE DbType ,
+        CAST(CHARACTER_MAXIMUM_LENGTH AS INT) MaxLength ,
+        CASE WHEN is_nullable = 'yes' THEN 1
+             ELSE 0
+        END isnullable
+FROM    information_schema.COLUMNS
+WHERE   TABLE_NAME = @0 ";
+            var columns = _db.Query<ColumnInfo>(coloinfoSql, tableName).ToList();
 
-                if (row1["COLUMN_DEFAULT"] != DBNull.Value)
-                    defValDict[row1["COLUMN_NAME"].ToString()] = row1["COLUMN_DEFAULT"].ToString().Replace("(", "").Replace(")", "").Replace("'", "");
-                var len = row1["MAX_LENTH"];
-                if (len != DBNull.Value)
-                    lenDict[row1["COLUMN_NAME"].ToString()] = Convert.ToInt32(len);
-            }
+          
 
 
             AddLine("public " + tableName + "()");
             AddLine("{");
             _indent++;
 
-            foreach (DataColumn dc1 in ds.Tables[0].Columns)
+            foreach (var col in columns)
             {
-                string columnName = dc1.ColumnName;
-                string defVal = null;
-                if (defValDict.TryGetValue(columnName, out defVal))
-                {
+                col.DataType = SqlServerType.SqlType2CsharpType(SqlServerType.SqlTypeString2SqlType(col.DbType));
+                string columnName = col.ColumnName;
 
-                    if (dc1.DataType.IsPrimitive || dc1.DataType == typeof(decimal))
+                if (!string.IsNullOrEmpty(col.DefaultValue)) {
+                    var defVal = col.DefaultValue.Replace("(", "").Replace(")", "");
+                    if (col.DataType.IsPrimitive || col.DataType == typeof(decimal))
                     {
 
-                        AddLine("this." + columnName + "  =  " + defVal + " ;");
+                        AddLine("this." + columnName + " = " + defVal + " ;");
                     }
-                    else if (dc1.DataType == typeof(string))
+                    else if (col.DataType == typeof(string))
                     {
 
-                        AddLine("this." + columnName + "  =  \"" + defVal + "\";");
+                        AddLine("this." + columnName + " = \"" + defVal + "\";");
                     }
-
                 }
+               
             }
 
 
@@ -149,25 +120,23 @@ namespace Mysoft.Project.Core.Entity
             AddLine("");
             #region 属性
 
-            foreach (DataColumn dc in ds.Tables[0].Columns)
+            foreach (var col in columns)
             {
-                string allowDBNull = ((dc.DataType.IsPrimitive || dc.DataType == typeof(DateTime)) && dc.AllowDBNull && !(defValDict.ContainsKey(dc.ColumnName))) ? "?" : "";
+                string allowDBNull = ((col.DataType.IsPrimitive || col.DataType == typeof(DateTime)) && col.IsNullable == 1 && string.IsNullOrEmpty(col.DefaultValue)) ? "?" : "";
                 string desc;
-                descDict.TryGetValue(dc.ColumnName, out desc);
+                descDict.TryGetValue(col.ColumnName, out desc);
                 AddSummary(desc);
-                if (_identityColumn == dc.ColumnName)
+                if (pkColumn == col.ColumnName)
                 {
                     AddLine("[ID]");
                 }
-                if (dc.DataType == typeof(string) && lenDict.ContainsKey(dc.ColumnName))
+                if (col.DataType == typeof(string) && col.MaxLength.HasValue && col.MaxLength > 0)
                 {
-                    var len = lenDict[dc.ColumnName];
-                    if (len > 0)
-                    {
-                        AddLine("[StringLength(" + len + ")]");
-                    }
+                    AddLine("[StringLength(" + col.MaxLength.Value + ")]");
                 }
-                AddLine("public " + GetFiledType(dc.DataType) + allowDBNull + "  " + dc.ColumnName + " { get; set; }");
+
+                AddLine("[DbType(SqlDbType." + SqlServerType.SqlTypeString2SqlType(col.DbType) + ")]");
+                AddLine("public " + GetFiledType(col.DataType) + allowDBNull + " " + col.ColumnName + " { get; set; }");
                 AddLine("");
             }
 
@@ -182,9 +151,10 @@ namespace Mysoft.Project.Core.Entity
             return _sb.ToString();
         }
 
-        void AddNameSpace()
+        void AddImport()
         {
             AddLine("using System;");
+            AddLine("using System.Data;");
             AddLine("using Mysoft.Project.Core.DataAnnotations;");
             AddLine("using System.ComponentModel.DataAnnotations;");
 

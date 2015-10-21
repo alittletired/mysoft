@@ -1,4 +1,5 @@
 *
+!/*
 
 
 
@@ -8,7 +9,7 @@
 !/dist/
 !.gitignore
 !README.md
-**/X[x]mjd/
+**/X[x]mjd/**/.gitignore
 
 
 #ignore thumbnails created by windows

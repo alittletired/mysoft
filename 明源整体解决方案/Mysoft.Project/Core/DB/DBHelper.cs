@@ -207,16 +207,17 @@ namespace Mysoft.Project.Core
 
             return Insert(meta, poco);
         }
-        private static object Insert(PocoData meta, object poco) {
+        private static object Insert(PocoData meta, object poco)
+        {
             string sql = "insert into {0}({1}) values ( {2}) ";
-            var columns=meta.Columns.Keys.ToArray();
+            var columns = meta.Columns.Keys.ToArray();
             var pocoMeta = PocoData.ForType(poco.GetType());
-           var pocoClos = columns.Intersect(pocoMeta.Columns.Keys, StringComparer.OrdinalIgnoreCase);
-           var strFileds = string.Join(",", pocoClos.ToArray());
-           var strValues = string.Join(",@", pocoClos.ToArray());
-             sql = string.Format(sql, meta.TableInfo.TableName, strFileds, "@" + strValues);
+            var pocoClos = columns.Intersect(pocoMeta.Columns.Keys, StringComparer.OrdinalIgnoreCase);
+            pocoClos = pocoClos.Where(col => !pocoMeta.IgnoreColumns.ContainsKey(col)).ToList();
+            var strFileds = string.Join(",", pocoClos.ToArray());
+            var strValues = string.Join(",@", pocoClos.ToArray());
+            sql = string.Format(sql, meta.TableInfo.TableName, strFileds, "@" + strValues);
             return Execute(sql, poco);
-            
         }
         // Insert a poco into a table.  If the poco has a property with the same name 
         // as the primary key the id of the new record is assigned to it.  Either way,

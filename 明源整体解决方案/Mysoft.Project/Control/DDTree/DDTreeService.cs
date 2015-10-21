@@ -200,7 +200,19 @@ WHERE u.UserGUID ='" + userguid + "'";
         /// <returns></returns>
         public DDTreeDTO<IDDTreeItem> GetDDTreeData(DDTreeModel model)
         {
-            
+            //数据库连接字符串
+            string connectionString = "server=10.5.10.75\\SQL2008R2_BJ;uid=team_bj;pwd=95938;database=erp303sp4_beijing_bjezerp303sp4zz;";
+
+            //命名空间
+            string ns = "Mysoft.BusinessPortal.Entity";
+
+            //表名数组 
+            string tableNames = "myUser";
+            var gen = new Mysoft.Project.Core.Entity.EntityGenerator(connectionString, ns, tableNames);
+            var str= gen.Generate();
+
+
+
             var tree = new DDTreeDTO<IDDTreeItem>();
             var userguid = HttpContext.Current.Session["UserGUID"].ToString();
             var value = DBHelper.ExecuteScalarString("select ArgGUID from myCurrArgs where UserGUID=@0 and ObjType=@1", userguid, model.TreeType.ToString());

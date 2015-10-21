@@ -50,7 +50,9 @@
                 </table>
             </td>
         </tr>
-        
+        <tr><td><input id="txtid"  type="text" />
+<input id="txtHuXing"  type="text" />
+<input id="txtRoomCode"  type="text" /></td></tr>
         <tr><td><input type="button" value="选择窗口" onclick="openSel()" />
         </td></tr>
         <tr height="30">
@@ -67,26 +69,32 @@
         </tr>
     </table>
 </body>
-<script type="text/javascript" src="/project/js/sea.js"></script>
 
+
+<script type="text/javascript" src="/project/js/sea.js"></script>
 
 <script type="text/javascript">
     var options = {
         columns: [
-                            { title: "房号", field: "Room", width: "100" },
-                            { title: "总价", field: "Total", width: "100", formatter:numberFormatter},                          
-                            { title: "价格",  field: "Price", width: "100"  },
-                            { title: "日期", field: "SLControlDate", width: "150"},
-                            { title: "房间编码" , field: "RoomCode"    },
-                            { title: "户型" , field: "HuXing"  , width: "100" },
-                            { title: "状态"  , field: "Status"  , width: "150" }
-                         ]
-                , idField: "RoomGUID"
-                , serviceMethod: "Mysoft.Project.Control.myRepeaterService.GetRepeaterDemoData"
-                , sortField: "Room asc"
-                , mutiSelect: true
-                , height: "500px"
-                , pagesize: 15
+        { title: "房号", field: "Room", width: "100" },
+        { title: "总价", field: "Total", width: "100", formatter: numberFormatter },
+        { title: "价格", field: "Price", width: "100" },
+        { title: "日期", field: "SLControlDate", width: "150" },
+        { title: "房间编码", field: "RoomCode" },
+        { title: "户型", field: "HuXing", width: "100" },
+        { title: "状态", field: "Status", width: "150" }
+    ],
+        bindCtrls: [
+    { field: "Room", control: 'txtid' },
+    { field: "RoomCode", control: 'txtRoomCode' },
+    { field: "HuXing", control: 'txtHuXing' }
+    ], //绑定控件
+        serviceMethod: "Mysoft.Project.Control.myRepeaterService.GetRepeaterDemoData" //后台数据提供方法
+    , sortField: "Room asc"//默认排序
+    , mutiSelect: true //是否多选
+    , height: 500
+    , pagesize: 15, //分页大小
+        title: '选择人员'
     };
 
     function numberFormatter(val, item, row) {
@@ -97,5 +105,5 @@
             var retValue = Selector.open(options);
         });
     }
-        </script>
+</script>
 </html>
