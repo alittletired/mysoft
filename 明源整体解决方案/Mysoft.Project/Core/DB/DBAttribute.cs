@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Data;
 
 namespace Mysoft.Project.Core.DataAnnotations
 {
@@ -94,6 +95,15 @@ namespace Mysoft.Project.Core.DataAnnotations
        bool _autoIncrement=true;
        public bool AutoIncrement { get { return _autoIncrement; } set { _autoIncrement = value; } }
 
+    }
+
+    public class DbTypeAttribute : Attribute {
+        public DbTypeAttribute(SqlDbType dbtype)
+        {
+            DbType = dbtype;
+            
+        }
+        public SqlDbType DbType { get; set; }
     }
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
      public class IgnoreAttribute : ColumnAttribute

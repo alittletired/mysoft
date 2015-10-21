@@ -1099,7 +1099,9 @@ namespace Mysoft.Project.Core
                             // Don't insert result columns
                             if (i.Value.ResultColumn)
                                 continue;
-
+                            // Don't insert ignore columns
+                            if (pd.IgnoreColumns.ContainsKey(i.Key))
+                                continue;
                             // Don't insert the primary key (except under oracle where we need bring in the next sequence value)
                             if (autoIncrement && primaryKeyName != null && string.Compare(i.Key, primaryKeyName, true) == 0)
                             {
@@ -1262,6 +1264,9 @@ namespace Mysoft.Project.Core
                         {
                             foreach (var i in pd.Columns)
                             {
+                                // Dont update Ignore  columns
+                                if (pd.IgnoreColumns.ContainsKey(i.Key))
+                                    continue;
                                 // Don't update the primary key, but grab the value if we don't have it
                                 if (string.Compare(i.Key, primaryKeyName, true) == 0)
                                 {
@@ -1287,6 +1292,8 @@ namespace Mysoft.Project.Core
                         {
                             foreach (var colname in columns)
                             {
+                                if (pd.IgnoreColumns.ContainsKey(colname))
+                                    continue;
                                 var pc = pd.Columns[colname];
 
                                 // Build the sql
@@ -1685,21 +1692,22 @@ namespace Mysoft.Project.Core
             // Work out bound properties
             bool ExplicitColumns = t.GetCustomAttributes(typeof(ExplicitColumnsAttribute), true).Length > 0;
             Columns = new Dictionary<string, PocoColumn>(StringComparer.OrdinalIgnoreCase);
+            IgnoreColumns = new Dictionary<string, PocoColumn>(StringComparer.OrdinalIgnoreCase);
             foreach (var pi in t.GetProperties())
             {
                 a = pi.GetCustomAttributes(typeof(IDAttribute), true);
                 if (a.Length > 0)
                 {
-                    IDAttribute idAttri=a[0] as IDAttribute;
+                    IDAttribute idAttri = a[0] as IDAttribute;
                     TableInfo.PrimaryKey = idAttri.Name ?? pi.Name;
                     TableInfo.SequenceName = idAttri.Name ?? pi.Name;
                     TableInfo.AutoIncrement = idAttri.AutoIncrement;
                 }
-              
+
 
                 // Work out if properties is to be included
                 var ColAttrs = pi.GetCustomAttributes(typeof(ColumnAttribute), true);
-                
+
                 if (ExplicitColumns)
                 {
                     if (ColAttrs.Length == 0)
@@ -1707,8 +1715,7 @@ namespace Mysoft.Project.Core
                 }
                 else
                 {
-                    if (pi.GetCustomAttributes(typeof(IgnoreAttribute), true).Length != 0)
-                        continue;
+
                 }
 
                 var pc = new PocoColumn();
@@ -1728,7 +1735,8 @@ namespace Mysoft.Project.Core
                     if (Database.Mapper != null && !Database.Mapper.MapPropertyToColumn(pi, ref pc.ColumnName, ref pc.ResultColumn))
                         continue;
                 }
-
+                if (pi.GetCustomAttributes(typeof(IgnoreAttribute), true).Length != 0)
+                { IgnoreColumns[pc.ColumnName] = pc; }
                 // Store it
                 Columns.Add(pc.ColumnName, pc);
             }
@@ -1748,7 +1756,7 @@ namespace Mysoft.Project.Core
         // Create factory function that can convert a IDataReader record into a POCO
         public Delegate GetFactory(string sql, string connString, bool ForceDateTimesToUtc, int firstColumn, int countColumns, IDataReader r)
         {
-            // ��ֹsql������ռ��̫���ڴ�
+          
             var key = string.Format("{0}:{1}:{2}:{3}:{4}", sql, connString, ForceDateTimesToUtc, firstColumn, countColumns).GetHashCode().ToString() ;
             RWLock.EnterReadLock();
             try
@@ -2057,6 +2065,7 @@ namespace Mysoft.Project.Core
         public string[] QueryColumns { get; private set; }
         public TableInfo TableInfo { get; private set; }
         public Dictionary<string, PocoColumn> Columns { get; private set; }
+        public Dictionary<string, PocoColumn> IgnoreColumns { get; private set; }
         Dictionary<string, Delegate> PocoFactories = new Dictionary<string, Delegate>();
     }
 

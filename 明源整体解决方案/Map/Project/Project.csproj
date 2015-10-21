@@ -69,6 +69,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\myAttentionCompany.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\myUser.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\myUserConfig.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
