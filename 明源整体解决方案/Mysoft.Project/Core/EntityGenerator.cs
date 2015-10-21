@@ -29,9 +29,17 @@ namespace Mysoft.Project.Core.Entity
             public Type DataType { get; set; }
             public int IsNullable { get; set; }
         }
+        /// <summary>
+        /// 获取大小写敏感的数据库表名
+        /// </summary>
+        /// <returns></returns>
         string GetTableName() {
           return  _db.ExecuteScalar<string>("SELECT * FROM  sys.objects WHERE object_id=object_id('" + TableName + "')");
         }
+        /// <summary>
+        /// 获取表的主键
+        /// </summary>
+        /// <returns></returns>
         string GetPKColumn()
         {
             return _db.ExecuteScalar<string>("SELECT name FROM SysColumns WHERE id=Object_Id('" + TableName + "') and colid=(select top 1 colid from sysindexkeys where id=Object_Id('" + TableName + "'))");
@@ -47,6 +55,10 @@ namespace Mysoft.Project.Core.Entity
              }
              return descDict;
         }
+        /// <summary>
+        /// 生成实体类方法
+        /// </summary>
+        /// <returns></returns>
         public string Generate()
         {
             _db = new Database(ConnectionString, "System.Data.SqlClient");
@@ -151,6 +163,9 @@ WHERE   TABLE_NAME = @0 ";
             return _sb.ToString();
         }
 
+        /// <summary>
+        /// 引入名字空间
+        /// </summary>
         void AddImport()
         {
             AddLine("using System;");

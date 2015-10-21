@@ -62,7 +62,6 @@
   <ItemGroup>
     <Compile Include="Control\myRepeater\myRepeaterService.cs" />
     <Compile Include="Core\Ajax\AjaxServiceProxy.cs" />
-    <Compile Include="Core\Ajax\CommonService.cs" />
     <Compile Include="Core\Ajax\HttpResult.cs" />
     <Compile Include="Core\Ajax\IBusiness.cs" />
     <Compile Include="Core\Ajax\ProxyClass.cs" />
