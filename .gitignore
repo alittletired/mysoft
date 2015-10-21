@@ -1,12 +1,7 @@
 *
 !/*
-
-
-
 !.gitignore
 !.gitattributes
-!/docs/
-!/dist/
 !.gitignore
 !README.md
 **/X[x]mjd/**/.gitignore

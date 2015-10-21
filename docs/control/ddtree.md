@@ -41,6 +41,7 @@ seajs.use('DDTree', function(DDTree) {
 
 ```
 
+![ddtree image](ddtree.png)
 
 options
 ====
@@ -74,3 +75,20 @@ ________
 setValue(codeorid)
 ________
 设置控件的值，传入code或者id
+
+
+## CompanyMenuTree
+
+##Quick start
+在menu.aspx页面底部添加
+```html
+<script type="text/javascript" src="/project/js/sea.js"></script>   
+
+<script language="javascript" type="text/javascript">
+seajs.use('DDTree/CompanyMenuTree', function(ddtree) {
+    var d = new ddtree('ddtree');
+});
+
+
+```
+![companyddtree image](companyddtree.png)
