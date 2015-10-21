@@ -221,7 +221,7 @@ define(function(require) {
                 }
 
                 //处理datatype,格式化数据
-                mydr.push(val);
+                mydr.push("<NOBR title='" + val + "'>" + val + "</NOBR>");
 
                 mydr.push('</td>');
             });
@@ -307,6 +307,7 @@ define(function(require) {
         //绑定控件事件
         //行事件
         me.find("#gridBar tr[id!=trHeader]").on("click", $.proxy(that.rowClick, that))
+        me.find("#gridBar tr[id!=trHeader]").on("click","nobr", $.proxy(that.rowClick, that))
         me.find("#gridBar tr[id!=trHeader]").on("mouseover", function() {
             $(this).addClass("gridSelectOver");
         })
@@ -407,7 +408,7 @@ define(function(require) {
                         if (IsNotNull(editor)) {
                             //$(lastCells[n]).text(that.options.items[lastRow.rowIndex - 1][cols[n].field]);
                             var control = this.editors[cols[n].editor.type];
-                            control.destory(lastCells[n], cols[n]);
+                            control.destroy(lastCells[n], cols[n]);
                         }
                     }
                     lastRow.isEditing = false;
@@ -476,7 +477,7 @@ define(function(require) {
                     getValue: function(target) {
                         return that.options.items[target.parentNode.rowIndex - 1][target.fieldname];
                     },
-                    destory: function(target, col) {
+                    destroy: function(target, col) {
                         var row = target.parentNode;
                         if (row.isEditing != true) {
                             return;
@@ -554,7 +555,7 @@ define(function(require) {
             getValue: function(target) {
                 return that.options.items[target.parentNode.rowIndex - 1][target.fieldname];
             },
-            destory: function(target, col) {
+            destroy: function(target, col) {
                 var row = target.parentNode;
                 if (row.isEditing != true) {
                     return;
@@ -620,7 +621,7 @@ define(function(require) {
             getValue: function(target) {
                 return that.options.items[target.parentNode.rowIndex - 1][target.fieldname];
             },
-            destory: function(target, col) {
+            destroy: function(target, col) {
                 var row = target.parentNode;
                 if (row.isEditing != true) {
                     return;
@@ -675,7 +676,7 @@ define(function(require) {
             getValue: function(target) {
                 return that.options.items[target.parentNode.rowIndex - 1][target.fieldname];
             },
-            destory: function(target, col) {
+            destroy: function(target, col) {
                 var row = target.parentNode;
                 if (row.isEditing != true) {
                     return;
@@ -729,7 +730,7 @@ define(function(require) {
                     getValue: function(target) {
                         return that.options.items[target.parentNode.rowIndex - 1][target.fieldname];
                     },
-                    destory: function(target, col) {
+                    destroy: function(target, col) {
                         var row = target.parentNode;
                         if (row.isEditing != true) {
                             return;
@@ -917,7 +918,8 @@ define(function(require) {
                         break;
                 }
             }
-            mydr.push(val);
+            //处理datatype,格式化数据
+            mydr.push("<NOBR title='" + val + "'>" + val + "</NOBR>");
             mydr.push('</td>');
             // item[col.field] = col.defaultvalue;
         });
@@ -927,6 +929,7 @@ define(function(require) {
         me.find("#gridBar").append(mydr.join(""));
 
         me.find("#gridBar tr:last").bind("click", $.proxy(that.rowClick, that));
+        me.find("#gridBar tr:last").on("click","nobr", $.proxy(that.rowClick, that));
         me.find("#gridBar tr:last").click();
     };
     myRepeater.prototype.rowClick = function(e) {
@@ -936,7 +939,7 @@ define(function(require) {
         if ($(e.target).attr("rowtype") == "datarow")
             tr = $(e.target)
         else
-            tr = $(e.target).parent("tr[rowtype=datarow]");
+            tr = $(e.target).parents("tr[rowtype=datarow]");
         if (tr.length != 1)
             return;
         var i = tr.index();
