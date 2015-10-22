@@ -78,14 +78,14 @@ seajs.use('myRepeater', function(myrepeater) {
 | 名称 | 类型 | 说明 |默认值|
 | :------------- | :------------- | :------------- | :------------- |
 | columns       | Array       |显示列的配置信息，是列配置对象的集合|[]|
-| idField       | String       |数据源的标识列，即主键|空字符串|
+| idField       | String       |数据源的标识列，即主键|""|
 | enablePager       | Boolean       |是否启用分页|true|
 | mutiSelect       | Boolean       |是否多选|false|
 | pageindex       | int       |页码|1|
 | pagesize       | int       |每页显示条数|20|
 | queryParams       | json/function       |自助查询的参数|｛｝|
 | serviceMethod       | String     |后台取数调用的方法，格式为：命名空间+类名+方法名；参数传递使用queryParams|null|
-| sortField       | String     |用于排序的字符串如：Room asc,RoomCode desc|空字符串|
+| sortField       | String     |用于排序的字符串如：Room asc,RoomCode desc|""|
 | height       | String/int      |控件显示高度|300px|
 | deleterows       | Array       |获取删除的数据|[]|
 | editors       | json       |内置控件集合|内置控件集合|
@@ -93,18 +93,18 @@ seajs.use('myRepeater', function(myrepeater) {
 ## column属性
 | 名称 | 类型 | 说明 |默认值|
 | :------------- | :------------- | :------------- | :------------- |
-| title       | String       |列标题|空字符串|
-| field       | String       |数据取值字段|空字符串|
-| width       | String       |列宽|空字符串|
-| align       | String       |对齐方式|空字符串|
-| datatype       | String       |目前支持number和datetime|空字符串|
-| format       | String       |格式化字符串支持日期和数据的格式化|空字符串|
+| title       | String       |列标题|""|
+| field       | String       |数据取值字段|""|
+| width       | String       |列宽|""|
+| align       | String       |对齐方式|""|
+| datatype       | String       |目前支持number和datetime|""|
+| format       | String       |格式化字符串支持日期和数据的格式化|""|
 | req       | Boolean       |设置是否必填|false|
 ## editor
 | 名称 | 类型 | 说明 |默认值|
 | :------------- | :------------- | :------------- | :------------- |
-| type       | String       |控件类型目前支持：numbox,textbox,datetimebox,lookupbox,combobox|空字符串|
-| option       | json       |支持对应控件类型属性配置，属性基本为ERP原生控件可设置的属性如{ onchange: function() { }, maxlength: 3, min: -99999, max: 999999999, ro: 0}|空字符串|
+| type       | String       |控件类型目前支持：numbox,textbox,datetimebox,lookupbox,combobox|""|
+| option       | json       |支持对应控件类型属性配置，属性基本为ERP原生控件可设置的属性如{ onchange: function() { }, maxlength: 3, min: -99999, max: 999999999, ro: 0}|""|
 + 方法
 
 | 名称 | 参数 | 说明 |
