@@ -72,17 +72,10 @@ var TreeType = { None: -1, Group: 0, Company: 10, EndCompany: 20, Dept: 30, Proj
 method&properties
 =====
 
-| 名称     | 类型     | 说明
+| 名称     | 类型     | 说明 |
 | :------------- | :------------- |
-| \_selItem | property | 当前控件选择的item
-| setValue | method | 设置控件的值，传入code或者id
-
-
-
-
-
-
-
+| _selItem |  property |  当前控件选择的item  |
+| setValue |  method | 设置控件的值，传入code或者id |
 
 
 
