@@ -538,9 +538,10 @@
         var data = { code: item.code, id: item.id, type: item.type, name: item.name, isend: item.isend };
         if (this.options.autoSwitchCompany && !isinit) {
 
-            var error = project.invoke('MySoft.Project.Control.DDTreeService.SetValue', data);
+            var error = project.invoke('Mysoft.Project.Control.DDTreeService.SetValue', data);
             if (error) return alert(error);
         }
+        
         if (this.options.onchange) {
             if (this.options.onchange(data) === false) {
                 return;
