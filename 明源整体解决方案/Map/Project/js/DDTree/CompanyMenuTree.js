@@ -78,7 +78,7 @@
         }
 
         options.nodeBgColor = { "0": "#FFFFFF", "10": "#FFFFFF", "20": "#FFFFFF", "30": "#FFFFFF" };
-       var ddtree= new  DDTree(span,options)      
+        var ddtree = new DDTree(span, options)
         var interval;
         $('.ddtreeWarp').find('.ddtree_span')
         .hover(function() {
@@ -108,6 +108,7 @@
 
             ddtree.showDropDown();
         });
+        return ddtree;
     }
 
     return CompanyMenuTree;

@@ -7,7 +7,8 @@ var config = {
     alias: {
         'json': '/project/js/json',
         'jquery': '/project/js/jquery',
-        'DDTree': '/project/js/DDTree/DDTree',
+        'DDTree': '/project/js/DDTree/DDTree',        
+         'project': '/project/js/project.js?t=2',        
          'Selector': '/project/js/Selector/Selector.js?t=30',
         'myRepeater': '/project/js/myRepeater/myRepeater.js?t=3121'
 

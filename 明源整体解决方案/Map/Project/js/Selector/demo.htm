@@ -19,11 +19,7 @@
 </head>
 <body style="padding-right: 10px; padding-left: 10px; padding-bottom: 10px; padding-top: 10px">
     <table style="font-size: 9pt" height="100%" border="0" cellspacing="0" cellpadding="0"
-        width="100%">
-        <%--  <tr height="10">
-            <td>
-            </td>
-        </tr>--%>
+        width="100%">      
         <tr height="1" valign="top">
             <td>
                 <table id="appGridMenu_Main" style="height: 28px; table-layout: fixed" cellspacing="0"
@@ -75,31 +71,30 @@
 
 <script type="text/javascript">
     var options = {
+    //显示的列
         columns: [
         { title: "房号", field: "Room", width: "100" },
-        { title: "总价", field: "Total", width: "100", formatter: numberFormatter },
+        { title: "总价", field: "Total", width: "100" },
         { title: "价格", field: "Price", width: "100" },
         { title: "日期", field: "SLControlDate", width: "150" },
         { title: "房间编码", field: "RoomCode" },
         { title: "户型", field: "HuXing", width: "100" },
         { title: "状态", field: "Status", width: "150" }
     ],
+        //绑定控件，当返回时自动填充值
         bindCtrls: [
     { field: "Room", control: 'txtid' },
     { field: "RoomCode", control: 'txtRoomCode' },
     { field: "HuXing", control: 'txtHuXing' }
-    ], //绑定控件
+    ], 
         serviceMethod: "Mysoft.Project.Control.myRepeaterService.GetRepeaterDemoData" //后台数据提供方法
     , sortField: "Room asc"//默认排序
     , mutiSelect: true //是否多选
     , height: 500
     , pagesize: 15, //分页大小
-        title: '选择人员'
+        title: '选择人员' //模态窗口和gird的标题
     };
-
-    function numberFormatter(val, item, row) {
-        return val;
-    }
+   
     function openSel() {
         seajs.use('Selector', function(Selector) {
             var retValue = Selector.open(options);

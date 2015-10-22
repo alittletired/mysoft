@@ -19,6 +19,8 @@
 
 + [Control](/docs/control)
 
++ [excel](/docs/excel/)
+
 ## Quick start
 + 定义后台服务类和方法
 

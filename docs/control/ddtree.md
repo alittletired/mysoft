@@ -1,5 +1,7 @@
 + [DDTree](ddtree.md)
 
++ [selector](selector/)
+
 ## DDTree
 
 
@@ -18,6 +20,7 @@ DDTree是一个通用的选择公司，部门，项目控件
 ```
 
 + 在页面底部添加调用
+
 ```javascript  
 
     var TreeType = { None: -1, Group: 0, Company: 10, EndCompany: 20, Dept: 30, Project: 60, EndProject: 70 }    
@@ -41,6 +44,7 @@ seajs.use('DDTree', function(DDTree) {
 
 ```
 
+![ddtree image](ddtree.png)
 
 options
 ====
@@ -74,3 +78,20 @@ ________
 setValue(codeorid)
 ________
 设置控件的值，传入code或者id
+
+
+## CompanyMenuTree
+CompanyMenuTree 继承于ddtree，与其具有相同接口
+##Quick start
+在menu.aspx页面底部添加
+```html
+<script type="text/javascript" src="/project/js/sea.js"></script>   
+
+<script language="javascript" type="text/javascript">
+seajs.use('DDTree/CompanyMenuTree', function(ctree) {
+    var d = new ctree();
+});
+
+
+```
+![companyddtree image](companyddtree.png)
