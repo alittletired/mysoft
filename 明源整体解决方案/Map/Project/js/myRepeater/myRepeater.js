@@ -100,7 +100,7 @@ define(function(require) {
         , field: ""//字段
         , width: ""//宽度
         , align: "center"//对齐方式
-        , sortable: true//是否可排序
+
         , datatype: "text"//number,datetime
         , format: ""
         , hidden: false
@@ -170,7 +170,7 @@ define(function(require) {
         table += '<td class="gridBar" width="40px" align="center" id="tdNO" name="noSort">序号</td>';
 
         $(that.options.columns).each(function() {
-            var tdTitle = $(' <td width="' + this.width + '" ' + (this.hidden ? "style='display:none'" : "") + ' class="gridBar ' + (this.req ? "req" : "") + '" fieldname="' + this.field + '" align="center" sortable="' + this.sortable + '" title="' + this.title + '"> <NOBR>' + this.title + '</NOBR></td>');
+            var tdTitle = $(' <td width="' + this.width + '" ' + (this.hidden ? "style='display:none'" : "") + ' class="gridBar ' + (this.req ? "req" : "") + '" fieldname="' + this.field + '" align="center"  title="' + this.title + '"> <NOBR>' + this.title + '</NOBR></td>');
             if (("#" + that.options.sortField).indexOf("#" + this.field + " ") > -1) {
 
                 if (that.options.sortField.indexOf("asc") > -1) {
@@ -317,9 +317,9 @@ define(function(require) {
         });
 
         me.find("#gridBar tr[id!=trHeader]").on("dbclick", function() {
-            var row = that.options.items[$(this).index()];
+            var row = that.options.items[$(this).index() - 1];
             if (that.options.onDblClickRow) {
-                if (that.options.onDblClickRow(row) === false) {
+                if (that.options.onDblClickRow($(this).index(), row) === false) {
                     return;
                 }
             }
@@ -730,7 +730,11 @@ define(function(require) {
         that.options.isChange = false;
     }
     myRepeater.prototype.loadData = function() {
-        var that = this;
+    var that = this;
+        //不启用分页，最大只能显示10000
+        if (!that.options.enablePager) {
+            that.options.pagesize = 10000;
+        }
         //自定义参数
         var param = { pagesize: that.options.pagesize, pageindex: that.options.pageindex, sortfield: that.options.sortField, servicemethod: that.options.serviceMethod };
         if (typeof (that.options.queryParams) == "function") {
@@ -856,22 +860,18 @@ define(function(require) {
         return this.options.data.items[index];
     };
     //开始编辑
-    myRepeater.prototype.beginEdit = function(index) {
+    myRepeater.prototype.enableEdit = function() {
         //beg lpf
         this.options.isEdit = true;
         //end
     };
     //结束编辑
-    myRepeater.prototype.endEdit = function(index) {
+    myRepeater.prototype.disableEdit = function() {
         //beg lpf
         this.options.isEdit = false;
         //end
     };
-    //中止编辑
-    myRepeater.prototype.cancelEdit = function(index) { };
-    //验证数据
-    myRepeater.prototype.validateData = function() {
-    };
+
     //新增行
     myRepeater.prototype.newRow = function(item) {
 
@@ -972,9 +972,9 @@ define(function(require) {
                 that.SetRowEdit(tr[0], row);
             }
         }
-        //end 
+        //end
         if (that.options.onClickRow) {
-            if (that.options.onClickRow(row) === false) {
+            if (that.options.onClickRow(i,row) === false) {
                 return;
             }
         }
@@ -1056,7 +1056,7 @@ define(function(require) {
     };
 
     //根据配置进行数据校验
-    myRepeater.prototype.validData = function(row, field) {
+    myRepeater.prototype.validData = function() {
 
         var that = this;
 
