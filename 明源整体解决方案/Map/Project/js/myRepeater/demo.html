@@ -100,7 +100,7 @@
                 , idField: "RoomGUID"
                 , serviceMethod: "Mysoft.Project.Control.myRepeaterService.GetRepeaterDemoData"
                 , sortField: "Room asc"
-                , mutiSelect: false
+                , mutiSelect: true
                 , height: "300px"
                 , pagesize: 15
             };
@@ -135,7 +135,7 @@
     <input type="button" value="测试显示" id="Button1" />
     <input type="button" value="测试删除" id="Button2" />
     <input type="button" value="测试新增" id="Button3" />
-    <input type="button" value="编辑" id="Button4" onclick="rep.beginEdit();" />
+    <input type="button" value="编辑" id="Button4" onclick="rep.enableEdit();" />
     <input type="button" value="取数" id="Button5" onclick="GetAllData();" />
     <input type="button" value="数据验证" id="Button6" />
 </body>
