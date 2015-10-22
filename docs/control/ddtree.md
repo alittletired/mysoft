@@ -51,33 +51,39 @@ options
 
 ```javascript
 var TreeType = { None: -1, Group: 0, Company: 10, EndCompany: 20, Dept: 30, Project: 60, EndProject: 70 }  
-var option= {
-            onchange: false  //选择元素后的回调函数
-           , showSearch: true     //是否显示搜索框
-            , treeType: TreeType.EndProject //数据加载类型
-            , selectType: TreeType.EndCompany //可以选择的类型
-            , showType: TreeType.EndProject //默认展开类型，-1不展开
-            , showGroup: true  //是否显示集团
-            , showCompany: true //是否显示区域公司
-             , applySys: '0201' //业务系统
-            , serviceMethod: 'MySoft.Project.Control.DDTreeService.GetDDTreeData' //后台数据提供方法
-            , autoSwitchCompany: true //是否自动切换公司
-
-}
-
 
 ```
 
+ 名称            |类型           | 说明                       | 默认值        
+ :--------------| :------------ | :------------------------- |:-----------  
+ showSearch     |  bool         | 是否显示搜索框  | true
+ onchange       |  function     | 选择元素后的回调函数  | false
+ treeType     |  int     | 控件数据加载类型  | TreeType.EndProject
+ selectType     |  int    | 控件可选择的节点类型  | TreeType.EndProject
+ showType     |  int   | 默认展开类型，-1不展开  | TreeType.EndProject
+ showGroup     |   bool       | 是否显示集团  | true
+ showCompany     |  bool         | 是否显示区域公司  | true
+ applySys     |  string         | 业务系统，在控件类型为项目是有效  | '0201'
+ serviceMethod     |  string         | 后台数据提供方法  | 'MySoft.Project.Control.DDTreeService.GetDDTreeData'
+ autoSwitchCompany |bool | 是否自动切换公司 | false
+
+
+
 method&properties
 =====
-\_selItem
-________
-当前控件选择的item
+
+| 名称     | 类型     | 说明
+| :------------- | :------------- |
+| \_selItem | property | 当前控件选择的item
+| setValue | method | 设置控件的值，传入code或者id
 
 
-setValue(codeorid)
-________
-设置控件的值，传入code或者id
+
+
+
+
+
+
 
 
 ## CompanyMenuTree
