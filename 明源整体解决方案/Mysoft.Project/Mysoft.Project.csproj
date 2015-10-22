@@ -71,6 +71,7 @@
     <Compile Include="Core\DB\DBHelper.cs" />
     <Compile Include="Core\DB\SqlJointer.cs" />
     <Compile Include="Core\DB\TransactionScope.cs" />
+    <Compile Include="Core\DB\PocoData.cs" />
     <Compile Include="Core\EntityGenerator.cs" />
     <Compile Include="Core\SqlServerType.cs" />
     <Compile Include="Excel\ExcelHelper.cs" />

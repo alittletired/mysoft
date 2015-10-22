@@ -176,13 +176,13 @@ namespace Mysoft.Project.Core
         public static int Update<Entity>(object param)
         {
             var meta = PocoData.ForType(typeof(Entity));
-            return GetDatabase().Update(meta.TableInfo.TableName, meta.TableInfo.PrimaryKey, param, null);
+            return GetDatabase().Update(param, meta);
 
         }
         public static int Update<Entity>(Entity poco)
         {
-            var meta = PocoData.ForType(poco.GetType());
-            return GetDatabase().Update(meta.TableInfo.TableName, meta.TableInfo.PrimaryKey, poco, null);
+            var meta = PocoData.ForType(typeof(Entity));
+            return GetDatabase().Update(poco, meta); ;
 
         }
         
