@@ -81,15 +81,15 @@ ________
 
 
 ## CompanyMenuTree
-
+CompanyMenuTree 继承于ddtree，与其具有相同接口
 ##Quick start
 在menu.aspx页面底部添加
 ```html
 <script type="text/javascript" src="/project/js/sea.js"></script>   
 
 <script language="javascript" type="text/javascript">
-seajs.use('DDTree/CompanyMenuTree', function(ddtree) {
-    var d = new ddtree('ddtree');
+seajs.use('DDTree/CompanyMenuTree', function(ctree) {
+    var d = new ctree();
 });
 
 
