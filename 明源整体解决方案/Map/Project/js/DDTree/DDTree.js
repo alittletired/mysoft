@@ -135,7 +135,7 @@
              , showCompany: true //是否显示区域公司
              , applySys: '0201'
              , NodeType: { None: -1, Group: 0, Company: 10, EndCompany: 20, Dept: 30, Team: 40, ProjectTeam: 50, Project: 60, EndProject: 70 }
-             , nodeBgColor: { "0": "#DDE0E5", "10": "#E4E7EC", "20": "#EEF0F2", "30": "#F4F5F8", "60": "#F4F5F8", "70": "#F8F9FC" }
+             , nodeBgColor: { "0": "#DDE0E5", "10": "#E4E7EC", "20": "#EEF0F2", "30": "#F4F5F8", "60": "#F4F5F8", "70": "#F8F9FC" }             
 , autoSwitchCompany: true //是否自动切换公司
     };
 
@@ -541,7 +541,7 @@
             var error = project.invoke('Mysoft.Project.Control.DDTreeService.SetValue', data);
             if (error) return alert(error);
         }
-        
+
         if (this.options.onchange) {
             if (this.options.onchange(data) === false) {
                 return;
@@ -589,6 +589,8 @@
         popup.document.parentWindow._dropdown = this;
 
         var txtSearch = popup.document.parentWindow.document.getElementById('txtSearch');
+       
+    
         if (txtSearch) {
             that._txtSearch = txtSearch;
             that._txtSearch.value = ''
