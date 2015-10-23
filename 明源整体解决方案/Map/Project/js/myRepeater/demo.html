@@ -63,7 +63,7 @@
                             { title: "总价",
                                 field: "Total",
                                 width: "100",
-                                editor: { type: "numbox", option: { onchange: function() { }, maxlength: 3, min: -99999, max: 999999999, ro: 0} },
+                                editor: { type: "numbox", option: { onchange: function() { }, maxlength: 8, min: -99999, max: 999999999, ro: 0} },
                                 datatype: "number",
                                 format: "#,###",
                                 req: true
@@ -100,7 +100,7 @@
                 , idField: "RoomGUID"
                 , serviceMethod: "Mysoft.Project.Control.myRepeaterService.GetRepeaterDemoData"
                 , sortField: "Room asc"
-                , mutiSelect: true
+                , mutiSelect: false
                 , height: "300px"
                 , pagesize: 15
             };
@@ -115,7 +115,7 @@
             });
             $("#Button6").bind("click", function() { rep.validData(); });
             $("#Button3").bind("click", function() {
-                var item = { RoomGUID: "", Room: "a1001", RoomCode: "testnew", HuXing: 1, Total: 0, Price: 0, Status: "销控", SLControlDate: "" };
+                var item = { RoomGUID: "", Room: "a1001", RoomCode: "testnew", HuXing: null, Total: 0, Price: null, Status: "销控", SLControlDate: null };
                 rep.newRow(item);
             });
         });

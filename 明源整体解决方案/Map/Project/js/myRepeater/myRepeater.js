@@ -730,7 +730,7 @@ define(function(require) {
         that.options.isChange = false;
     }
     myRepeater.prototype.loadData = function() {
-    var that = this;
+        var that = this;
         //不启用分页，最大只能显示10000
         if (!that.options.enablePager) {
             that.options.pagesize = 10000;
@@ -808,6 +808,7 @@ define(function(require) {
 
         switch (col.datatype) {
             case "datetime":
+                if (!val) return "";
                 val = val.replace("T", " ").replace(/-/g, "/");
                 var d = new Date(val);
                 if (col.format && col.format != "") {
@@ -816,10 +817,14 @@ define(function(require) {
 
                 break;
             case "number":
+                if (!val) val = 0;
                 if (col.format && col.format != "") {
 
                     val = __formatNumber(val.toString(), col.format);
                 }
+                break;
+            default:
+                if (!val) val = "";
                 break;
         }
 
@@ -896,21 +901,22 @@ define(function(require) {
             mydr.push('<td ' + (this.hidden ? "style='display:none'" : "") + ' class="gridBorder" align="' + col.align + '" fieldname="' + col.field + '" data-type="' + col.datatype + '">');
 
             var val = item[col.field];
-            if (typeof (col.datatype) == "object") {
-                switch (col.datatype.type) {
-                    case "datetime":
-                        var d = new Date(val.replace("T", " ").replace(/-/g, "/"));
-                        var format = col.datatype.option.format == "" ? "yyyy-MM-dd" : col.datatype.option.format;
-                        val = d.Format(format);
-                        break;
-                    case "number":
-                        if (col.datatype.option.format && col.datatype.option.format != "") {
+            val = that.dataFormat(col, val);
+            //            if (typeof (col.datatype) == "object") {
+            //                switch (col.datatype.type) {
+            //                    case "datetime":
+            //                        var d = new Date(val.replace("T", " ").replace(/-/g, "/"));
+            //                        var format = col.datatype.option.format == "" ? "yyyy-MM-dd" : col.datatype.option.format;
+            //                        val = d.Format(format);
+            //                        break;
+            //                    case "number":
+            //                        if (col.datatype.option.format && col.datatype.option.format != "") {
 
-                            val = __formatNumber(val.toString(), col.datatype.option.format);
-                        }
-                        break;
-                }
-            }
+            //                            val = __formatNumber(val.toString(), col.datatype.option.format);
+            //                        }
+            //                        break;
+            //                }
+            //            }
             //处理datatype,格式化数据
             mydr.push("<NOBR title='" + val + "'>" + val + "</NOBR>");
             mydr.push('</td>');
@@ -974,7 +980,7 @@ define(function(require) {
         }
         //end
         if (that.options.onClickRow) {
-            if (that.options.onClickRow(i,row) === false) {
+            if (that.options.onClickRow(i, row) === false) {
                 return;
             }
         }
