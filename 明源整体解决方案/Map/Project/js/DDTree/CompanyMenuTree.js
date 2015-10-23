@@ -12,22 +12,13 @@
         styles.push(" .mnuTitle   a{ height:100%; padding-top:4px; } .mnuTitle span.ddtreeWarp  { height:100%; padding-top:0px;}");
         styles.push(" .mnuTitle .ddtreeWarp  span{ height:100%; padding-top:0px; } #spnCompany { margin-right:10px;}")
         project.addStyle(styles.join(''));
-        var options = {};
-        options.icon = "/_imgs/ico_16_10.gif";
-        options.showFullText = false;
-
-
         var lblCurCompany = $('#lblCurCompany').hide();
         lblCurCompany.prev().hide();
         var table = $(lblCurCompany.parents('table')[0]);
         table.prop('cellpadding', '0');
         table.prop('cellspacing', '0');
-
-
         var span = $('<span id="spnCompany"></span>')
-
         lblCurCompany.parent().prepend(span);
-
         DDTree.prototype.renderHeader = function() {
             var html = [];
             //   html.push('<TABLE class="ddtree"  cellSpacing=0 cellPadding=0><TD>');
@@ -63,8 +54,18 @@
 
 
 
-        var defaults = { treeType: 20, selectType: 0, showType: 0, showSearch: false, autoSwitchCompany: true, showSearch: false, height: 400 }
-        options = $.extend(defaults, options, typeof option == 'object' && option)
+        var defaults =
+        { treeType: 20,
+            selectType: 0,
+            showType: 0,
+            showSearch: false,
+            autoSwitchCompany: true,
+            showSearch: false,
+            height: 400
+            , icon: "/_imgs/ico_16_10.gif"
+            , showFullText: false
+        }
+        var options = $.extend({},defaults, typeof option == 'object' && option)
         options.onchange = function(item) {
             $('.ddtreeWarp').find('.ddtree_span').removeClass('ddtree_span_click').removeClass('ddtree_span_active');
             try {
