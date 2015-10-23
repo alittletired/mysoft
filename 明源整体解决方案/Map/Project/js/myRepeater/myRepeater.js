@@ -879,9 +879,12 @@ define(function(require) {
 
     //新增行
     myRepeater.prototype.newRow = function(item) {
+        var that = this;
+        if (!that.options.isEdit)
+            return false;
 
         var item = $.extend({}, myRepeater.ColumnDEFAULTS, item);
-        var that = this;
+
         //增加变量确定数据是否改变
         that.options.isChange = true;
         var me = that.$element;
@@ -901,23 +904,9 @@ define(function(require) {
             mydr.push('<td ' + (this.hidden ? "style='display:none'" : "") + ' class="gridBorder" align="' + col.align + '" fieldname="' + col.field + '" data-type="' + col.datatype + '">');
 
             var val = item[col.field];
-            val = that.dataFormat(col, val);
-            //            if (typeof (col.datatype) == "object") {
-            //                switch (col.datatype.type) {
-            //                    case "datetime":
-            //                        var d = new Date(val.replace("T", " ").replace(/-/g, "/"));
-            //                        var format = col.datatype.option.format == "" ? "yyyy-MM-dd" : col.datatype.option.format;
-            //                        val = d.Format(format);
-            //                        break;
-            //                    case "number":
-            //                        if (col.datatype.option.format && col.datatype.option.format != "") {
-
-            //                            val = __formatNumber(val.toString(), col.datatype.option.format);
-            //                        }
-            //                        break;
-            //                }
-            //            }
             //处理datatype,格式化数据
+            val = that.dataFormat(col, val);
+                     
             mydr.push("<NOBR title='" + val + "'>" + val + "</NOBR>");
             mydr.push('</td>');
             // item[col.field] = col.defaultvalue;
