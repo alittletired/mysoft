@@ -104,8 +104,10 @@ namespace Mysoft.Project.Ajax
 
             if (!IsAllowServiceMethod(methodInfo))
             {
-                throw new Exception("方法'" + invokeMethod + "'不满足约定，申明方法的类型需以Service结尾或方法添加ServiceAttribute特性！");
+                throw new Exception("无法调用方法'" + invokeMethod + "',不满足约定，申明方法的类型需以Service结尾或方法添加ServiceAttribute特性！");
             }
+            if(!methodInfo.IsPublic)
+                throw new Exception("无法调用方法'" + invokeMethod + "'，方法非public公共方法！");
 
             //是否开启事务
             var transAttribute = methodInfo.GetCustomAttributes(typeof(TransactionAttribute), true);

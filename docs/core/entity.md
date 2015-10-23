@@ -18,4 +18,4 @@
 生成的实体只是简单的poco，无基类继承
 
 
-**数据库中的guid类型将转换成string，bool转换为short，如需修改，编辑MySoft.Project.Core.Entity.EntityGenerator中GetFiledType方法**
+**数据库中的guid类型将转换成string，如需修改，编辑MySoft.Project.Core.Entity.EntityGenerator中GetFiledType方法**
