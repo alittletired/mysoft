@@ -201,11 +201,7 @@ WHERE   TABLE_NAME = @0 ";
             if (typeof(System.Guid) == type)
             {
                 return typeof(string).Name;
-            }
-            else if (typeof(bool) == type)
-            {
-                return typeof(short).Name;
-            }
+            }          
             return type.Name;
         }
 

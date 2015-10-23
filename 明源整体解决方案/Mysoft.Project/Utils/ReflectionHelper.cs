@@ -77,7 +77,7 @@ namespace Mysoft.Project.Core
             var type = GetType(typeName, assbemlyName);
             var methodName = callMethod.Substring(lastDotIndex + 1);
 
-            var methodInfos = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+            var methodInfos = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static|BindingFlags.NonPublic);
             foreach (var n in methodInfos)
             {
                 if (n.Name.Equals(methodName) && (paramArr.Length == 0 || n.GetParameters().Length == paramArr.Length))

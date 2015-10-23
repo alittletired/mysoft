@@ -74,7 +74,7 @@ namespace Mysoft.Project.Control
 
         public DataTable GetRepeaterDemoData()
         {
-            return DBHelper.GetDataTable("select top 100 RoomGUID,Room,RoomCode,HuXing,Total,Price,Status,SLControlDate from dbo.p_Room order by  Roomcode asc");
+            return DBHelper.GetDataTable("select top 100 RoomGUID,Room,RoomCode,HuXing,Total,Price,Status,SLControlDate from dbo.p_Room where SLControlDate is not null order by  Roomcode asc");
         }
 
     }
