@@ -23,9 +23,8 @@
 
                 });
 
-
-
             });
+            
             $.each(options.bindCtrls, function() {
                 var item = this;
                 var field = item["field"];
@@ -51,16 +50,13 @@
                 ], //绑定的值控件
         searchField: []
             , columns: []
-            , dataMethod: 'Mysoft.Project.Control.DDTreeService.GetDDTreeData'
-            , params: function() { return { buguid: 123 }; } //调用服务器方法前传递的参数
+            , serviceMethod: 'Mysoft.Project.Control.DDTreeService.GetDDTreeData'
+            , queryParams: function() { return { buguid: 123 }; } //调用服务器方法前传递的参数
             , selectorType: SelectorType.grid
             , showClearButton: false
             , height: 400,
         width: 600
     };
-
-
-
     return Selector;
 
 

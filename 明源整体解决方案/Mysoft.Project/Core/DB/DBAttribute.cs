@@ -161,15 +161,28 @@ namespace Mysoft.Project.Core.DataAnnotations
         
        
     }
-    // Results from paged request
-    public class Page<T>
+    public interface IPager
     {
-        public long CurrentPage { get; set; }
-        public long TotalPages { get; set; }
-        public long TotalItems { get; set; }
-        public long ItemsPerPage { get; set; }
+        long PageIndex { get; set; }
+        long PageSize { get; set; }
+        long TotalCount { get; set; }
+
+
+    }
+    // Results from paged request
+    public class Pager<T>:IPager
+    {
+        public long PageIndex { get; set; }      
+        public long TotalCount { get; set; }
+        public long PageSize { get; set; }
         public List<T> Items { get; set; }
-        public object Context { get; set; }
+  
+    }
+    public class Pager : IPager {
+        public long PageIndex { get; set; }
+        public long TotalCount { get; set; }
+        public long PageSize { get; set; }
+        public DataTable Items { get; set; }
     }
 
     // Pass as parameter value to force to DBType.AnsiString
