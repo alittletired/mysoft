@@ -109,7 +109,7 @@ WHERE   TABLE_NAME = @0 ";
                 string columnName = col.ColumnName;
 
                 if (!string.IsNullOrEmpty(col.DefaultValue)) {
-                    var defVal = col.DefaultValue.Replace("(", "").Replace(")", "");
+                    var defVal = col.DefaultValue.Replace("(", "").Replace(")", "").Replace("'","");
                     if (col.DataType.IsPrimitive || col.DataType == typeof(decimal))
                     {
 

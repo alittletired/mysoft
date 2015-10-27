@@ -22,7 +22,7 @@
                     parentWin = parentWin.parent;
                 }
                 parentWin.__error__ = json.__error__;
-                if (window.debug || window.location.host.indexOf('localhost') > -1)
+                if ( window.location.host.indexOf('localhost') > -1)
                     alert(json.__error__);
                 else if (!window.hiddenServiceError)
                     alert('操作出错，请联系系统管理员！');

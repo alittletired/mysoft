@@ -80,6 +80,7 @@
       <LastGenOutput>Entity.cs</LastGenOutput>
     </Content>
     <Content Include="js\DDTree\usp_myProjFilterBase.sql" />
+    <Content Include="js\Excel\demo.htm" />
     <Content Include="js\myRepeater\demo.html" />
     <Content Include="js\myRepeater\myRepeater.js" />
     <Content Include="js\myRepeater\_imgs\ico_Arrow_D.gif" />
@@ -110,6 +111,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="js\DDTree\ddttreeupdate.json" />
+    <None Include="js\Excel\NullTemplate.xls" />
+    <None Include="js\Excel\Template.xls" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MySoft.Project\MySoft.Project.csproj">
