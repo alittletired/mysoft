@@ -1,57 +1,75 @@
 + [Excel](Excel.md)
 
-## ExcelHelper
+在Excel导入导出中将会生成excel的元数据，并隐藏在生成的的excel文档中
+，可以通过Datatable或者实体集合来导出导入
 
+模版支持语法，
+模版规则：
+1. 模版绑定都包裹在#{}中
+2. 支持列表绑定，在需要循环的列开头模版中添加 each:数据源，
+数据源是可遍历的数据集合，如datatable，list等
+数据源=$root 代表是根元素
+3. 绑定字段直接使用#{字段名}即可，也可以使用模版的完整语法#{value:字段名}
 
-ExcelHelper是一个通用的导出Excel解决方案
-
-**设计通用Excel的目的就是为了避免重复工作，
-也就是说不必因为Excel的样式、
-数据等变化而重新从零做起、重复劳动。
-因此我们就必须抽取一个通用的东西出来，
-使用时只需要关注相关的业务而不必过度关注相关excel操作和存储。**
+![exceltemplate image](exceltemplate.png)
 
 ##Quick start
 
-+ 代码调用
++ 导出用法
 ```C#  
+public string TestExportDatatable(string fileTemplate)
+			 {
 
-	ExcelHelper excel = new ExcelHelper();
-	/// <summary>
-	/// 导出Excel
-	/// </summary>
-	/// <param name="templateFilePath">Excel模版文件路径:如D:\map\upfiles\temp.xls</param>
-	/// <param name="data">匹配Exceml模版的数据源</param>
-	/// <returns>导出Excel的相对路径</returns>
-	string exportedFilePath = excel.ExportExcel(templateFilePath[string], data[DataSet]);
-	返回的是生成的文件路径exportedFilePath
+					 var data = DBHelper.GetDataTable(@"select top 300 RoomGUID,Room,RoomCode,HuXing,Total,Price,Status,SLControlDate
+from p_Room where SLControlDate is not null  order by  Roomcode asc");
+					 var str = ExcelHelper.ExportExcel(fileTemplate, data);
+					 return str;
+			 }
+			 public string TestExportList(string fileTemplate)
+			 {
+
+					 var data = DBHelper.GetList < p_Room>(@"select top 300 RoomGUID,Room,RoomCode,HuXing,Total,Price,Status,SLControlDate
+from p_Room where SLControlDate is not null  order by  Roomcode asc");
+					 var str = ExcelHelper.ExportExcel(fileTemplate, data);
+					 return str;
+			 }
+```
++ 无须模版，自定义列导出
+```C#
+public string TestExportDymic(string filePath)
+			 {
+					 var data = DBHelper.GetList<p_Room>(@"select top 300 RoomGUID,Room,RoomCode,HuXing,Total,Price,Status,SLControlDate
+from p_Room where SLControlDate is not null  order by  Roomcode asc");
+					 var cols = new List<ExcelColumn>()
+					 {
+							 new ExcelColumn{ Filed="RoomGUID", Name="房间GUID", Width=100}
+							 , new ExcelColumn{ Filed="Room", Name="房间", Width=200}
+							,  new ExcelColumn{ Filed="RoomCode", Name="房间编码", Width=150}
+							,   new ExcelColumn{ Filed="HuXing", Name="户型", Width=200}
+							,    new ExcelColumn{ Filed="Total", Name="总价", Width=100}
+							,    new ExcelColumn{ Filed="Price", Name="价格", Width=100}
+							,    new ExcelColumn{ Filed="Status", Name="状态", Width=120}
+							,    new ExcelColumn{ Filed="SLControlDate", Name="结束日期", Width=100}
+					 };
+
+					 return ExcelHelper.ExportExcel(cols,data);
+
+			 }
 ```
 
++ 导入
 
-+ 模版填写    
-   正则支持$table:表序号或表名,column:字段名#
-           $each:循环模式#（循环模式row,col）
-           $lock:是否锁定字段名，值为1时锁定，值为0时不锁定#或直接指定$（符号）lock:1#锁定
-   所有正则关键字只支持小写
-   如：
+```C#
+public DataTable TestImportDatatable(string filePath)
+			 {
 
-   <table style="width:200px;border:1px solid #e1e1e1;">
-	<tr>
-		<td colspan="3">课程：$table:0,column:CourseName# 课时：$table:0,column:Period#</td>
-	</tr>
-	<tr>
-		<th>报名学生</th>
-		<th>班级</th>
-		<th>专业</th>
-	</tr>
-	<tr>
-		<td>$table:1,column:StudantName#$each:row#</td>
-		<td>$table:1,column:Class#$each:row#</td>
-		<td>$table:1,column:Major#$each:row#</td>
-	</tr>
-	<tr>
-		<td>使用教室：$table:2,column:ClassRoom# 教师：$table:2,column:Teacher#$each:col#</td>
-		<td></td>
-		<td></td>
-	<tr>
-	</table>   
+					 return ExcelHelper.Import<DataTable>(filePath);
+
+			 }
+			 public List<p_Room> TestImportList(string filePath)
+			 {
+					 return ExcelHelper.Import<List<p_Room>>(filePath);
+
+			 }
+
+			 ```
