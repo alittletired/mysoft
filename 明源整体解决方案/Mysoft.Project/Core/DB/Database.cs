@@ -585,7 +585,7 @@ namespace Mysoft.Project.Core
         }
 
         // Fetch a page	
-        public Page<T> Page<T>(long page, long itemsPerPage, string sql, params object[] args)
+        public Pager<T> Page<T>(long page, long itemsPerPage, string sql, params object[] args)
         {
             string sqlCount, sqlPage;
             BuildPageQueries<T>((page - 1) * itemsPerPage, itemsPerPage, sql, ref args, out sqlCount, out sqlPage);
@@ -594,14 +594,10 @@ namespace Mysoft.Project.Core
             int saveTimeout = OneTimeCommandTimeout;
 
             // Setup the paged result
-            var result = new Page<T>();
-            result.CurrentPage = page;
-            result.ItemsPerPage = itemsPerPage;
-            result.TotalItems = ExecuteScalar<long>(sqlCount, args);
-            result.TotalPages = result.TotalItems / itemsPerPage;
-            if ((result.TotalItems % itemsPerPage) != 0)
-                result.TotalPages++;
-
+            var result = new Pager<T>();
+            result.PageIndex = page;
+            result.PageSize = itemsPerPage;
+            result.TotalCount = ExecuteScalar<long>(sqlCount, args);          
             OneTimeCommandTimeout = saveTimeout;
 
             // Get the records
@@ -611,7 +607,7 @@ namespace Mysoft.Project.Core
             return result;
         }
 
-        public Page<T> Page<T>(long page, long itemsPerPage, SqlJointer sql)
+        public Pager<T> Page<T>(long page, long itemsPerPage, SqlJointer sql)
         {
             return Page<T>(page, itemsPerPage, sql.SQL, sql.Arguments);
         }

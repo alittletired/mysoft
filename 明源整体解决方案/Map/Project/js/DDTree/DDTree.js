@@ -135,7 +135,7 @@
              , showCompany: true //是否显示区域公司
              , applySys: '0201'
              , NodeType: { None: -1, Group: 0, Company: 10, EndCompany: 20, Dept: 30, Team: 40, ProjectTeam: 50, Project: 60, EndProject: 70 }
-             , nodeBgColor: { "0": "#DDE0E5", "10": "#E4E7EC", "20": "#EEF0F2", "30": "#F4F5F8", "60": "#F4F5F8", "70": "#F8F9FC" }             
+             , nodeBgColor: { "0": "#DDE0E5", "10": "#E4E7EC", "20": "#EEF0F2", "30": "#F4F5F8", "60": "#F4F5F8", "70": "#F8F9FC" }
 , autoSwitchCompany: true //是否自动切换公司
     };
 
@@ -160,7 +160,7 @@
         that._treeKey = {};
         that._searchHit = {}
         that._searchShow = {};
-        this._popup = {}
+        that._popup = {}
         NodeType = that.options.NodeType
         nodeBgColor = that.options.nodeBgColor
         $.each(that.options.data, function() {
@@ -276,11 +276,11 @@
         if (searchText) {
             that._addColorReg = new RegExp(searchText, "gm");
             that._searchReplace = '<b style="color:red">' + searchText + '</b>';
-            this.buildSearchDropDownItem(this._rootItems, arr, 0)
+            that.buildSearchDropDownItem(this._rootItems, arr, 0)
             html = arr.join('')
 
         } else {
-            this.buildDropDownItem(this._rootItems, arr, 0)
+            that.buildDropDownItem(this._rootItems, arr, 0)
             html = arr.join('')
 
         }
@@ -295,7 +295,6 @@
 
     //ie popup有bug，无法输入字符字母
     DDTree.prototype._input = function(o, keyCode) {
-        var that = this;
 
         //只能输入大小字母和数字
         var c = keyCode;
@@ -316,7 +315,6 @@
         options = this.options;
         var item = this._treeKey[code];
         if (!item) return;
-
         this.setValue(code)
 
 
@@ -571,26 +569,23 @@
         }
         that._searchShow = {};
         var arr = [];
-        if (this.options.showSearch) {
+        if (that.options.showSearch) {
             arr.push('<TABLE  style="TABLE-LAYOUT: fixed" cellSpacing=0 cellPadding=0 width="100%">');
             arr.push('<TR><TD>');
             arr.push('<input style="width:100%" type="text" value style="border:1px solid #CAD3E4"  id="txtSearch" onkeypress="_dropdown._input(this,event.keyCode)" />');
             arr.push('</TD></TR></TBODY></TABLE>');
         }
         arr.push('<ul id="treeUL"  style="list-style: none;padding:0 0 ;margin:0 0;font-size: 9pt; font-family: 宋体, Tahoma, Verdana, Arial; width:100%;"  >');
-        this.buildDropDownItem(this._rootItems, arr, 0, true)
+        that.buildDropDownItem(that._rootItems, arr, 0, true)
         arr.push('</ul>');
 
         // 3、生成下拉菜单
-        var html = this.wrapDropdown(arr.join(''));
-
-        var popup = this.showPopup(html)
-        this._popup = popup
-        popup.document.parentWindow._dropdown = this;
-
+        var html = that.wrapDropdown(arr.join(''));
+        var popup = that.showPopup(html)
+        that._popup = popup
+        popup.document.parentWindow._dropdown = that;
         var txtSearch = popup.document.parentWindow.document.getElementById('txtSearch');
-       
-    
+
         if (txtSearch) {
             that._txtSearch = txtSearch;
             that._txtSearch.value = ''

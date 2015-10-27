@@ -46,14 +46,17 @@ function IsNotNull(val) {
 }
 define(function(require) {
     require('jquery');
-
+    require('/_common/styles/global.css');
+    require('/_grid/map_grid.css');
+    require('/_forms/styles/form.css');
     require('/_controls/number/number.js');
     require('/_controls/datetime/date.js');
     require('/_controls/datetime/time.js');
     require('/_controls/lookup/map_lookup.js');
     require('/_controls/util/util.js');
     require('/_common/scripts/global.js');
-
+    require('/_controls/setting.js');    
+    
     var project = require('project');
 
     //repeater列表
