@@ -27,32 +27,7 @@ namespace Mysoft.Project.Excel
             FileInfo fi = new FileInfo(physicalPath);
             if (!fi.Directory.Exists)
                 fi.Directory.Create();
-
-
-            var json = JToken.FromObject(data);
-            meta.IsArray = json.Type == JTokenType.Array;
-
-            var workbook = meta.Workbook;
-            for (int i = 0; i < workbook.NumberOfSheets; i++)
-            {
-                ISheet sheet = workbook.GetSheetAt(i);             
-                var sheetMeta = meta.Sheets[i];
-                workbook.SetSheetName(i, sheetMeta.SheetName);              
-                FillSheet(sheetMeta, sheet, json);
-
-            }
-
-            //将模版元数据放到excel文件中，便于下次读取
-            var templateSheet = workbook.CreateSheet("模版元数据");
-            templateSheet.ProtectSheet("author:zhulin");
-            templateSheet.TabColorIndex = HSSFColor.Yellow.Index;
-            var row = templateSheet.CreateRow(0);
-            var metastr = JsonConvert.SerializeObject(meta);
-            row.CreateCell(0).SetCellValue(metastr);
-            templateSheet.DisplayZeros = true;
-            var sheetIdx = workbook.GetSheetIndex(templateSheet);
-            workbook.SetSheetHidden(sheetIdx, SheetState.VeryHidden);
-
+            meta.Render(data);
             using (FileStream fs = new FileStream(physicalPath, FileMode.Create))
             {
                 meta.Workbook.Write(fs);
@@ -61,19 +36,7 @@ namespace Mysoft.Project.Excel
             return excelPath;
         }
 
-        static void FillSheet(ExcelSheetMetaData meta, ISheet sheet, JToken json)
-        {
-            foreach (var cellTemplate in meta.CellTemplates)
-            {
-                cellTemplate.SetValue(sheet, json);
-
-            }
-            foreach (var tableTemplate in meta.TableTemplates)
-            {
-                tableTemplate.SetValue(sheet, json);
-            }
-
-        }
+        
         /// <summary>
         /// 导出Excel
         /// </summary>
@@ -109,7 +72,7 @@ namespace Mysoft.Project.Excel
                 namecell = namecell.CopyCellTo(namecell.ColumnIndex + 1);
                 filedcell = filedcell.CopyCellTo(filedcell.ColumnIndex + 1);
             }
-            var meta = ExcelMetaData.FromTemplate(workbook);
+            var meta = ExcelMetaData.FromExcel(workbook);
             return ExportExcel(meta, data);
 
 

@@ -600,6 +600,12 @@
 
 
     }
+    DDTree.prototype.getValue = function() {
+        return this._selItem.id;
+    }
+    DDTree.prototype.getselItem = function() {
+        return this._selItem;
+    }
     return DDTree;
 
 
