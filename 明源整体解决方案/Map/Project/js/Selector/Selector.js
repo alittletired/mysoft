@@ -1,4 +1,5 @@
 ﻿define(function(require) {
+
     var project = require('../project')
     var Selector = {}
     Selector.open = function(options) {

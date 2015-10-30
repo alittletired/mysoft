@@ -74,8 +74,9 @@ method&properties
 
 | 名称     | 类型     | 说明 |
 | :------------- | :------------- |---|
-| _selItem |  property |  当前控件选择的item  |
-| setValue |  method | 设置控件的值，传入code或者id |
+| getselItem |  function |  获取当前控件选择的item  |
+| setValue |  function | 设置控件的值，传入code或者id |
+| getValue |  function |  获取当前控件选择的guid |
 
 
 
