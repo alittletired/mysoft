@@ -59,13 +59,17 @@ namespace Mysoft.Project.Excel
             var sheet = workbook.GetSheetAt(0);
             var namecell = sheet.GetRow(0).GetCell(0);
             var filedcell = sheet.GetRow(1).GetCell(0);
-
+            //添加树形支持
+            var treeCode = "";
+            var treeCol = cols.FirstOrDefault(o => !string.IsNullOrEmpty(o.TreeCode));
+            if (treeCol != null) {
+                treeCode = ",treeCode:" + treeCol.TreeCode;
+            }
             foreach (var col in cols)
             {
                 namecell.SetCellValue(col.Name);
-                if (
-                filedcell.ColumnIndex == 0)
-                    filedcell.SetCellValue("#{each:$root,value:" + col.Filed + "}");
+                if (filedcell.ColumnIndex == 0)
+                    filedcell.SetCellValue("#{each:$root,value:" + col.Filed + treeCode+"}");
                 else
                     filedcell.SetCellValue("#{" + col.Filed + "}");
                 sheet.SetColumnWidth(filedcell.ColumnIndex, col.Width * 32);

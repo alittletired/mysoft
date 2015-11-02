@@ -1,0 +1,24 @@
+{
+  "name": "mysoft.project",
+  "version": "1.0.0",
+  "description": "项目小平台",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-debug": "^2.1.2",
+    "gulp-foreach": "^0.1.0",
+    "gulp-minify": "0.0.5",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-util": "^3.0.7",
+    "string": "^3.3.1",
+    "through2": "^2.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "zhulin",
+  "license": "ISC"
+}
