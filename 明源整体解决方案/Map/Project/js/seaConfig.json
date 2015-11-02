@@ -1,0 +1,17 @@
+{
+  "alias": {
+    "json": "json",
+    "jquery": "jquery",
+    "DDTree": "DDTree/DDTree",
+    "project": "project",
+    "Selector": "Selector/Selector",
+    "myRepeater": "myRepeater/myRepeater"
+  },
+  "vars": {
+    "locale": "zh-cn"
+  },
+  "preload": ["jquery", "json"],
+  "debug": true,
+  "base": "/project/js/",
+  "charset": "utf-8"
+}

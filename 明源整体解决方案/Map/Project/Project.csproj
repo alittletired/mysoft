@@ -79,6 +79,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Entity.cs</LastGenOutput>
     </Content>
+    <Content Include="gulpfile.js" />
     <Content Include="js\DDTree\usp_myProjFilterBase.sql" />
     <Content Include="js\Excel\demo.htm" />
     <Content Include="js\myRepeater\demo.html" />
@@ -99,6 +100,7 @@
     <Content Include="js\jquery.js" />
     <Content Include="js\sea-debug.js" />
     <Content Include="js\sea.js" />
+    <Content Include="js\sea.min.js" />
     <Content Include="js\json.js" />
     <Content Include="js\Selector\Selector.js" />
     <Content Include="js\seaConfig.js" />
@@ -108,6 +110,7 @@
     <Content Include="js\Selector\demo.htm">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Content Include="js\seainit.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="js\DDTree\ddttreeupdate.json" />

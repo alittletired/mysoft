@@ -24,7 +24,7 @@ namespace Mysoft.Project.Core
        {
           get;set;
        }
-
+       public string TreeCode { get; set; }
       
    }
 }

@@ -2,7 +2,12 @@
 Thumbs.db
 #Ignore files build by Visual Studio
 !*
-
+bower_components/
+node_modules/
+Assets/
+TempFiles/
+hbmXml/
+log/
 !*.png
 *.user
 *.aps
