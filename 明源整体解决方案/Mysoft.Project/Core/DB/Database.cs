@@ -1082,6 +1082,7 @@ namespace Mysoft.Project.Core
             {
                 OpenSharedConnection();
                  pd =pd?? PocoData.ForObject(poco);
+                 var opd = PocoData.ForObject(poco);
                  var primaryKeyName = pd.TableInfo.PrimaryKey;
                  var autoIncrement = false;
                  var tableName = pd.TableInfo.TableName;
@@ -1093,9 +1094,10 @@ namespace Mysoft.Project.Core
                         var names = new List<string>();
                         var values = new List<string>();
                         var index = 0;
-                        foreach (var i in pd.Columns)
+                        foreach (var i in opd.Columns)
                         {
-                            // Don't insert result columns
+                            if (!pd.Columns.ContainsKey(i.Key))
+                                continue;
                             if (i.Value.ResultColumn)
                                 continue;
                             // Don't insert ignore columns
@@ -1114,7 +1116,7 @@ namespace Mysoft.Project.Core
 
                             names.Add(EscapeSqlIdentifier(i.Key));
                             values.Add(string.Format("{0}{1}", _paramPrefix, index++));
-                            AddParam(cmd, i.Value.GetValue(poco), _paramPrefix);
+                            AddParam(cmd, opd.Columns[i.Key].GetValue(poco), _paramPrefix);
                         }
 
                         cmd.CommandText = string.Format("INSERT INTO {0} ({1}) VALUES ({2})",
@@ -1212,7 +1214,7 @@ namespace Mysoft.Project.Core
                         if (primaryKeyName != null)
                         {
                             PocoColumn pc;
-                            if (pd.Columns.TryGetValue(primaryKeyName, out pc))
+                            if (opd.Columns.TryGetValue(primaryKeyName, out pc))
                             {
                                 pc.SetValue(poco, pc.ChangeType(id));
                             }
@@ -1239,11 +1241,12 @@ namespace Mysoft.Project.Core
             return Update(poco, null);
         }
         // Update a record with values from a poco.  primary key value can be either supplied or read from the poco
-        public int Update( object poco, PocoData pd)
+        public int Update(object poco, PocoData pd)
         {
             try
             {
                 pd = pd ?? PocoData.ForObject(poco);
+                var opd = PocoData.ForObject(poco);
                 var primaryKeyName = pd.TableInfo.PrimaryKey;
 
                 OpenSharedConnection();
@@ -1253,32 +1256,34 @@ namespace Mysoft.Project.Core
                     {
                         var sb = new StringBuilder();
                         var index = 0;
-                        var pc = pd.Columns[primaryKeyName];
-                      var  primaryKeyValue = pc.GetValue(poco);
-                            foreach (var i in pd.Columns)
+                        var pc = opd.Columns[primaryKeyName];
+                        var primaryKeyValue = pc.GetValue(poco);
+                        foreach (var i in opd.Columns)
+                        {
+                            if (!pd.Columns.ContainsKey(i.Key))
+                                continue;
+                            // Dont update Ignore  columns
+                            if (pd.IgnoreColumns.ContainsKey(i.Key))
+                                continue;
+                            // Don't update the primary key, but grab the value if we don't have it
+                            if (string.Compare(i.Key, primaryKeyName, true) == 0)
                             {
-                                // Dont update Ignore  columns
-                                if (pd.IgnoreColumns.ContainsKey(i.Key))
-                                    continue;
-                                // Don't update the primary key, but grab the value if we don't have it
-                                if (string.Compare(i.Key, primaryKeyName, true) == 0)
-                                {                                    
-                                    continue;
-                                }
-
-                                // Dont update result only columns
-                                if (i.Value.ResultColumn)
-                                    continue;
-
-                                // Build the sql
-                                if (index > 0)
-                                    sb.Append(", ");
-                                sb.AppendFormat("{0} = {1}{2}", EscapeSqlIdentifier(i.Key), _paramPrefix, index++);
-
-                                // Store the parameter in the command
-                                AddParam(cmd, i.Value.GetValue(poco), _paramPrefix);
+                                continue;
                             }
-                       
+
+                            // Dont update result only columns
+                            if (i.Value.ResultColumn)
+                                continue;
+
+                            // Build the sql
+                            if (index > 0)
+                                sb.Append(", ");
+                            sb.AppendFormat("{0} = {1}{2}", EscapeSqlIdentifier(i.Key), _paramPrefix, index++);
+
+                            // Store the parameter in the command
+                            AddParam(cmd, opd.Columns[i.Key].GetValue(poco), _paramPrefix);
+                        }
+
 
                         cmd.CommandText = string.Format("UPDATE {0} SET {1} WHERE {2} = {3}{4}",
                                             EscapeTableName(pd.TableInfo.TableName), sb.ToString(), EscapeSqlIdentifier(primaryKeyName), _paramPrefix, index++);

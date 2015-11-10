@@ -69,6 +69,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\myBusinessUnit.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\myStation.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -103,14 +109,13 @@
     <Content Include="js\sea.min.js" />
     <Content Include="js\json.js" />
     <Content Include="js\Selector\Selector.js" />
-    <Content Include="js\seaConfig.js" />
+    <None Include="js\seaConfig.json" />
     <Content Include="js\Selector\Selector.htm">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="js\Selector\demo.htm">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="js\seainit.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="js\DDTree\ddttreeupdate.json" />

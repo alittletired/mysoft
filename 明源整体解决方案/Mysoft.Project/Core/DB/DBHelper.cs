@@ -95,10 +95,12 @@ namespace Mysoft.Project.Core
             var db = GetDatabase();
             using (var trans = db.BeginTransaction())
             {
+                //Batch size= 65,536 * Network Packet Size
+                //65,536 *1000
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < sqls.Count; i++)
                 {
-                    if (i > 0 && i % 50 == 0)
+                    if (i > 0 && i % 5000 == 0)
                     {
                         db.Execute(sb.ToString());
                         sb = new StringBuilder();
@@ -113,6 +115,7 @@ namespace Mysoft.Project.Core
           
 
         }
+
         public static int Execute(string sql, params  object[] args)
         {
 
@@ -215,6 +218,7 @@ namespace Mysoft.Project.Core
             var pocoClos = columns.Intersect(pocoMeta.Columns.Keys, StringComparer.OrdinalIgnoreCase);
             pocoClos = pocoClos.Where(col => !pocoMeta.IgnoreColumns.ContainsKey(col)).ToList();
             var strFileds = string.Join(",", pocoClos.ToArray());
+         
             var strValues = string.Join(",@", pocoClos.ToArray());
             sql = string.Format(sql, meta.TableInfo.TableName, strFileds, "@" + strValues);
             return Execute(sql, poco);
@@ -227,8 +231,10 @@ namespace Mysoft.Project.Core
         public static Entity GetByID<Entity>(object id)
         {
             var meta = PocoData.ForType(typeof(Entity));
-            string sql = "select * from {0} where {1}=@0";
-            sql = string.Format(sql, meta.TableInfo.TableName, meta.TableInfo.PrimaryKey);
+            string sql = "select {2} from {0} where {1}=@0";
+            var columns = meta.Columns.Keys.Where(col => !meta.IgnoreColumns.ContainsKey(col)).ToArray();
+            var strFileds = string.Join(",", columns.ToArray());
+            sql = string.Format(sql, meta.TableInfo.TableName, meta.TableInfo.PrimaryKey, strFileds);
             return GetDatabase().FirstOrDefault<Entity>(sql, id);
         }
     }
