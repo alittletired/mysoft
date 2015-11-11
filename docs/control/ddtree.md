@@ -8,7 +8,7 @@
 DDTree是一个通用的选择公司，部门，项目控件
 
 **由于平台只提供末级公司有过滤权限的末级项目，如要使用集团级或者区域公司的末级项目，
-需要改造存储过程，存储过程的文件路径/project/ddtree/usp_myProjFilterBase.sql**
+需要修改存储过程 [usp_myProjFilterBase.sql](usp_myProjFilterBase.sql)**
 
 ##Quick start
 

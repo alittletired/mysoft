@@ -64,29 +64,13 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entity\Entity.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Entity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\myBusinessUnit.cs">
-      <DependentUpon>Entity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\myStation.cs">
-      <DependentUpon>Entity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ajax.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Entity\Entity.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Entity.cs</LastGenOutput>
-    </Content>
     <Content Include="gulpfile.js" />
-    <Content Include="js\DDTree\usp_myProjFilterBase.sql" />
     <Content Include="js\Excel\demo.htm" />
     <Content Include="js\myRepeater\demo.html" />
     <Content Include="js\myRepeater\myRepeater.js" />
@@ -100,11 +84,8 @@
     <Content Include="js\DDTree\img\icon_com1.png" />
     <Content Include="js\DDTree\img\icon_com2.png" />
     <Content Include="js\DDTree\img\ico_16_10.gif" />
-    <Content Include="js\DDTree\install.htm" />
     <Content Include="js\DDTree\CompanyMenuTree.js" />
-    <Content Include="js\jquery-1.11.3.min.js" />
     <Content Include="js\jquery.js" />
-    <Content Include="js\sea-debug.js" />
     <Content Include="js\sea.js" />
     <Content Include="js\sea.min.js" />
     <Content Include="js\json.js" />
@@ -118,7 +99,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="js\DDTree\ddttreeupdate.json" />
     <None Include="js\Excel\NullTemplate.xls" />
     <None Include="js\Excel\Template.xls" />
   </ItemGroup>
