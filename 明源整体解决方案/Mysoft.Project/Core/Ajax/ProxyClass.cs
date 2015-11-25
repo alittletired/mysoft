@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
+using Mysoft.Project.Json;
 using System.ComponentModel;
 
 namespace Mysoft.Project.Core
@@ -13,26 +13,26 @@ namespace Mysoft.Project.Core
         static IntConverter intConverter = new IntConverter();
         public static string SerializeObject(object obj)
         {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+            return JsonConvert.SerializeObject(obj);
         }
 
         public static object DeserializeObject(string val)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject(val);
+            return JsonConvert.DeserializeObject(val);
         }
         public static object DeserializeObject(string val,Type type)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject(val, type, boolConverter, intConverter);
+            return JsonConvert.DeserializeObject(val, type, boolConverter, intConverter);
         }
         public static T DeserializeObject<T>(string val)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(val, boolConverter, intConverter);
+            return JsonConvert.DeserializeObject<T>(val, boolConverter, intConverter);
         }
         public static string ToJson(this object obj) {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+            return JsonConvert.SerializeObject(obj);
         }
     }
 

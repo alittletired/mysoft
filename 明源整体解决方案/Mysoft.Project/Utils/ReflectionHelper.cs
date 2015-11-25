@@ -6,7 +6,7 @@ using System.Text;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.IO;
-using Newtonsoft.Json.Linq;
+using Mysoft.Project.Json.Linq;
 namespace Mysoft.Project.Core
 {
     /// <summary>
@@ -143,8 +143,6 @@ namespace Mysoft.Project.Core
 
         public static object InvokeMethod(string callMethod, string assbemlyName, params object[] paramArr)
         {
-
-
             var methodInfo = GetMethod(callMethod, assbemlyName, paramArr);
             object instance = null;
             if (!methodInfo.IsStatic)
@@ -211,5 +209,7 @@ namespace Mysoft.Project.Core
                 throw new Exception("调用方法'" + type.FullName + "." + methodInfo.Name + "'失败\n出错信息：" + ex.Message, ex);
             }
         }
+
+    //    public static object InvokeGenericTypeMethod(string callMethod)
     }
 }
