@@ -15,34 +15,43 @@ using System.IO;
 
 namespace Mysoft.Project.Core
 {
-   
+
     public static class ConverterExtensions
     {
+        static Dictionary<Type, object> typeDefaultValues = new Dictionary<Type, object>();
+        static readonly MethodInfo _TypeDefaultValueMethod = typeof(ConverterExtensions).GetMethod("GetTypeDefaultValue", BindingFlags.NonPublic | BindingFlags.Static);
+
         static public T ChangeType<T>(this object obj)
         {
             return (T)ChangeType(obj, typeof(T));
         }
+        static object GetTypeDefaultValue<T>()
+        {
+            return default(T);
+        }
+
         static public object ChangeType(this object obj, Type type)
         {
-            if (obj == null && !type.IsValueType)
-                return null;
-            if (obj == null && type.IsValueType && !type.GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
-                throw new NullReferenceException("无法转换为空的值");
+            //对象为空则返回目标类型的默认值
+            if (obj == null)
+            {
+                if (type.IsClass)
+                    return null;
+                var method = _TypeDefaultValueMethod.MakeGenericMethod(new[] { type });
+                return method.Invoke(null, null);
+            }
 
             if (type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
             {
-                if (obj == null)
-                {
-                    return null;
-                }
                 NullableConverter nullableConverter = new NullableConverter(type);
                 type = nullableConverter.UnderlyingType;
             }
-
             if (type == typeof(Guid)) return new Guid(obj.ToString());
             if (type == typeof(Version)) return new Version(obj.ToString());
-
-            return Convert.ChangeType(obj.ToString(), type);
+            var val = obj;
+            if (obj.GetType() == typeof(Guid))
+                val = obj.ToString();
+            return Convert.ChangeType(val, type);
         }
     }
 

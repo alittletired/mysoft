@@ -64,12 +64,21 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ajax.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Entity.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Entity.cs</LastGenOutput>
+    </Content>
     <Content Include="gulpfile.js" />
     <Content Include="js\Excel\demo.htm" />
     <Content Include="js\myRepeater\demo.html" />

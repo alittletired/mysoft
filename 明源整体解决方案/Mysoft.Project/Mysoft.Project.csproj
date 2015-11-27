@@ -39,9 +39,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="Mysoft.Project.Json, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="NPOI, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
@@ -100,7 +98,7 @@
     <EmbeddedResource Include="Core\Ajax\AjaxServiceProxy.js">
       <CustomToolNamespace>Mysoft.Project.Ajax</CustomToolNamespace>
     </EmbeddedResource>
-    <Content Include="lib\Newtonsoft.Json.dll" />
+    <Content Include="lib\Mysoft.Project.Json.dll" />
     <Content Include="lib\NPOI.dll" />
     <Content Include="lib\NPOI.OOXML.dll" />
     <Content Include="lib\NPOI.OpenXml4Net.dll" />
