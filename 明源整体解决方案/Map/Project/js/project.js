@@ -22,7 +22,7 @@
                     parentWin = parentWin.parent;
                 }
                 parentWin.__error__ = json.__error__;
-                if ( window.location.host.indexOf('localhost') > -1)
+                if (window.location.host.indexOf('localhost') > -1)
                     alert(json.__error__);
                 else if (!window.hiddenServiceError)
                     alert('操作出错，请联系系统管理员！');
@@ -37,7 +37,7 @@
         $.ajax({ url: serverUrl + '?invokeMethod=' + invokeMethod, contentType: 'application/x-www-form-urlencoded; charset=UTF-8', data: { postdata: JSON.stringify(data) }, async: async, type: 'POST', cache: false, dataType: 'json' }).done(ajaxdone);
         return returnValue;
 
-    };  
+    };
 
     project.addStyle = function(styleText) {
         style = document.createElement('style');
@@ -48,7 +48,18 @@
             style.appendChild(document.createTextNode(styleText));
         document.getElementsByTagName('head')[0].appendChild(style);
     }
-
+    project.generateUUID = function() {
+        var d = new Date().getTime();
+        if (window.performance && typeof window.performance.now === "function") {
+            d += performance.now(); ; //use high-precision timer if available
+        }
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = (d + Math.random() * 16) % 16 | 0;
+            d = Math.floor(d / 16);
+            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+        return uuid;
+    }
 
     //兼容小平台传参调用
     window.my = window.my || {};

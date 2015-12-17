@@ -86,11 +86,15 @@ namespace Mysoft.Project.Core
             get
             {
                 if (!string.IsNullOrEmpty(_connectionString))
-                    return _connectionString;  
-                _connectionString = (string)ReflectionHelper.InvokeMethod("Mysoft.Map.Data.MyDB.GetSqlConnectionString", "Mysoft.Map.Core");
+                    return _connectionString;
+                try
+                {
+                    _connectionString = (string)ReflectionHelper.InvokeMethod("Mysoft.Map.Data.MyDB.GetSqlConnectionString", "Mysoft.Map.Core");
+                }
+                catch { }
                 return _connectionString;
             }
-            private set { _connectionString = value; }
+             set { _connectionString = value; }
         }
 
         public static DBType DBType
@@ -170,6 +174,8 @@ namespace Mysoft.Project.Core
         [ThreadStatic]
         static Database _db;
         public static Transaction BeginTransaction() {
+            if (string.IsNullOrEmpty(ConnectionString))
+                return new Transaction(null);
             return GetDatabase().BeginTransaction();
         }
         static Database GetDatabase()

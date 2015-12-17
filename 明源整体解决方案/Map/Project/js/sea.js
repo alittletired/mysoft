@@ -10,9 +10,10 @@ var config={
         "json": "json.js?v=1445338041",
         "jquery": "jquery.js?v=1445338041",
         "DDTree": "DDTree/DDTree.js?v=1446000685",
-        "project": "project.js?v=1445907658",
+        "project": "project.js?v=145907658",
         "Selector": "Selector/Selector.js?v=1446027869",
-        "myRepeater": "myRepeater/myRepeater.js?v=1445842326"
+        "myRepeater": "myRepeater/myRepeater.js?v=1445842326",
+          "Excel": "Excel/Excel.js?v=13"
     },
     "vars": {
         "locale": "zh-cn"

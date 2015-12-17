@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Data;
 using System.IO;
-using NPOI.HSSF.UserModel;
+using Mysoft.Project.NPOI.HSSF.UserModel;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using NPOI.SS.UserModel;
+using Mysoft.Project.NPOI.SS.UserModel;
 using System.Text;
 using System.Web.Hosting;
 using Mysoft.Project.Json.Linq;
 using System.Linq;
 using Mysoft.Project.Json;
-using NPOI.HSSF.Util;
+using Mysoft.Project.NPOI.HSSF.Util;
 using Mysoft.Project.Core;
 namespace Mysoft.Project.Excel
 {
@@ -34,9 +34,7 @@ namespace Mysoft.Project.Excel
             }
 
             return excelPath;
-        }
-
-        
+        }        
         /// <summary>
         /// 导出Excel
         /// </summary>
@@ -49,7 +47,6 @@ namespace Mysoft.Project.Excel
             return ExportExcel(meta, data);
           
         }
-
         //自定义简单列表导出
         public static string ExportExcel(List<ExcelColumn> cols, object data)
         {
@@ -67,11 +64,11 @@ namespace Mysoft.Project.Excel
             }
             foreach (var col in cols)
             {
-                namecell.SetCellValue(col.Name);
+                namecell.SetCellValue(col.Title);
                 if (filedcell.ColumnIndex == 0)
-                    filedcell.SetCellValue("#{each:$root,value:" + col.Filed + treeCode+"}");
+                    filedcell.SetCellValue("#{each:$root,bind:" + col.Bind + treeCode + "}");
                 else
-                    filedcell.SetCellValue("#{" + col.Filed + "}");
+                    filedcell.SetCellValue("#{" + col.Bind + "}");
                 sheet.SetColumnWidth(filedcell.ColumnIndex, col.Width * 32);
                 namecell = namecell.CopyCellTo(namecell.ColumnIndex + 1);
                 filedcell = filedcell.CopyCellTo(filedcell.ColumnIndex + 1);
@@ -82,30 +79,35 @@ namespace Mysoft.Project.Excel
 
         }
 
-        public static T Import<T>(string filePath) {
+        public static T Import<T>(string filePath)
+        {
+
+            var token = Import(filePath);
+            var data = token.ToObject<T>();
+            return data;
+        }
+        public static JToken Import(string filePath)
+        {
 
             if (filePath.StartsWith("/"))
                 filePath = HostingEnvironment.MapPath(filePath);
             IWorkbook workbook = WorkbookFactory.Create(filePath);
-            ExcelMetaData meta=new ExcelMetaData();
+            ExcelMetaData meta = new ExcelMetaData();
             for (int i = 0; i < workbook.NumberOfSheets; i++)
             {
                 ISheet sheet = workbook.GetSheetAt(i);
-                if (sheet.SheetName == "模版元数据") {
-                  
+                if (sheet.SheetName == "模版元数据")
+                {
+
                     var json = sheet.GetRow(0).GetCell(0).ToString();
                     meta = JsonConvert.DeserializeObject<ExcelMetaData>(json);
                     break;
                 }
-                
+
             }
 
-          
-         
-           
-            
             //判断是否是数组或者对象
-            JToken token=JToken.Parse("{}");
+            JToken token = JToken.Parse("{}");
             if (meta.IsArray)
                 token = JToken.Parse("[]");
 
@@ -124,9 +126,8 @@ namespace Mysoft.Project.Excel
 
 
             }
-            var data = token.ToObject<T>();
-            return data;
+       
+            return token;
         }
-
     }
 }

@@ -81,6 +81,7 @@
     </Content>
     <Content Include="gulpfile.js" />
     <Content Include="js\Excel\demo.htm" />
+    <Content Include="js\Excel\Excel.js" />
     <Content Include="js\myRepeater\demo.html" />
     <Content Include="js\myRepeater\myRepeater.js" />
     <Content Include="js\myRepeater\_imgs\ico_Arrow_D.gif" />

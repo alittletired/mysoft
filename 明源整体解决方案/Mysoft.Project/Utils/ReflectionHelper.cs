@@ -16,7 +16,7 @@ namespace Mysoft.Project.Core
     {
         static Dictionary<string, MethodInfo> _methodCache = new Dictionary<string, MethodInfo>();
         static Dictionary<string, Type> _typeCache = new Dictionary<string, Type>();
-
+        static Dictionary<string, Assembly> _assemblyCache = new Dictionary<string, Assembly>();
 
         /// <summary>
         /// 获取资源文件的流
@@ -108,8 +108,7 @@ namespace Mysoft.Project.Core
                 assbemlyName = typeName.Substring(0, typeName.LastIndexOf("."));
             }
             var assembly = GetAssembly(assbemlyName);
-            if (assembly == null)
-                throw new FileNotFoundException(assbemlyName + ".dll文件不存在!");
+         
             type = assembly.GetType(typeName);
             if (type == null)
             {
@@ -124,19 +123,30 @@ namespace Mysoft.Project.Core
         static Assembly GetAssembly(string assemblyName)
         {
             Assembly assembly = null;
-            while (assemblyName.LastIndexOf('.') > 0)
+            if (_assemblyCache.TryGetValue(assemblyName, out assembly))
+            {
+                return assembly;
+            }
+            var currAssemblyName = assemblyName;
+            var listNames = new List<string>();
+            while (assembly == null)
             {
                 try
                 {
-                    assembly = Assembly.Load(assemblyName);
+                    listNames.Add(currAssemblyName);
+                    assembly = Assembly.Load(currAssemblyName);
                 }
                 catch { }
-                if (assembly != null)
-                {
-                    return assembly;
-                }
-                assemblyName = assemblyName.Substring(0, assemblyName.LastIndexOf('.'));
+
+                if (currAssemblyName.LastIndexOf('.') < 0)
+                    break;
+                currAssemblyName = currAssemblyName.Substring(0, currAssemblyName.LastIndexOf('.'));
             }
+            if (assembly == null)
+            {
+                throw new FileNotFoundException("未找到程序集:\n" + string.Join("\n", listNames.ToArray()));
+            }
+            _assemblyCache[assemblyName] = assembly;
             return assembly;
 
         }
@@ -152,20 +162,19 @@ namespace Mysoft.Project.Core
             return methodInfo.Invoke(instance, paramArr);
 
         }
-        public static object Invoke(string callMethod, string jsonstr)
+        public static object Invoke(string callMethod, object param)
         {
             var methodInfo = GetMethod(callMethod, "");
-            return Invoke(methodInfo, jsonstr);
+            return Invoke(methodInfo, param);
         }
-        public static object Invoke(MethodInfo methodInfo, string jsonstr)
+        public static object Invoke(MethodInfo methodInfo, JObject json)
         {
             ParameterInfo[] paramterInfos = methodInfo.GetParameters();
             var type = methodInfo.DeclaringType;
 
             object[] paramters = new object[paramterInfos.Length];
             try
-            {
-                var json = JObject.Parse(jsonstr);
+            {       
                 for (int i = 0; i < paramterInfos.Length; i++)
                 {
                     Type parameterType = paramterInfos[i].ParameterType;
@@ -208,6 +217,18 @@ namespace Mysoft.Project.Core
             {
                 throw new Exception("调用方法'" + type.FullName + "." + methodInfo.Name + "'失败\n出错信息：" + ex.Message, ex);
             }
+         
+        }
+        public static object Invoke(MethodInfo methodInfo, object param)
+        {
+            JObject json;
+            if (param.GetType() == typeof(string))
+                json = JObject.Parse((string)param);
+            else if (param.GetType() == typeof(JObject))
+                return Invoke(methodInfo, (JObject)param);
+            else
+                json = JObject.FromObject(param);
+            return Invoke(methodInfo, json);
         }
 
     //    public static object InvokeGenericTypeMethod(string callMethod)

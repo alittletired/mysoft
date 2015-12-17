@@ -21,63 +21,84 @@ toJSONString : function(filter){return JSON.stringify(this,filter)},
 | 属性     | 说明     |值
 | :------------- | :------------- |:----|
 | each |  绑定表格  |数据源中的列表字段，如果绑定数据源本身，则使用$root
-| value |  设置单元格绑定的字段   |
-| treeCode |  设置树型code绑定字段，在each节点中有效  |
-
+| bind |  设置单元格绑定的字段   | null
+| treeCode |  设置树型code绑定字段，在each节点中有效  | null
+| islock |  设置是否锁定单元格  | 0,1
+| ishide |  设置是否隐藏单元格,值  | 0,1
 
 ![exceltemplate image](exceltemplate.png)
 
 ##Quick start
 
 + 导出用法
+后台定义数据源,
 ```C#  
-
-public string TestExportDatatable(string fileTemplate)
+public DataTable ExportDateExcel(string filter, string xml)
 {
-
-		var data = DBHelper.GetDataTable(@"select top 300 RoomGUID,Room,RoomCode,HuXing,Total,Price,Status,SLControlDate
-				from p_Room where SLControlDate is not null  order by  Roomcode ");
-		var str = ExcelHelper.ExportExcel(fileTemplate, data);
-		return str;
+	var sql = @" SELECT  * FROM		 ep_room		
+		 WHERE	  (1=1)		 AND (2=2)		 ORDER BY  RoomCode";
+	var filtersql = Mysoft.Map.Utility.General.XML2Filter(filter, "ep_Room", "RoomGUID");
+	sql = sql.Replace("2=2", filtersql);
+	return DBHelper.GetDataTable(sql);
 }
 ```
-+ 无须模版，自定义列导出
-```C#
 
-public string TestExportDynamic(string filePath)
-{
-		var data = DBHelper.GetDataTable(@"select top 300 RoomGUID,Room,RoomCode,HuXing,Total,Price,Status,SLControlDate
-																				from p_Room where SLControlDate is not null  order by  Roomcode ");
-		var cols = new List<ExcelColumn>()
-		{
-				new ExcelColumn{ Filed="RoomGUID", Name="房间GUID", Width=100,TreeCode="RoomCode"}
-			 ,new ExcelColumn{ Filed="Room", Name="房间", Width=200}
-			 ,new ExcelColumn{ Filed="RoomCode", Name="房间编码", Width=150}
-			 ,new ExcelColumn{ Filed="HuXing", Name="户型", Width=200}
-			 ,new ExcelColumn{ Filed="Total", Name="总价", Width=100}
-			 ,new ExcelColumn{ Filed="Price", Name="价格", Width=100}
-			 ,new ExcelColumn{ Filed="Status", Name="状态", Width=120}
-			 ,new ExcelColumn{ Filed="SLControlDate", Name="结束日期", Width=100}
-		};
-
-		return ExcelHelper.ExportExcel(cols, data);
-
+```javascript
+var exceloptions = {
+    serviceMethod: 'Mysoft.Kfxt.Services.JFFJGLService.ExportDateExcel' //后台数据提供方法
+      , params: getExcelParam  //传递给serviceMethod后台方法的参数,可以是对象或者函数,函数必须返回对象
+      , fileName: '20151211.xls'//导出的文件名称
+      , templateFile: '/Kfxt/ZSJF/JFFJGL_Grid_template.xls' //模版文件地址
 }
+function getExcelParam() {
+    return { xml: $('#__xml').val(), filter: $('#__filter').val() }
+}
+    function ExportDateExcel() {
+        seajs.use('Excel', function(excel) {
+
+        excel.exporttExcel(exceloptions);
+        });
+    }
+
 ```
+
 
 + 导入
 
 ```C#
-public DataTable TestImportDatatable(string filePath)
+public string ImportDateExcel(List<JFFJGLDateDTO> data)
 {
+	StringBuilder sb = new StringBuilder();
+	foreach (var item in data)
+	{
+		var CFHDate = string.IsNullOrEmpty(item.CFHDate) ? "null" : "'" + item.CFHDate + "'";			 
+		sb.AppendLine("update s_Contract set CFHDate=" + CFHDate + " where ContractGUID='" + item.ContractGUID + "';");
 
-	return ExcelHelper.Import<DataTable>(filePath);
 
+	}
+	DBHelper.Execute(sb.ToString());
+	return string.Empty;
 }
-public List<p_Room> TestImportList(string filePath)
-{
-	return ExcelHelper.Import<List<p_Room>>(filePath);
 
-}
+ ```
 
-			 ```
+ ```javascript
+ var importoptions = {
+	   serviceMethod: 'Mysoft.Kfxt.Services.JFFJGLService.ImportDateExcel' //后台导入提供方法
+	 , params: {}  //传递给serviceMethod后台方法的参数,可以是对象或者函数,函数必须返回对象
+	 , docType: '交付房间日期' //上传文档的类型,p_document表中docType
+	 , id: '' //可选,p_document表中refguid
+   }
+   function ImportDateExcel() {
+	   seajs.use('Excel', function(excel) {
+		   var err = excel.importExcel(importoptions);
+		   if (err)
+			   return alert(err);
+		   else {
+			   alert("导入成功")
+		   }
+		   appGrid.frameElement.Query();
+	   });
+   }
+
+ ```

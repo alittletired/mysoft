@@ -10,11 +10,11 @@ using System.IO;
 using System.Web.Hosting;
 using System.Data;
 using System.Text.RegularExpressions;
-using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
+using Mysoft.Project.NPOI.HSSF.UserModel;
+using Mysoft.Project.NPOI.SS.UserModel;
+using Mysoft.Project.NPOI.XSSF.UserModel;
 using Mysoft.Project.Json;
-using NPOI.HSSF.Util;
+using Mysoft.Project.NPOI.HSSF.Util;
 using Mysoft.Project.Json.Linq;
 namespace Mysoft.Project.Excel
 {
@@ -22,7 +22,7 @@ namespace Mysoft.Project.Excel
     {
         int RowIndex { get; set; }
         int ColIndex { get; set; }
-        string BindName { get; set; }
+       
         void SetValue(ISheet sheet, JToken token);
         void GetValue(ISheet sheet, JToken token);
     }
@@ -31,7 +31,11 @@ namespace Mysoft.Project.Excel
     {
         public int RowIndex { get; set; }
         public int ColIndex { get; set; }
-        public string BindName { get; set; }
+        public string Bind { get; set; }
+        public string Format { get; set; }
+        public bool IsLock { get; set; }
+        public bool IsHide { get; set; }
+        public int Width { get; set; }
         public virtual void SetCellValue(ICell cell, JToken token) {
             if (token == null)
             {
@@ -68,12 +72,10 @@ namespace Mysoft.Project.Excel
                 var ms = ex.Message;
             }
         }
-
-
         public virtual void SetValue(ISheet sheet, JToken token)
         {
             var cell = sheet.GetRow(this.RowIndex).GetCell(this.ColIndex);          
-            SetCellValue(cell,token[BindName] );
+            SetCellValue(cell,token[Bind] );
         }
         public virtual void GetValue(ISheet sheet, JToken token)
         {
@@ -84,7 +86,7 @@ namespace Mysoft.Project.Excel
         {
             if (cell == null) return;
             var str = cell.ToString().Trim();
-            token[BindName] = str;  
+            token[Bind] = str;  
         }
     }
     
@@ -92,6 +94,7 @@ namespace Mysoft.Project.Excel
     {
      
         public string Direction { get; set; }
+        public string Each { get; set; }
         public List< ExcelCell> Cells { get; set; }
         public ExcelTable() {
             Cells = new List<ExcelCell>();
@@ -99,28 +102,30 @@ namespace Mysoft.Project.Excel
         public string TreeCode { get; set; }
         public override void SetValue(ISheet sheet, JToken token)
         {
-            JArray tokens;
-            if (this.BindName == "$root")
+            JArray data;
+            if (this.Each == "$root")
             {
-                tokens = (JArray)token;
+                data = (JArray)token;
             }
             else
             {
-                tokens = (JArray)token[BindName];
+                data = (JArray)token[Each];
             }
             var row = sheet.GetRow(RowIndex);
 
-            var grouprows = ExcelGroupRow.GetGroupRows(tokens, TreeCode);
+            var grouprows = ExcelGroupRow.GetGroupRows(data, TreeCode);
 
-            for (int i = 0; i < tokens.Count; i++)
+            for (int i = 0; i < data.Count; i++)
             {
-                var item = tokens[i];
+                var item = data[i];
                 foreach (var cellTemplate in Cells)
                 {
                     var cell = row.GetCell(cellTemplate.ColIndex);
-                    cellTemplate.SetCellValue(cell, item[cellTemplate.BindName]);
+                    var val = item[cellTemplate.Bind];
+                  
+                        cellTemplate.SetCellValue(cell, val);
                 }
-                if (i != tokens.Count - 1) {
+                if (i != data.Count - 1) {
                     row = sheet.CopyRow(row.RowNum, row.RowNum + 1);
                 }
             }
@@ -133,24 +138,26 @@ namespace Mysoft.Project.Excel
                
                 sheet.GroupRow(grouprow.StartIndex + RowIndex+1, grouprow.EndIndex + RowIndex);
             }
-
+            if (data.Count == 0) {
+                sheet.ShiftRows(row.RowNum+1, sheet.LastRowNum, -1);
+            }
 
 
         }
         public override void GetValue(ISheet sheet, JToken json)
         {
             JToken tokens;
-            if (this.BindName == "$root")
+            if (this.Each == "$root")
             {
                 tokens = json;
             }
             else
             {
-                tokens = json[BindName];
+                tokens = json[Each];
             }
             if (tokens == null) {
                 tokens = JToken.Parse("[]");
-                json[BindName] = tokens;
+                json[Each] = tokens;
             }
            
             JArray array=(JArray)tokens;
@@ -181,8 +188,6 @@ namespace Mysoft.Project.Excel
             CellTemplates = new List<ExcelCell>();
             TableTemplates = new List<ExcelTable>();
         }
-
-
     }
 
     public class ExcelMetaData

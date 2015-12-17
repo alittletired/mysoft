@@ -6,6 +6,7 @@
     "project": "project",
     "Selector": "Selector/Selector",
     "myRepeater": "myRepeater/myRepeater"
+    "Excel": "Excel/Excel",
   },
   "vars": {
     "locale": "zh-cn"

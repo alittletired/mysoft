@@ -5,38 +5,26 @@ using System.Text;
 
 namespace Mysoft.Project.Core
 {
-    public class HttpResult<T> : HttpResult
-    {
-        public T Result { get; set; }
-    }
+  
     public class HttpResult
     {
-        public bool IsSuccess { get; set; }
-        public string Error { get; set; }
 
-        public static HttpResult<T> CreateOk<T>(T data)
-        {
-            var res = new HttpResult<T>();
-            res.Result = data;
-            res.IsSuccess = true;
-            return res;
-        }
-
-        public static HttpResult CreateError(string error)
+        public object data { get; set; }
+        public string err { get; set; }
+        public static HttpResult Ok(object data)
         {
             var res = new HttpResult();
-            res.IsSuccess = false;
-            res.Error = error;
+            res.data = data;          
             return res;
         }
-        public static HttpResult<T> CreateError<T>(string error, T data)
+
+        public static HttpResult Error(string error)
         {
-            var res = new HttpResult<T>();
-            res.IsSuccess = false;
-            res.Error = error;
-            res.Result = data;
+            var res = new HttpResult();
+            res.err = error;
             return res;
         }
+      
         protected HttpResult() { }
     }
 }

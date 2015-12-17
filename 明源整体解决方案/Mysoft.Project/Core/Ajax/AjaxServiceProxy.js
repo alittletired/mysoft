@@ -4,11 +4,10 @@
     service._serverUrl = serverUrl;
     service.parseParam = function(data, paramName, paramVal) {
         if (!window.$ && window.location.host.indexOf('localhost') > 0) { alert('人生苦短，我用jquery '); };
-//        if ($.isArray(paramVal)) {
-//            data[paramName] = JSON.stringify(paramVal);
-//        }
-//        else 
-        if ($.isFunction(paramVal)) { }
+        if ($.isArray(paramVal)) {
+            data[paramName] = paramVal;
+        }
+        else  if ($.isFunction(paramVal)) { }
         else if (typeof paramVal === 'object') {
             $.extend(data, paramVal);
         }
@@ -47,6 +46,7 @@
 window.my = window.my || {};
 my.project = my.project || {};
 my.project.invoke = function(method, option, callback) {
+if (!window.JSON && window.location.host.indexOf('localhost') > 0) { alert('页面需要引入JSON脚步'); };  
     var invokeMethod = method;
     var data = option;
     if (typeof invokeMethod !== "string") {
@@ -80,6 +80,7 @@ my.project.invoke = function(method, option, callback) {
         }
         returnValue = json.result;
     }
+    
     $.ajax({ url: serverUrl + '?invokeMethod=' + invokeMethod, contentType: 'application/x-www-form-urlencoded; charset=UTF-8', data: { postdata: JSON.stringify(data) }, async: async, type: 'POST', cache: false, dataType: 'json' }).done(ajaxdone);
     return returnValue;
 

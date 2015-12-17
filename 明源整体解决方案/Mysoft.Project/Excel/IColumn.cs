@@ -10,12 +10,12 @@ namespace Mysoft.Project.Core
    {
       
 
-       public string Name
+       public string Title
        {
           get;set;
        }
 
-       public string Filed
+       public string Bind
        {
           get;set;
        }
@@ -25,6 +25,8 @@ namespace Mysoft.Project.Core
           get;set;
        }
        public string TreeCode { get; set; }
-      
+
+       public bool IsLock { get; set; }
+       public bool IsHide { get; set; }
    }
 }

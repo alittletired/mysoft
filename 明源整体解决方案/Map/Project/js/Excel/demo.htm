@@ -46,15 +46,18 @@
 </html>
 <script type="text/javascript" src="/project/js/sea.js"></script>    
 <script type="text/javascript" src="/project/js/jquery.js"></script>    
-<script type="text/javascript" src="/project/ajax.aspx?type=Mysoft.Project.Excel.ExcelDemoService"></script>    
+
 <script language="javascript" type="text/javascript">
-   // var str = ExcelDemoService.TestExportDatatable("/project/js/Excel/Template.xls");
-    str = ExcelDemoService.TestExportList("/project/js/Excel/Template.xls");
-   // str = ExcelDemoService.TestExportList("/project/js/Excel/Template.xls");
-    
-  //   var json1 = ExcelDemoService.TestImportDatatable(str);
- //  var json2 = ExcelDemoService.TestImportList(str);
-  
+
+    var options = {
+        serviceMethod: 'Mysoft.Project.Excel.ExcelDemoService.GetDemoData' //后台数据提供方法
+      , params: {}  //传递给serviceMethod后台方法的参数,可以是对象或者函数,函数必须返回对象
+      , fileName: '20151211'//导出的文件名称
+      , templateFile: '/Project/js/Excel/NullTemplate.xls' //模版文件地址
+    }
+    seajs.use('Excel', function(excel) {
+        excel.exporttExcel(options);
+    });
   
     </script>
 

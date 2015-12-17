@@ -40,21 +40,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mysoft.Project.Json, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="NPOI, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="NPOI.OOXML, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="NPOI.OpenXml4Net, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="Mysoft.Project.NPOI, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq">
@@ -82,31 +77,44 @@
     <Compile Include="Core\DB\PocoData.cs" />
     <Compile Include="Core\EntityGenerator.cs" />
     <Compile Include="Core\SqlServerType.cs" />
-    <Compile Include="Excel\ExcelDemoService.cs" />
-    <Compile Include="Excel\ExcelGroupRow.cs" />
-    <Compile Include="Excel\ExcelHelper.cs" />
-    <Compile Include="Excel\ExcelMetaDataParser.cs" />
-    <Compile Include="Excel\ExcelMetaData.cs" />
-    <Compile Include="Excel\IColumn.cs" />
+    <Compile Include="Excel\ExcelDemoService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Excel\ExcelGroupRow.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Excel\ExcelHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Excel\ExcelMetaData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Excel\ExcelMetaDataParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Excel\ExcelService.cs" />
+    <Compile Include="Excel\IColumn.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Extension\ObjectExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\DatatableHelper.cs" />
     <Compile Include="Utils\ReflectionHelper.cs" />
     <Compile Include="Utils\TypeHelper.cs" />
+    <Compile Include="ValidationRes.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\Ajax\AjaxServiceProxy.js">
       <CustomToolNamespace>Mysoft.Project.Ajax</CustomToolNamespace>
     </EmbeddedResource>
-    <Content Include="lib\Mysoft.Project.Json.dll" />
-    <Content Include="lib\NPOI.dll" />
-    <Content Include="lib\NPOI.OOXML.dll" />
-    <Content Include="lib\NPOI.OpenXml4Net.dll" />
-    <Content Include="lib\NPOI.OpenXmlFormats.dll" />
-    <Content Include="lib\NPOI.ScratchPad.HWPF.dll" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="lib\Mysoft.Project.Json.dll" />
+    <Content Include="lib\Mysoft.Project.NPOI.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
