@@ -34,10 +34,11 @@ namespace Mysoft.Project.Excel
         {
             var data = DBHelper.GetDataTable(@"SELECT * FROM dbo.cb_Cost WHERE ProjectCode='C01BJ01'  order by  CostCode ");
             var str = ExcelHelper.ExportExcel(fileTemplate, data);
+            
             return str;
         }
 
-     
+       
         public DataTable TestImportDatatable(string filePath)
         {
 

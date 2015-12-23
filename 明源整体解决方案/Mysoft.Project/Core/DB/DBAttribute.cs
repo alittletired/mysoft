@@ -158,7 +158,10 @@ namespace Mysoft.Project.Core.DataAnnotations
         public TransactionAttribute() {
             IsOpen = true;
         }
-        
+        public TransactionAttribute(bool isOpen)
+        {
+            IsOpen = isOpen;
+        }
        
     }
     public interface IPager
