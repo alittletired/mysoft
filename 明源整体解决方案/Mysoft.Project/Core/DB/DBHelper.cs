@@ -200,10 +200,37 @@ namespace Mysoft.Project.Core
         public static int Update<Entity>(Entity poco)
         {
             var meta = PocoData.ForType(typeof(Entity));
-            return GetDatabase().Update(poco, meta); ;
+            return GetDatabase().Update(poco, meta); 
+        }
+
+
+        public static int Save<Entity>(object poco)
+        {
+            var meta = PocoData.ForType(typeof(Entity));
+            var keyValue = meta.Columns[meta.TableInfo.PrimaryKey].GetValue(poco);
+            if (keyValue == null || keyValue.ToString() == string.Empty)
+            {
+                keyValue = Guid.NewGuid().ToString();
+                meta.Columns[meta.TableInfo.PrimaryKey].SetValue(poco, keyValue);
+                return Insert(poco,meta);
+            }
+
+            return GetDatabase().Update(poco, meta);
 
         }
-        
+        public static int Save<Entity>(Entity poco)
+        {
+            var meta = PocoData.ForType(typeof(Entity));
+            var keyValue = meta.Columns[meta.TableInfo.PrimaryKey].GetValue(poco);
+            if (keyValue == null || keyValue.ToString() == string.Empty)
+            {
+                keyValue = Guid.NewGuid().ToString();
+                meta.Columns[meta.TableInfo.PrimaryKey].SetValue(poco, keyValue);
+                return Insert(poco,meta);
+            }
+            return GetDatabase().Update(poco, meta);
+        }
+
         public static int Delete<Entity>(object idropoco)
         {
             return GetDatabase().Delete<Entity>(idropoco);
@@ -216,16 +243,16 @@ namespace Mysoft.Project.Core
         public static object Insert<Entity>(Entity poco)
         {
             var meta = PocoData.ForType(typeof(Entity));
-            return Insert(meta, poco);
+            return Insert(poco,meta);
         }
 
-        public static object Insert<Entity>(object poco)
+        public static int Insert<Entity>(object poco)
         {
             var meta = PocoData.ForType(typeof(Entity));
 
-            return Insert(meta, poco);
+            return Insert(poco,meta);
         }
-        private static object Insert(PocoData meta, object poco)
+        private static int Insert(object poco, PocoData meta)
         {
             string sql = "insert into {0}({1}) values ( {2}) ";
             var columns = meta.Columns.Keys.ToArray();
@@ -237,11 +264,7 @@ namespace Mysoft.Project.Core
             var strValues = string.Join(",@", pocoClos.ToArray());
             sql = string.Format(sql, meta.TableInfo.TableName, strFileds, "@" + strValues);
             return Execute(sql, poco);
-        }
-        // Insert a poco into a table.  If the poco has a property with the same name 
-        // as the primary key the id of the new record is assigned to it.  Either way,
-        // the new id is returned.
-      
+        }      
      
         public static Entity GetByID<Entity>(object id)
         {

@@ -95,10 +95,6 @@ namespace Mysoft.Project.Core.Entity
 FROM    information_schema.COLUMNS
 WHERE   TABLE_NAME = @0 ";
             var columns = _db.Query<ColumnInfo>(coloinfoSql, tableName).ToList();
-
-          
-
-
             AddLine("public " + tableName + "()");
             AddLine("{");
             _indent++;
@@ -134,6 +130,8 @@ WHERE   TABLE_NAME = @0 ";
 
             foreach (var col in columns)
             {
+                if (col.DbType .Equals( "timestamp", StringComparison.OrdinalIgnoreCase))
+                    continue;
                 string allowDBNull = ((col.DataType.IsPrimitive || col.DataType == typeof(DateTime)) && col.IsNullable == 1 && string.IsNullOrEmpty(col.DefaultValue)) ? "?" : "";
                 string desc;
                 descDict.TryGetValue(col.ColumnName, out desc);
