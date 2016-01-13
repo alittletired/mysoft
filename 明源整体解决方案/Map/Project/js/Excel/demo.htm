@@ -52,8 +52,8 @@
     var options = {
         serviceMethod: 'Mysoft.Project.Excel.ExcelDemoService.GetDemoData' //后台数据提供方法
       , params: {}  //传递给serviceMethod后台方法的参数,可以是对象或者函数,函数必须返回对象
-      , fileName: '20151211'//导出的文件名称
-      , templateFile: '/Project/js/Excel/NullTemplate.xls' //模版文件地址
+      , fileName: '20151211.xls'//导出的文件名称
+      , templateFile: '/Project/js/Excel/Template.xls' //模版文件地址
     }
     seajs.use('Excel', function(excel) {
         excel.exporttExcel(options);
