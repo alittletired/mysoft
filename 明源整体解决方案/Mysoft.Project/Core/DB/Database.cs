@@ -1522,6 +1522,7 @@ namespace Mysoft.Project.Core
         string _connectionString;
         string _providerName;
         DbProviderFactory _factory;
+        public DbProviderFactory DbProviderFactory { get { return _factory; } }
         IDbConnection _sharedConnection;
         IDbTransaction _transaction;
         int _sharedConnectionDepth;

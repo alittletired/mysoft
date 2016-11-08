@@ -13,7 +13,7 @@ string ns="Mysoft.Project.Entity";
 //表名数组 
 string[] tableNames=new string[]{
 
-//"myBusinessUnit","myStation"
+"myBusinessUnit","myStation"
 };
 
 //生成文件
