@@ -38,7 +38,7 @@ DDTree是一个通用的选择公司，部门，项目控件
 }
 var ddtree=null;
 seajs.use('DDTree', function(DDTree) {
-    ddtree = new ddtree('ddtree', option);
+    ddtree = new ddtree('DDTree', option);
 
 });
 

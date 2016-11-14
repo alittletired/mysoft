@@ -64,34 +64,13 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entity.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Entity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="myBusinessUnit.cs">
-      <DependentUpon>Entity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="myStation.cs">
-      <DependentUpon>Entity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ajax.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Entity.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Entity.cs</LastGenOutput>
-    </Content>
     <Content Include="gulpfile.js" />
-    <Content Include="js\Excel\demo.htm" />
-    <Content Include="js\Excel\Excel.js" />
-    <Content Include="js\myRepeater\demo.html" />
-    <Content Include="js\myRepeater\myRepeater.js" />
-    <Content Include="js\myRepeater\_imgs\ico_Arrow_D.gif" />
-    <Content Include="js\myRepeater\_imgs\ico_arrow_U.gif" />
     <Content Include="js\project.js" />
     <Content Include="js\DDTree\DDTree.css" />
     <Content Include="js\DDTree\DDTree.js" />
@@ -105,18 +84,7 @@
     <Content Include="js\sea.js" />
     <Content Include="js\sea.min.js" />
     <Content Include="js\json.js" />
-    <Content Include="js\Selector\Selector.js" />
     <None Include="js\seaConfig.json" />
-    <Content Include="js\Selector\Selector.htm">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
-    <Content Include="js\Selector\demo.htm">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="js\Excel\NullTemplate.xls" />
-    <None Include="js\Excel\Template.xls" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MySoft.Project\MySoft.Project.csproj">
